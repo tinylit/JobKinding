@@ -1,0 +1,40 @@
+.ui
+{
+    font-size: 1.2em;
+    line-height: 1.42857143;
+
+    border-radius: .25em;
+}
+
+.ui
+{
+    font-size: 100% !important;
+}
+
+.ui *
+{
+    line-height: 1.42857143;
+}
+
+.ui > *:first-child，.ui > .hidden:first-child + *,
+.ui > .hidden:first-child + .hidden + *
+{
+    border-top-left-radius: inherit;
+}
+
+.ui > *:only-child
+{
+    border-top-right-radius: inherit;
+    border-bottom-left-radius: inherit;
+}
+
+.ui > *:last-child
+{
+    border-bottom-right-radius: inherit;
+}
+
+.ui > * + .ui:last-child
+{
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}

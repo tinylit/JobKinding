@@ -1,0 +1,457 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" style="font-size: 16px;">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>JsChar</title>
+	<link href="link/fa.css" rel="stylesheet" type="text/css" />
+	<link href="link/kimicriss.css" rel="stylesheet" type="text/css" />
+	<link href="link/kimicriss.lib.css" rel="stylesheet" type="text/css" />
+	<style type="text/css">
+		body>div {
+			margin-top: 2em;
+		}
+
+		.row-test {
+			width: 100%;
+			font-size: 1.2em;
+			display: inline-block;
+		}
+
+		.row-test>div {
+			line-height: 2.1875em;
+			border: 1px solid #DCDCDC;
+		}
+	</style>
+	<script src="jschar.js" type="text/javascript"></script>
+	<script src="jschar.lib.js" type="text/javascript"></script>
+	<script src="js/jschar.ui.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		$(document).ready(function(e) {
+			jschar(".check > input").click(function() {
+				jschar(this.parentNode).toggleClass("checked", this.checked);
+			});
+			jschar('.selection').each(function(elem) {
+				var comBox = jschar('> input, > .text', this);
+				comBox.click(function() {
+					jschar(this.parentNode).addClass('active');
+				}).nextAll('.fa').click(function() {
+					jschar(this.parentNode).toggleClass('active');
+				}).nextAll('.select').find(".option").click(function() {
+					jschar('.option', this.parentNode).removeClass('selected');
+					jschar(this).addClass('selected')
+					comBox.val(jschar(this).attr('data-value'));
+					comBox.text(jschar(this).attr('data-value'));
+					jschar(elem).removeClass('active');
+				});
+				var comBoxEl = comBox.get(0);
+				jschar(document).click(function(e) {
+					if ($.contains(elem, e.targetEl)) {
+						return false;
+					}
+					$(elem).removeClass('active');
+				});
+			});
+		}).readyControl("Dialog", function() {
+			var fn = jschar.ui.dialog({
+				init: function() {
+					this.x = 0;
+					this.base.init();
+				}
+			});
+		}).ready(function() {
+			var fn = jschar.ui.dialog;
+		});
+	</script>
+</head>
+
+<body style="padding: 15px;">
+	<div>
+		<a class="ui link">Link</a>
+	</div>
+	<div class="ui menu">
+		<a class="item"><i class="fa fa-music"></i></a>
+		<a class="item"><i class="fa fa-glass"></i></a>
+	</div>
+	<div class="ui menu">
+		<div class="item"><i class="fa fa-music"></i></div>
+		<div class="item">菜单
+			<div class="ui menu">
+				<div class="item">1
+					<div class="ui menu">
+						<div class="item">1</div>
+						<div class="item">2</div>
+					</div>
+				</div>
+				<div class="item">2
+					<div class="ui menu">
+						<div class="item">1</div>
+						<div class="item">2</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="ui menu vertical">
+		<div class="item"><i class="fa fa-music"></i></div>
+		<div class="item">菜单
+			<div class="ui menu">
+				<div class="item">1
+					<div class="ui menu">
+						<div class="item">1</div>
+						<div class="item">2</div>
+					</div>
+				</div>
+				<div class="item">2
+					<div class="ui menu">
+						<div class="item">1</div>
+						<div class="item">2</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+	<div class="ui tab four">
+		<div class="item"><i class="fa fa-music"></i>音乐</div>
+		<div class="item"><i class="fa fa-glass"></i>酒杯</div>
+		<div class="item"><i class="fa fa-android"></i>安卓</div>
+		<div class="item"><i class="fa fa-apple"></i>苹果</div>
+		<div class="clearfix"></div>
+	</div>
+	<div class="ui content">
+		<label class="ui extra info">内容区</label>
+	</div>
+	<div class="ui tabular">
+		<div class="item active"><i class="fa fa-music"></i>音乐</div>
+		<div class="item"><i class="fa fa-glass"></i>酒杯</div>
+		<div class="item"><i class="fa fa-android"></i>安卓</div>
+		<div class="item"><i class="fa fa-apple"></i>苹果</div>
+		<div class="clearfix"></div>
+	</div>
+	<div class="ui content">
+		<label class="ui extra warning">内容区</label>
+	</div>
+	<div class="ui tabular">
+		<div class="item"><i class="fa fa-music"></i>音乐</div>
+		<div class="item active"><i class="fa fa-glass"></i>酒杯</div>
+		<div class="item"><i class="fa fa-android"></i>安卓</div>
+		<div class="item"><i class="fa fa-apple"></i>苹果</div>
+		<div class="clearfix"></div>
+	</div>
+	<div class="ui content">
+		<label class="ui extra warning">内容区</label>
+	</div>
+	<div class="ui content">
+		<label class="ui extra info">Default</label> 信息提示框
+		</br>
+		信息提示框
+	</div>
+	<div class="ui content">
+		<label class="ui extra info"><i class="fa fa-android"></i>Android</label> 信息提示框
+		</br>
+		</br>
+		<label class="ui extra warning"><i class="fa fa-apple"></i>App</label> 信息提示框
+	</div>
+	<div>
+		<button class="ui button submit">
+            <i class="fa fa-heart"></i>确定</button>
+	</div>
+	<div class="ui buttons">
+		<button class="button submit">
+            <i class="fa fa-heart"></i>确定</button>
+		<button class="button">
+            确定</button>
+		<button class="button cancel">
+            取消</button>
+	</div>
+	<div>
+		<div class="ui label info">
+			<i class="fa fa-heart"></i>Like</div>
+	</div>
+	<div class="ui labels info">
+		<label class="label">
+            <i class="fa fa-heart"></i>Like</label>
+		<label class="label">
+            1080</label>
+	</div>
+	<div class="ui labels info">
+		<label class="label label-concave">
+            <i class="fa fa-heart"></i>Like</label>
+		<label class="label ">
+            1080</label>
+	</div>
+	<div class="ui labels info">
+		<label class="ui label label-convex">
+            <i class="fa fa-heart"></i>Like</label>
+		<label class="ui label">1080</label>
+	</div>
+	<div>
+		<input class="ui input" />
+	</div>
+	<div class="ui input">
+		<input />
+	</div>
+	<div>
+		<div class="ui input" style="margin-left: 120px; margin-top: 50px;">
+			<span class="ui input-hint init north"><i class="fa fa-info-circle"></i>我是上提示框</span>
+			<input />
+		</div>
+		<div class="ui input" style="margin-left: 120px; margin-top: 50px;">
+			<span class="ui input-hint info east"><i class="fa fa-info-circle">
+            		</i>我是右提示框(不推荐使用)</span>
+			<input />
+		</div>
+		<div class="ui input" style="margin-left: 120px; margin-top: 50px;">
+			<span class="ui input-hint warning south"><i class="fa fa-question-circle">
+            		</i>我是下提示框</span>
+			<input />
+		</div>
+		<div class="ui input" style="margin-left: 120px; margin-top: 50px;">
+			<span class="ui input-hint danger west"><i class="fa fa-exclamation-circle">
+            		</i>我是左提示框(不推荐使用)</span>
+			<input />
+		</div>
+	</div>
+	<div class="ui inputs">
+		<div class="input">
+			<label class="ui label">
+                Email</label>
+			<input />
+		</div>
+	</div>
+	<div class="ui inputs">
+		<div class="input">
+			<label class="ui label info">
+                <i class="fa fa-mail-forward"></i>Like</label>
+			<input />
+		</div>
+	</div>
+	<div class="ui inputs">
+		<div class="input">
+			<div class="ui labels info">
+				<label class="ui label label-convex">
+                    <i class="fa fa-heart"></i>Like</label>
+				<label class="ui label">
+                    @</label>
+			</div>
+			<input />
+		</div>
+	</div>
+	<div class="ui inputs">
+		<div class="input">
+			<label class="ui label">
+                Email</label>
+			<input type="text" placeholder="请输入..." />
+			<label class="ui label">
+                @foxmail.com</label>
+		</div>
+	</div>
+	<div>
+		<textarea cols="5" rows="2" class="ui input"></textarea>
+	</div>
+	<div class="ui check">
+		<input type="checkbox" />
+		<label>
+            CheckBox</label>
+	</div>
+	<div class="ui check checked">
+		<input type="checkbox" checked="checked" />
+		<label>
+            CheckBox</label>
+	</div>
+	<div class="ui check">
+		<input type="radio" />
+		<label>
+            CheckBox</label>
+	</div>
+	<div class="ui check checked">
+		<input type="radio" checked="checked" />
+		<label>
+            CheckBox</label>
+	</div>
+	<div class="ui imgs">
+		<img class="img-round" src="svg/img.svg" style="height: 140px; width: 140px;" />
+		<img class="img-circle" src="svg/img.svg" style="height: 140px; width: 140px;" />
+		<img class="img-thumbnail" src="svg/img.svg" style="height: 140px; width: 140px;" />
+	</div>
+	<div class="ui hint init">
+		<i class="fa fa-info-circle"></i>默认提示框
+	</div>
+	<div class="ui hint info">
+		<i class="fa fa-info-circle"></i>信息提示框
+	</div>
+	<div class="ui hint warning">
+		<i class="fa fa-question-circle"></i>警告提示框
+	</div>
+	<div class="ui hint danger">
+		<i class="fa fa-exclamation-circle"></i>危险提示框
+	</div>
+	<div class="ui selection">
+		<input type="text" />
+		<i class="fa fa-caret-down"></i>
+		<div class="select">
+			<div class="option" data-value="I">I</div>
+			<div class="option" data-value="Like">Like</div>
+			<div class="option" data-value="You">You</div>
+			<div class="option" data-value="I">I</div>
+			<div class="option" data-value="Like">Like</div>
+			<div class="option" data-value="You">You</div>
+			<div class="option" data-value="I">I</div>
+			<div class="option" data-value="Like">Like</div>
+			<div class="option" data-value="You">You</div>
+		</div>
+	</div>
+	<div class="ui selection north">
+		<input type="text" />
+		<i class="fa fa-caret-down"></i>
+		<div class="select">
+			<div class="option" data-value="I">I</div>
+			<div class="option" data-value="Like">Like</div>
+			<div class="option" data-value="You">You</div>
+			<div class="option" data-value="I">I</div>
+			<div class="option" data-value="Like">Like</div>
+			<div class="option" data-value="You">You</div>
+		</div>
+	</div>
+	<div class="ui selection">
+		<div class="text"></div>
+		<i class="fa fa-caret-down"></i>
+		<div class="select">
+			<div class="option" data-value="I">I</div>
+			<div class="option" data-value="Like">Like</div>
+			<div class="option" data-value="You">You</div>
+			<div class="option" data-value="I">I</div>
+			<div class="option" data-value="Like">Like</div>
+			<div class="option" data-value="You">You</div>
+			<div class="option" data-value="I">I</div>
+			<div class="option" data-value="Like">Like</div>
+			<div class="option" data-value="You">You</div>
+		</div>
+	</div>
+	<div class="ui selection north">
+		<div class="text"></div>
+		<i class="fa fa-caret-down"></i>
+		<div class="select">
+			<div class="option" data-value="I">I</div>
+			<div class="option" data-value="Like">Like</div>
+			<div class="option" data-value="You">You</div>
+			<div class="option" data-value="I">I</div>
+			<div class="option" data-value="Like">Like</div>
+			<div class="option" data-value="You">You</div>
+		</div>
+	</div>
+	<div class="ui input">
+		<input />
+		<div class="ui selection">
+			<div class="text"></div>
+			<i class="fa fa-caret-down"></i>
+			<div class="select">
+				<div class="option" data-value="@qq.com">@qq.com</div>
+				<div class="option" data-value="@vip.qq.com">@vip.qq.com</div>
+				<div class="option" data-value="@foxmail.com">@foxmail.com</div>
+			</div>
+		</div>
+	</div>
+	<div class="ui input">
+		<label class="ui label">Email</label>
+		<input />
+		<div class="ui selection north">
+			<div class="text"></div>
+			<i class="fa fa-caret-down"></i>
+			<div class="select hybrid">
+				<div class="header">Search Issues</div>
+				<div class="ui input"><i class="fa fa-search"></i><input type="search" /></div>
+				<div class="header"><i class="fa fa-tags"></i>Filter by tag</div>
+				<div class="select">
+					<div class="option" data-value="@qq.com">@qq.com</div>
+					<div class="option" data-value="@vip.qq.com">@vip.qq.com</div>
+					<div class="option" data-value="@foxmail.com">@foxmail.com</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row-test table-multi">
+		<div class="row-xxxs">
+			.row-xxxs</div>
+		<div class="row-xxxs">
+			.row-xxxs</div>
+		<div class="row-xxxs">
+			.row-xxxs</div>
+		<div class="row-xxxs">
+			.row-xxxs</div>
+		<div class="row-xxxs">
+			.row-xxxs</div>
+		<div class="row-xxxs">
+			.row-xxxs</div>
+		<div class="row-xxxs">
+			.row-xxxs</div>
+		<div class="row-xxxs">
+			.row-xxxs</div>
+		<div class="row-xxxs">
+			.row-xxxs</div>
+		<div class="row-xxxs">
+			.row-xxxs</div>
+		<div class="row-xxxs">
+			.row-xxxs</div>
+		<div class="row-xxxs">
+			.row-xxxs</div>
+	</div>
+	<div class="row-test">
+		<div class="row-xxxs">
+			.row-xxxs</div>
+		<div class="row-xxxs">
+			.row-xxxs</div>
+		<div class="row-xxl">
+			.row-xxl</div>
+	</div>
+	<div class="row-test table-twins">
+		<div class="row-xxs">
+			.row-xxs</div>
+		<div class="row-xxl">
+			.row-xxl</div>
+	</div>
+	<div class="row-test">
+		<div class="row-xxxs">
+			.row-xxxs</div>
+		<div class="row-xxxs">
+			.row-xxxs</div>
+		<div class="row-xxxs">
+			.row-xxxs</div>
+		<div class="row-xl">
+			.row-xl</div>
+	</div>
+	<div class="row-test table-twins">
+		<div class="row-xs">
+			.row-xs</div>
+		<div class="row-xl">
+			.row-xl</div>
+	</div>
+	<div class="row-test table-twins">
+		<div class="row-s">
+			.row-s</div>
+		<div class="row-l">
+			.row-l</div>
+	</div>
+	<div class="row-test table-twins">
+		<div class="row-ms">
+			.row-ms</div>
+		<div class="row-ml">
+			.row-ml</div>
+	</div>
+	<div class="row-test table-twins">
+		<div class="row-m">
+			.row-m</div>
+		<div class="row-m">
+			.row-m</div>
+	</div>
+	<div class="row-test">
+		<div class="row-wrap">
+			.row-wrap</div>
+	</div>
+</body>
+
+</html>
