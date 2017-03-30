@@ -840,6 +840,7 @@ h4 > a::before
     }
 }
 
+/*其它*/
 .fr
 {
     float: right;
@@ -853,12 +854,10 @@ h4 > a::before
 {
     text-align: right;
 }
-
 .tl
 {
     text-align: left;
 }
-
 .tv
 {
     text-align: center;
@@ -878,10 +877,12 @@ h4 > a::before
     clear: both;
 }
 
+/*状态*/
 .hidden
 {
     display: none !important;
 }
+
 .visible
 {
     display: block !important;
@@ -913,6 +914,20 @@ table.visible-inline-block
     display: inline-table !important;
 }
 
+/*动画*/
+.transition
+{
+    -webkit-animation-duration: .3s;
+            animation-duration: .3s;
+    -webkit-animation-timing-function: ease;
+            animation-timing-function: ease;
+    -webkit-animation-iteration-count: 1;
+            animation-iteration-count: 1;
+
+    -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+}
+
 /*颜色*/
 .font-info-color
 {
@@ -930,11 +945,9 @@ table.visible-inline-block
 .font-warning-color{
   color: #f0ad4e !important;
 }
-
 .border-warning-color{
   border-color: #f0ad4e !important;
 }
-
 .backgroud-warning-color
 {
     background-color: #f0ad4e !important;
@@ -943,158 +956,120 @@ table.visible-inline-block
 .font-danger-color{
   color: #d9534f !important;
 }
-
 .border-danger-color{
   border-color: #d9534f !important;
 }
-
 .backgroud-danger-color
 {
     background-color: #d9534f !important;
 }
 
+.row-level-1 > *,.row-level-1 > *[class^='row-col-']
+{
+    width: 100% !important;
+}
+.row-level-2 > *,.row-level-2 > *[class^='row-col-']
+{
+  width: 50% !important;
+}
+.row-level-3 > *,.row-level-3 > *[class^='row-col-']
+{
+  width: 33.3333% !important;
+}
 
-
-/*数量*/
-.ui.two > .item
+.row-level-4 > *,.row-level-4 > *[class^='row-col-']
 {
-    width: 50%;
+    width: 25% !important;
 }
-.ui.three > .item
+.row-level-5 > *,.row-level-5 > *[class^='row-col-']
 {
-    width: 33.3333%;
+    width: 20% !important;
 }
-.ui.four > .item
+.row-level-6 > *,.row-level-6 > *[class^='row-col-']
 {
-    width: 25%;
+    width: 16.6666% !important;
 }
-.ui.five > .item
+.row-level-7 > *,.row-level-7 > *[class^='row-col-']
 {
-    width: 20%;
+    width: 14.285% !important;
 }
-.ui.six > .item
+.row-level-8 > *,.row-level-8 > *[class^='row-col-']
 {
-    width: 16.6666%;
+    width: 12.5% !important;
 }
-.ui.seven > .item
+.row-level-9 > *,.row-level-9 > *[class^='row-col-']
 {
-    width: 14.285%;
+    width: 11.1111% !important;
 }
-.ui.eight > .item
+.row-level-10 > *,.row-level-10 > *[class^='row-col-']
 {
-    width: 12.5%;
+    width: 10% !important;
 }
-.ui.nine > .item
+.row-level-11 > *,.row-level-11 > *[class^='row-col-']
 {
-    width: 11.1111%;
+    width: 9.0909% !important;
 }
-.ui.ten > .item
+.row-level-12 > *,.row-level-12 > *[class^='row-col-']
 {
-    width: 10%;
-}
-.ui.eleven > .item
-{
-    width: 9.0909%;
-}
-.ui.twelve > .item
-{
-    width: 8.3333%;
+    width: 8.3333% !important;
 }
 
 /*方向：北东南西(上右下左)*/
 
-
-/*动画*/
-.transition
-{
-    -webkit-animation-duration: .3s;
-            animation-duration: .3s;
-    -webkit-animation-timing-function: ease;
-            animation-timing-function: ease;
-    -webkit-animation-iteration-count: 1;
-            animation-iteration-count: 1;
-
-    -webkit-animation-fill-mode: both;
-            animation-fill-mode: both;
-}
-
 /*栅格*/
-.row-xxxs,
-.row-xxs,
-.row-xs,
-.row-s,
-.row-ms,
-.row-m,
-.row-ml,
-.row-l,
-.row-xl,
-.row-xxl,
-.row-xxxl,
-.row-wrap
-{
-    position: relative;
+*[class^='row-col-']{
+  position: relative;
 
-    float: left;
+  float: left;
 
-    min-height: 1em;
+  min-height: 1em;
 }
 
-.row-xxxs
+.row-col-1
 {
     width: 8.33333333% !important;
 }
-
-.row-xxs
+.row-col-2
 {
     width: 16.66666667% !important;
 }
-
-.row-xs
+.row-col-3
 {
     width: 25% !important;
 }
-
-.row-s
+.row-col-4
 {
     width: 33.33333333% !important;
 }
-
-.row-ms
+.row-col-5
 {
     width: 41.66666667% !important;
 }
-
-.row-m
+.row-col-6
 {
     width: 50% !important;
 }
-
-.row-ml
+.row-col-7
 {
     width: 58.33333333% !important;
 }
-
-.row-l
+.row-col-8
 {
     width: 66.66666667% !important;
 }
-
-.row-xl
+.row-col-9
 {
     width: 75% !important;
 }
-
-.row-xxl
+.row-col-10
 {
     width: 83.33333333% !important;
 }
-
-.row-xxxl
+.row-col-11
 {
     width: 91.66666667% !important;
 }
-
-.row-wrap
+.row-col-12
 {
     width: 100% !important;
 }
@@ -1160,17 +1135,7 @@ table.visible-inline-block
 
 @media (max-width:360px)
 {
-    .row-xxxs,
-    .row-xxs,
-    .row-xs,
-    .row-s,
-    .row-ms,
-    .row-m,
-    .row-ml,
-    .row-l,
-    .row-xl,
-    .row-xxl,
-    .row-xxxl
+    *[class^='row-col-']
     {
         width: 100% !important;
     }
