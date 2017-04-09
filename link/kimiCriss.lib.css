@@ -6,17 +6,15 @@
     border-radius: .25em;
 }
 
-.ui
+.ui *,
+.ui *:before,
+.ui *:after
 {
     font-size: 100% !important;
-}
-
-.ui *
-{
     line-height: 1.42857143;
 }
 
-.ui > *:first-child，.ui > .hidden:first-child + *,
+.ui > *:first-child，.ui > .hidden:first-child+*,
 .ui > .hidden:first-child + .hidden + *
 {
     border-top-left-radius: inherit;
@@ -37,4 +35,117 @@
 {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
+}
+
+
+/*按钮或标签*/
+
+.ui.item,
+.ui.link,
+.ui.label,
+.ui.button,
+.ui.menu .item,
+.ui.links .link,
+.ui.labels .label,
+.ui.buttons .button
+{
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+}
+
+.ui.item,
+.ui.link,
+.ui.label,
+.ui.button
+{
+    display: inline-block;
+}
+
+.ui.menu .item,
+.ui.links .link,
+.ui.labels .label,
+.ui.buttons .button
+{
+    float: left;
+}
+
+.ui.item,
+.ui.link,
+.ui.label,
+.ui.button,
+.ui.menu .item,
+.ui.links .link,
+.ui.labels .label,
+.ui.buttons .button
+{
+    height: 2.5em;
+    padding: .375em 1em;
+
+    -webkit-transition: opacity .1s ease, background-color .1s ease, color .1s ease, box-shadow .1s ease, background .1s ease;
+            transition: opacity .1s ease, background-color .1s ease, color .1s ease, box-shadow .1s ease, background .1s ease;
+    text-align: center;
+    vertical-align: middle;
+    text-decoration: none;
+    text-transform: none;
+
+    border: .0625em solid transparent;
+    outline: 0;
+    background-color: transparent;
+    text-shadow: none;
+
+    -webkit-tap-highlight-color: transparent;
+}
+
+.ui.item,
+.ui.link,
+.ui.button,
+.ui.menu .item,
+.ui.links .link,
+.ui.buttons .button
+{
+    cursor: pointer;
+}
+.ui.links .link,
+.ui.buttons .button
+{
+    border-radius: inherit;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+}
+
+.ui.button.submit,
+.ui.buttons > .button.submit
+{
+    color: #fff;
+    border-color: #357ebd;
+    background-color: #2185d0;
+    box-shadow: 0 0 0 0 rgba(34, 36, 38, .15) inset;
+}
+
+.ui.button.submit:hover,
+.ui.button.submit:focus,
+.ui.buttons > .button.submit:hover,
+.ui.buttons > .button.submit:focus
+{
+    background-color: #1678c2;
+}
+
+.ui.button.cancel,
+.ui.buttons > .button.cancel
+{
+    color: #606060;
+    border-color: #c0c0c0;
+    background-color: #fff;
+    box-shadow: 0 0 0 .0625em transparent inset, 0 0 0 0 rgba(34, 36, 38, .15) inset;
+}
+
+.ui.button.cancel:hover,
+.ui.button.cancel:focus,
+.ui.buttons > .button.cancel:hover,
+.ui.buttons > .button.cancel:focus
+{
+    border-color: #e0e0e0;
+    background-color: #f5f5f5;
 }
