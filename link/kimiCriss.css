@@ -74,13 +74,12 @@ audio:not([controls]) {
 
 a {
     text-decoration: none;
-    color: #428bca;
+
     background-color: transparent;
 }
 
 a:hover, a:focus {
-    text-decoration: underline;
-    color: #2a6496;
+    text-decoration: none;
 }
 
 a:active, a:hover {
