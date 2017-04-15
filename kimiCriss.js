@@ -1,5 +1,9 @@
 (function (window) {
     var version = "1.1.1";
+<<<<<<< HEAD
+=======
+
+>>>>>>> 43472ea4fc94afc157b178af3f7f6e1ae58a1772
     var arr = [];
     var push = arr.push;
     var slice = arr.slice;
@@ -142,7 +146,11 @@
     }
     kimiCriss.fn.init.prototype = kimiCriss.fn;
 
+<<<<<<< HEAD
     var
+=======
+    var 
+>>>>>>> 43472ea4fc94afc157b178af3f7f6e1ae58a1772
 	extendCallbak = function (value) {
 	    return value;
 	},
@@ -255,7 +263,11 @@
         class2type["[object " + item + "]"] = item.toLowerCase();
     });
 
+<<<<<<< HEAD
     var
+=======
+    var 
+>>>>>>> 43472ea4fc94afc157b178af3f7f6e1ae58a1772
 	rmsPrefix = /^-ms-/,
 	rdashAlpha = /-([\da-z])/gi,
 	rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,
@@ -306,7 +318,11 @@
         merge: function (arr, arr2) {
             arr = arr || [];
             if (arr2) {
+<<<<<<< HEAD
                 var
+=======
+                var 
+>>>>>>> 43472ea4fc94afc157b178af3f7f6e1ae58a1772
                 i = 0,
                 len = arr.length,
                 len2 = arr2.length;
@@ -839,12 +855,20 @@
             }
             return cache;
         }
+<<<<<<< HEAD
         var
+=======
+        var 
+>>>>>>> 43472ea4fc94afc157b178af3f7f6e1ae58a1772
         classCache = createCache(),
 	    tokenCache = createCache(),
 	    compilerCache = createCache();
 
+<<<<<<< HEAD
         var
+=======
+        var 
+>>>>>>> 43472ea4fc94afc157b178af3f7f6e1ae58a1772
         characterEncoding = "(?:\\\\.|[\\w-]|[^\\x00-\\xa0])+",
         identifier = characterEncoding.replace("w", "w#"),
         attributes = "\\[" + whitespace + "*(" + identifier + ")(?:" + whitespace +
@@ -1577,7 +1601,11 @@
 
     })(support);
 
+<<<<<<< HEAD
     var
+=======
+    var 
+>>>>>>> 43472ea4fc94afc157b178af3f7f6e1ae58a1772
     rclickable = /^(?:a|area)$/i,
     rnotwhite = (/[^\x20\t\r\n\f]+/g),
     rfocusable = /^(?:input|select|textarea|button|object)$/i;
@@ -1874,7 +1902,11 @@
         }
     });
 
+<<<<<<< HEAD
     var
+=======
+    var 
+>>>>>>> 43472ea4fc94afc157b178af3f7f6e1ae58a1772
     cssShow = { position: "absolute", visibility: "hidden", display: "block" },
 	cssNormalTransform = {
 	    letterSpacing: 0,
@@ -1900,7 +1932,11 @@
     }
     if (!support.opacity) {
 
+<<<<<<< HEAD
         var
+=======
+        var 
+>>>>>>> 43472ea4fc94afc157b178af3f7f6e1ae58a1772
         ralpha = /alpha\([^)]*\)/i,
 	    ropacity = /opacity\s*=\s*([^)]*)/;
 
@@ -2109,7 +2145,11 @@
         domManip: function (args, callback) {
             args = concat.apply([], args);
             var node, first, length, fragment, scripts;
+<<<<<<< HEAD
             var
+=======
+            var 
+>>>>>>> 43472ea4fc94afc157b178af3f7f6e1ae58a1772
             i = 0,
             len = this.length,
             value = args[0],
@@ -2222,7 +2262,11 @@
         }
     });
 
+<<<<<<< HEAD
     var
+=======
+    var 
+>>>>>>> 43472ea4fc94afc157b178af3f7f6e1ae58a1772
     rvalidchars = /^[\],:{}\s]*$/,
 	rvalidbraces = /(?:^|:|,)(?:\s*\[)+/g,
 	rvalidescape = /\\(?:["\\\/bfnrt]|u[\da-fA-F]{4})/g,
@@ -2804,7 +2848,11 @@
         }
     };
 
+<<<<<<< HEAD
     var
+=======
+    var 
+>>>>>>> 43472ea4fc94afc157b178af3f7f6e1ae58a1772
 	rkeyEvent = /^key/,
 	rmouseEvent = /^(?:mouse|contextmenu)|click|dblclick/,
 	rfocusMorph = /^(?:focusinfocus|focusoutblur)$/,
@@ -3262,7 +3310,11 @@
     });
 
 
+<<<<<<< HEAD
     var
+=======
+    var 
+>>>>>>> 43472ea4fc94afc157b178af3f7f6e1ae58a1772
 	nonce = +(new Date()),
 	location = window.location,
 	rquery = (/\?/),
@@ -3308,7 +3360,11 @@
         return s.join("&");
     };
 
+<<<<<<< HEAD
     var
+=======
+    var 
+>>>>>>> 43472ea4fc94afc157b178af3f7f6e1ae58a1772
 	r20 = /%20/g,
 	rhash = /#.*$/,
 	rantiCache = /([?&])_=[^&]*/,
@@ -3529,7 +3585,11 @@
             }
             options = options || {};
 
+<<<<<<< HEAD
             var
+=======
+            var 
+>>>>>>> 43472ea4fc94afc157b178af3f7f6e1ae58a1772
 			transport,
 			cacheURL,
 			responseHeadersString,
@@ -3808,7 +3868,11 @@
             return new window.XMLHttpRequest();
         } catch (e) { }
     };
+<<<<<<< HEAD
     var
+=======
+    var 
+>>>>>>> 43472ea4fc94afc157b178af3f7f6e1ae58a1772
 	xhrSuccessStatus = {
 	    0: 200,
 	    1223: 204
@@ -3959,7 +4023,11 @@
             }
         }
     });
+<<<<<<< HEAD
     var
+=======
+    var 
+>>>>>>> 43472ea4fc94afc157b178af3f7f6e1ae58a1772
 	oldCallbacks = [],
 	rjsonp = /(=)\?(?=&|$)|\?\?/;
     kimiCriss.ajaxSetup({
@@ -4026,7 +4094,11 @@
 
     kimiCriss.Callbacks = function (options) {
         options = kimiCriss.isString(options) ? createOptions(options) : kimiCriss.extend({}, options);
+<<<<<<< HEAD
         var
+=======
+        var 
+>>>>>>> 43472ea4fc94afc157b178af3f7f6e1ae58a1772
 		firing, memory, fired, locked, list = [],
 		queue = [],
 		firingIndex = -1,
@@ -4164,7 +4236,11 @@
 
     kimiCriss.extend({
         Deferred: function (callback) {
+<<<<<<< HEAD
             var
+=======
+            var 
+>>>>>>> 43472ea4fc94afc157b178af3f7f6e1ae58a1772
 			tuples = [
 				["solve", "progress", kimiCriss.Callbacks("memory"), kimiCriss.Callbacks("memory"), 2],
 				["resolve", "done", kimiCriss.Callbacks("once memory"), kimiCriss.Callbacks("once memory"), 0, "success"],
@@ -4251,7 +4327,11 @@
 			},
 			deferred = {};
             kimiCriss.each(tuples, function (tuple, i) {
+<<<<<<< HEAD
                 var
+=======
+                var 
+>>>>>>> 43472ea4fc94afc157b178af3f7f6e1ae58a1772
                 list = tuple[2],
 				stateString = tuple[5];
                 promise[tuple[1]] = list.add;
@@ -4274,7 +4354,11 @@
             return deferred;
         },
         when: function (singleValue) {
+<<<<<<< HEAD
             var
+=======
+            var 
+>>>>>>> 43472ea4fc94afc157b178af3f7f6e1ae58a1772
 			remaining = arguments.length,
 			i = remaining,
 			resolveContexts = Array(i),
