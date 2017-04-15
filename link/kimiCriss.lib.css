@@ -17,6 +17,17 @@
     line-height: 1.42857143;
 }
 
+.ui,
+.ui *
+{
+    vertical-align: middle;
+    text-decoration: none;
+    text-transform: none;
+
+    outline: 0;
+    text-shadow: none;
+}
+
 .ui *[class^='fa-']
 {
     padding-right: .25em;
@@ -53,7 +64,7 @@
 .ui.link,
 .ui.label,
 .ui.button,
-.ui.items .item,
+.ui.menu .item,
 .ui.links .link,
 .ui.labels .label,
 .ui.buttons .button
@@ -65,27 +76,72 @@
 }
 
 .ui.item,
+.ui.menu,
+.ui.link,
+.ui.label,
+.ui.button,
+.ui.items .item,
+.ui.menus .menu,
+.ui.links .link,
+.ui.labels .label,
+.ui.buttons .button
+{
+    position: relative;
+
+    padding: .375em 1em;
+
+    -webkit-transition: opacity .1s ease, background-color .1s ease, color .1s ease, box-shadow .1s ease, background .1s ease;
+            transition: opacity .1s ease, background-color .1s ease, color .1s ease, box-shadow .1s ease, background .1s ease;
+    text-align: center;
+
+    border-width: .0625em;
+    background-color: transparent;
+
+    -webkit-tap-highlight-color: transparent;
+}
+.ui.item,
+.ui.items,
+.ui.menu,
+.ui.menus,
+.ui.link,
+.ui.links,
+.ui.label,
+.ui.labels,
+.ui.button,
+.ui.buttons
+{
+    border-style: solid;
+    border-color: #c0c0c0;
+}
+.ui.items .item,
+.ui.menus .menu,
+.ui.links .link,
+.ui.labels .label,
+.ui.buttons .button
+{
+    border-style: inherit;
+    border-color: inherit;
+}
+.ui.item,
+.ui.menu,
 .ui.link,
 .ui.label,
 .ui.button
 {
     display: inline-block;
 }
-
-.ui.items .item:first-child,
-.ui.links .link:first-child,
-.ui.labels .label:first-child
+.ui.items,
+.ui.menus,
+.ui.links,
+.ui.labels,
+.ui.buttons
 {
-    border-bottom-left-radius: inherit;
-}
-.ui.items .item:last-child,
-.ui.links .link:last-child,
-.ui.labels .label:last-child
-{
-    border-top-right-radius: inherit;
-}
+    display: inline-table;
 
+    border-width: 0;
+}
 .ui.items .item,
+.ui.menus .menu,
 .ui.links .link,
 .ui.labels .label,
 .ui.buttons .button
@@ -93,31 +149,367 @@
     float: left;
 }
 
-.ui.item,
-.ui.link,
+.ui.items .item + .item,
+.ui.menus .menu + .menu,
+.ui.labels .label + .label
+{
+    border-left-width: 0;
+}
+
+.ui.items .item:first-child,
+.ui.menus .menu:first-child,
+.ui.links .link:first-child,
+.ui.labels .label:first-child
+{
+    border-bottom-left-radius: inherit;
+}
+.ui.items .item:last-child,
+.ui.menus .menu:last-child,
+.ui.links .link:last-child,
+.ui.labels .label:last-child
+{
+    border-top-right-radius: inherit;
+}
+
+.ui.menu,
 .ui.label,
+.ui.menus .menu,
+.ui.labels .label
+{
+    box-shadow: 0 .0625em .125em 0 rgba(34, 36, 38, .15);
+}
+.ui.item,
+.ui.menu,
+.ui.link,
 .ui.button,
 .ui.items .item,
+.ui.menus .menu,
 .ui.links .link,
-.ui.labels .label,
 .ui.buttons .button
 {
-    padding: .375em 1em;
-
-    -webkit-transition: opacity .1s ease, background-color .1s ease, color .1s ease, box-shadow .1s ease, background .1s ease;
-            transition: opacity .1s ease, background-color .1s ease, color .1s ease, box-shadow .1s ease, background .1s ease;
-    text-align: center;
-    vertical-align: middle;
-    text-decoration: none;
-    text-transform: none;
-
-    border: .0625em solid #c0c0c0;
-    outline: 0;
-    background-color: transparent;
-    text-shadow: none;
-
-    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
 }
+.ui.menu:hover,
+.ui.menus .menu:hover
+{
+    background-color: #f5f5f5;
+}
+
+.ui.items > .item > .ui.items,
+.ui.menus > .menu > .ui.menus
+{
+    position: absolute;
+    z-index: 2017;
+
+    display: none;
+
+    margin: auto;
+
+    border-width: .0625em;
+    background-color: #fff;
+}
+.ui.items > .item:hover > .ui.items,
+.ui.menus > .menu:hover > .ui.menus
+{
+    display: block;
+}
+.ui.items > .item:hover > .ui.items > .item,
+.ui.menus > .menu:hover > .ui.menus > .menu
+{
+  animation-name: transition-line-height;
+  -webkit-animation-duration: .2s;
+          animation-duration: .2s;
+  -webkit-animation-timing-function: ease;
+          animation-timing-function: ease;
+  -webkit-animation-iteration-count: 1;
+          animation-iteration-count: 1;
+
+  -webkit-animation-fill-mode: both;
+          animation-fill-mode: both;
+}
+@-webkit-keyframes transition-line-height
+{
+    from
+    {
+        line-height: 0;
+    }
+    to
+    {
+        line-height: inherit;
+    }
+}
+@keyframes transition-line-height
+{
+    from
+    {
+        line-height: 0;
+    }
+    to
+    {
+        line-height: inherit;
+    }
+}
+.ui.items > .item > .ui.items > .item,
+.ui.menus > .menu > .ui.menus > .menu
+{
+    width: 100%;
+
+    border-width: 0;
+    border-radius: 0;
+    box-shadow: none;
+}
+.ui.items > .item > .ui.items > .item + .item,
+.ui.menus > .menu > .ui.menus > .menu + .menu
+{
+    border-top-width: .0625em;
+}
+.ui.items > .item > .ui.items > .item:first-child,
+.ui.menus > .menu > .ui.menus > .menu:first-child
+{
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+}
+.ui.items > .item > .ui.items > .item:last-child,
+.ui.menus > .menu > .ui.menus > .menu:last-child
+{
+    border-bottom-right-radius: inherit;
+    border-bottom-left-radius: inherit;
+}
+.ui.items > .item > .ui.items > .item:after,
+.ui.menus > .menu > .ui.menus > .menu:after,
+.ui.items > .item > .ui.items > .item:before,
+.ui.menus > .menu > .ui.menus > .menu:before
+{
+    position: absolute;
+
+    width: 0;
+    height: 0;
+    margin: auto;
+
+    content: '';
+
+    border-width: 0;
+    border-style: solid;
+    border-color: transparent;
+}
+.ui.items > .item > .ui.items.towards-up,
+.ui.menus > .menu > .ui.menus.towards-up,
+.ui.items > .item > .ui.items.towards-down,
+.ui.menus > .menu > .ui.menus.towards-down
+{
+    right: -.0625em;
+    left: -.0625em;
+}
+.ui.items > .item > .ui.items.towards-up,
+.ui.menus > .menu > .ui.menus.towards-up
+{
+    bottom: 100%;
+
+    margin-bottom: .8em;
+}
+.ui.items > .item > .ui.items.towards-up > .item.last-child:after,
+.ui.menus > .menu > .ui.menus.towards-up > .menu.last-child:after,
+.ui.items > .item > .ui.items.towards-up > .item:last-child:after,
+.ui.menus > .menu > .ui.menus.towards-up > .menu:last-child:after,
+.ui.items > .item > .ui.items.towards-down > .item:first-child:after,
+.ui.menus > .menu > .ui.menus.towards-down > .menu:first-child:after,
+.ui.items > .item > .ui.items.towards-right > .item:first-child:after,
+.ui.menus > .menu > .ui.menus.towards-right > .menu:first-child:after,
+.ui.items > .item > .ui.items.towards-left > .item:first-child:after,
+.ui.menus > .menu > .ui.menus.towards-left > .menu:first-child:after
+{
+    border-width: .5em;
+}
+
+.ui.items > .item > .ui.items.towards-up > .item.last-child:before,
+.ui.menus > .menu > .ui.menus.towards-up > .menu.last-child:before,
+.ui.items > .item > .ui.items.towards-up > .item:last-child:before,
+.ui.menus > .menu > .ui.menus.towards-up > .menu:last-child:before,
+.ui.items > .item > .ui.items.towards-down > .item:first-child:before,
+.ui.menus > .menu > .ui.menus.towards-down > .menu:first-child:before,
+.ui.items > .item > .ui.items.towards-right > .item:first-child:before,
+.ui.menus > .menu > .ui.menus.towards-right > .menu:first-child:before,
+.ui.items > .item > .ui.items.towards-left > .item:first-child:before,
+.ui.menus > .menu > .ui.menus.towards-left > .menu:first-child:before
+{
+    border-width: .6em;
+}
+.ui.items > .item > .ui.items.towards-up > .item.last-child:after,
+.ui.menus > .menu > .ui.menus.towards-up > .menu.last-child:after,
+.ui.items > .item > .ui.items.towards-up > .item:last-child:after,
+.ui.menus > .menu > .ui.menus.towards-up > .menu:last-child:after,
+.ui.items > .item > .ui.items.towards-up > .item.last-child:before,
+.ui.menus > .menu > .ui.menus.towards-up > .menu.last-child:before,
+.ui.items > .item > .ui.items.towards-up > .item:last-child:before,
+.ui.menus > .menu > .ui.menus.towards-up > .menu:last-child:before,
+.ui.items > .item > .ui.items.towards-down > .item:first-child:after,
+.ui.menus > .menu > .ui.menus.towards-down > .menu:first-child:after,
+.ui.items > .item > .ui.items.towards-down > .item:first-child:before,
+.ui.menus > .menu > .ui.menus.towards-down > .menu:first-child:before
+{
+    right: 0;
+    left: 0;
+}
+.ui.items > .item > .ui.items.towards-up > .item.last-child:after,
+.ui.menus > .menu > .ui.menus.towards-up > .menu.last-child:after,
+.ui.items > .item > .ui.items.towards-up > .item:last-child:after,
+.ui.menus > .menu > .ui.menus.towards-up > .menu:last-child:after,
+.ui.items > .item > .ui.items.towards-up > .item.last-child:before,
+.ui.menus > .menu > .ui.menus.towards-up > .menu.last-child:before,
+.ui.items > .item > .ui.items.towards-up > .item:last-child:before,
+.ui.menus > .menu > .ui.menus.towards-up > .menu:last-child:before
+{
+    top: 100%;
+}
+.ui.items > .item > .ui.items.towards-up > .item.last-child:after,
+.ui.menus > .menu > .ui.menus.towards-up > .menu.last-child:after,
+.ui.items > .item > .ui.items.towards-up > .item:last-child:after,
+.ui.menus > .menu > .ui.menus.towards-up > .menu:last-child:after
+{
+    border-top-color: #fff;
+}
+.ui.items > .item > .ui.items.towards-up > .item.last-child:before,
+.ui.menus > .menu > .ui.menus.towards-up > .menu.last-child:before,
+.ui.items > .item > .ui.items.towards-up > .item:last-child:before,
+.ui.menus > .menu > .ui.menus.towards-up > .menu:last-child:before
+{
+    border-top-color: inherit;
+}
+.ui.items > .item > .ui.items.towards-down,
+.ui.menus > .menu > .ui.menus.towards-down
+{
+    top: 100%;
+
+    margin-top: .8em;
+}
+.ui.items > .item > .ui.items.towards-down > .item:first-child:after,
+.ui.menus > .menu > .ui.menus.towards-down > .menu:first-child:after,
+.ui.items > .item > .ui.items.towards-down > .item:first-child:before,
+.ui.menus > .menu > .ui.menus.towards-down > .menu:first-child:before
+{
+    bottom: 100%;
+}
+.ui.items > .item > .ui.items.towards-down > .item:first-child:after,
+.ui.menus > .menu > .ui.menus.towards-down > .menu:first-child:after
+{
+    border-bottom-color: #fff;
+}
+.ui.items > .item > .ui.items.towards-down > .item:first-child:before,
+.ui.menus > .menu > .ui.menus.towards-down > .menu:first-child:before
+{
+    border-bottom-color: inherit;
+}
+
+.ui.items > .item > .ui.items.towards-left,
+.ui.menus > .menu > .ui.menus.towards-left,
+.ui.items > .item > .ui.items.towards-right,
+.ui.menus > .menu > .ui.menus.towards-right
+{
+    top: -.0625em;
+    bottom: auto;
+}
+.ui.items > .item > .ui.items.towards-left,
+.ui.menus > .menu > .ui.menus.towards-left
+{
+    right: 100%;
+
+    margin-right: .8em;
+}
+.ui.items > .item > .ui.items.towards-right,
+.ui.menus > .menu > .ui.menus.towards-right
+{
+    left: 100%;
+
+    margin-left: .8em;
+}
+.ui.items > .item > .ui.items.towards-left > .item,
+.ui.menus > .menu > .ui.menus.towards-left > .menu,
+.ui.items > .item > .ui.items.towards-right > .item,
+.ui.menus > .menu > .ui.menus.towards-right > .menu
+{
+    word-wrap: nowrap;
+    word-break: keep-all;
+}
+.ui.items > .item > .ui.items.towards-left > .item:after,
+.ui.menus > .menu > .ui.menus.towards-left > .menu:after,
+.ui.items > .item > .ui.items.towards-left > .item:before,
+.ui.menus > .menu > .ui.menus.towards-left > .menu:before,
+.ui.items > .item > .ui.items.towards-right > .item:after,
+.ui.menus > .menu > .ui.menus.towards-right > .menu:after,
+.ui.items > .item > .ui.items.towards-right > .item:before,
+.ui.menus > .menu > .ui.menus.towards-right > .menu:before
+{
+    top: 0;
+    bottom: 0;
+}
+.ui.items > .item > .ui.items.towards-right > .item:first-child:after,
+.ui.menus > .menu > .ui.menus.towards-right > .menu:first-child:after,
+.ui.items > .item > .ui.items.towards-right > .item:first-child:before,
+.ui.menus > .menu > .ui.menus.towards-right > .menu:first-child:before
+{
+    right: 100%;
+}
+.ui.items > .item > .ui.items.towards-right > .item:first-child:after,
+.ui.menus > .menu > .ui.menus.towards-right > .menu:first-child:after
+{
+    border-right-color: #fff;
+}
+.ui.items > .item > .ui.items.towards-right > .item:first-child:before,
+.ui.menus > .menu > .ui.menus.towards-right > .menu:first-child:before
+{
+    border-right-color: inherit;
+}
+.ui.items > .item > .ui.items.towards-left > .item:first-child:after,
+.ui.menus > .menu > .ui.menus.towards-left > .menu:first-child:after,
+.ui.items > .item > .ui.items.towards-left > .item:first-child:before,
+.ui.menus > .menu > .ui.menus.towards-left > .menu:first-child:before
+{
+    left: 100%;
+}
+.ui.items > .item > .ui.items.towards-left > .item:first-child:after,
+.ui.menus > .menu > .ui.menus.towards-left > .menu:first-child:after
+{
+    border-left-color: #fff;
+}
+.ui.items > .item > .ui.items.towards-left > .item:first-child:before,
+.ui.menus > .menu > .ui.menus.towards-left > .menu:first-child:before
+{
+    border-left-color: inherit;
+}
+.ui.items.vertical,
+.ui.menus.vertical
+{
+    display: inline-block;
+
+    width: 15.75em;
+}
+.ui.items.vertical .item,
+.ui.menus.vertical .menu
+{
+    display: block;
+    float: none !important;
+
+    text-align: left;
+}
+.ui.items.vertical .item + .item,
+.ui.menus.vertical .menu + .menu
+{
+    border-top-width: 0;
+    border-left-width: .0625em;
+}
+.ui.items.vertical .item:first-child,
+.ui.menus.vertical .menu:first-child
+{
+    border-top-right-radius: inherit;
+    border-bottom-left-radius: 0;
+}
+.ui.items.vertical .item:last-child,
+.ui.menus.vertical .menu:last-child
+{
+    border-top-right-radius: 0;
+    border-bottom-left-radius: inherit;
+}
+
 .ui.link,
 .ui.links .link
 {
@@ -143,6 +535,63 @@
 {
     margin-left: .5em;
 }
+
+.ui.link,
+.ui.links .link
+{
+    position: relative;
+    z-index: 0;
+
+    overflow: hidden;
+
+    color: #428bca;
+}
+
+.ui.link:hover,
+.ui.links .link:hover,
+.ui.link:focus,
+.ui.links .link:focus
+{
+    color: #2a6496;
+}
+.ui.link:before,
+.ui.links .link:before
+{
+    position: absolute;
+    top: auto;
+    right: 0;
+    bottom: .0625em;
+    left: 0;
+
+    width: 0;
+    height: 0;
+    margin: auto;
+
+    content: '';
+    -webkit-transition: width .2s; /* Safari 和 Chrome */
+       -moz-transition: width .2s; /* Firefox 4 */
+         -o-transition: width .2s; /* Opera */
+            transition: width .2s; /* IE */
+
+    border-bottom: .0625em solid #2a6496;
+
+    -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+}
+
+.ui.link:hover:before,
+.ui.links .link:hover:before
+{
+    width: 100%;
+}
+.ui.link[href^='#']:before,
+.ui.link[href^='javascript:']:before,
+.ui.links .link[href^='#']:before,
+.ui.links .link[href^='javascript:']:before
+{
+    display: none;
+}
+
 .ui.button.submit,
 .ui.buttons > .button.submit
 {
@@ -175,60 +624,4 @@
 {
     border-color: #e0e0e0;
     background-color: #f5f5f5;
-}
-
-.ui.link,
-.ui.links .link
-{
-    position: relative;
-    z-index: 0;
-
-    overflow: hidden;
-
-    color: #428bca;
-}
-.ui.link:hover,
-.ui.links .link:hover,
-.ui.link:focus,
-.ui.links .link:focus
-{
-    color: #2a6496;
-}
-.ui.link::before,
-.ui.links .link::before
-{
-    position: absolute;
-    top: auto;
-    bottom: .0625em;
-    left: 0;
-
-    width: 100%;
-    height: 0;
-
-    content: '';
-    -webkit-transition: all .2s;
-            transition: all .2s;
-    -webkit-transform: scaleX(0);
-            transform: scaleX(0);
-
-    border-bottom: .0625em solid #2a6496;
-
-    -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-}
-
-.ui.link:hover::before,
-.ui.links .link:hover::before
-{
-    -webkit-transform: scaleX(1);
-            transform: scaleX(1);
-
-    background-color: #2c76bf;
-}
-.ui.link[href^='#']::before,
-.ui.link[href^='javascript:']::before,
-.ui.links .link[href^='#']::before,
-.ui.links .link[href^='javascript:']::before
-{
-    display: none;
 }

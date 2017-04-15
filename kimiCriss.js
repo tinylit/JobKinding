@@ -1,6 +1,5 @@
 (function (window) {
     var version = "1.1.1";
-
     var arr = [];
     var push = arr.push;
     var slice = arr.slice;
@@ -143,7 +142,7 @@
     }
     kimiCriss.fn.init.prototype = kimiCriss.fn;
 
-    var 
+    var
 	extendCallbak = function (value) {
 	    return value;
 	},
@@ -256,7 +255,7 @@
         class2type["[object " + item + "]"] = item.toLowerCase();
     });
 
-    var 
+    var
 	rmsPrefix = /^-ms-/,
 	rdashAlpha = /-([\da-z])/gi,
 	rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,
@@ -307,7 +306,7 @@
         merge: function (arr, arr2) {
             arr = arr || [];
             if (arr2) {
-                var 
+                var
                 i = 0,
                 len = arr.length,
                 len2 = arr2.length;
@@ -840,12 +839,12 @@
             }
             return cache;
         }
-        var 
+        var
         classCache = createCache(),
 	    tokenCache = createCache(),
 	    compilerCache = createCache();
 
-        var 
+        var
         characterEncoding = "(?:\\\\.|[\\w-]|[^\\x00-\\xa0])+",
         identifier = characterEncoding.replace("w", "w#"),
         attributes = "\\[" + whitespace + "*(" + identifier + ")(?:" + whitespace +
@@ -1578,7 +1577,7 @@
 
     })(support);
 
-    var 
+    var
     rclickable = /^(?:a|area)$/i,
     rnotwhite = (/[^\x20\t\r\n\f]+/g),
     rfocusable = /^(?:input|select|textarea|button|object)$/i;
@@ -1875,7 +1874,7 @@
         }
     });
 
-    var 
+    var
     cssShow = { position: "absolute", visibility: "hidden", display: "block" },
 	cssNormalTransform = {
 	    letterSpacing: 0,
@@ -1901,7 +1900,7 @@
     }
     if (!support.opacity) {
 
-        var 
+        var
         ralpha = /alpha\([^)]*\)/i,
 	    ropacity = /opacity\s*=\s*([^)]*)/;
 
@@ -2110,7 +2109,7 @@
         domManip: function (args, callback) {
             args = concat.apply([], args);
             var node, first, length, fragment, scripts;
-            var 
+            var
             i = 0,
             len = this.length,
             value = args[0],
@@ -2223,7 +2222,7 @@
         }
     });
 
-    var 
+    var
     rvalidchars = /^[\],:{}\s]*$/,
 	rvalidbraces = /(?:^|:|,)(?:\s*\[)+/g,
 	rvalidescape = /\\(?:["\\\/bfnrt]|u[\da-fA-F]{4})/g,
@@ -2805,7 +2804,7 @@
         }
     };
 
-    var 
+    var
 	rkeyEvent = /^key/,
 	rmouseEvent = /^(?:mouse|contextmenu)|click|dblclick/,
 	rfocusMorph = /^(?:focusinfocus|focusoutblur)$/,
@@ -3263,7 +3262,7 @@
     });
 
 
-    var 
+    var
 	nonce = +(new Date()),
 	location = window.location,
 	rquery = (/\?/),
@@ -3309,7 +3308,7 @@
         return s.join("&");
     };
 
-    var 
+    var
 	r20 = /%20/g,
 	rhash = /#.*$/,
 	rantiCache = /([?&])_=[^&]*/,
@@ -3530,7 +3529,7 @@
             }
             options = options || {};
 
-            var 
+            var
 			transport,
 			cacheURL,
 			responseHeadersString,
@@ -3809,7 +3808,7 @@
             return new window.XMLHttpRequest();
         } catch (e) { }
     };
-    var 
+    var
 	xhrSuccessStatus = {
 	    0: 200,
 	    1223: 204
@@ -3960,7 +3959,7 @@
             }
         }
     });
-    var 
+    var
 	oldCallbacks = [],
 	rjsonp = /(=)\?(?=&|$)|\?\?/;
     kimiCriss.ajaxSetup({
@@ -4027,7 +4026,7 @@
 
     kimiCriss.Callbacks = function (options) {
         options = kimiCriss.isString(options) ? createOptions(options) : kimiCriss.extend({}, options);
-        var 
+        var
 		firing, memory, fired, locked, list = [],
 		queue = [],
 		firingIndex = -1,
@@ -4165,7 +4164,7 @@
 
     kimiCriss.extend({
         Deferred: function (callback) {
-            var 
+            var
 			tuples = [
 				["solve", "progress", kimiCriss.Callbacks("memory"), kimiCriss.Callbacks("memory"), 2],
 				["resolve", "done", kimiCriss.Callbacks("once memory"), kimiCriss.Callbacks("once memory"), 0, "success"],
@@ -4252,7 +4251,7 @@
 			},
 			deferred = {};
             kimiCriss.each(tuples, function (tuple, i) {
-                var 
+                var
                 list = tuple[2],
 				stateString = tuple[5];
                 promise[tuple[1]] = list.add;
@@ -4275,7 +4274,7 @@
             return deferred;
         },
         when: function (singleValue) {
-            var 
+            var
 			remaining = arguments.length,
 			i = remaining,
 			resolveContexts = Array(i),
