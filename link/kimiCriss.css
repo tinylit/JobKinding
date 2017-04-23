@@ -58,6 +58,10 @@ textarea
 
     outline: 0;
 }
+select
+{
+    -webkit-appearance: none; /*for chrome*/
+}
 
 input::-ms-clear,
 textarea::-ms-clear

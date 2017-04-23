@@ -44,26 +44,9 @@
 			kimiCriss(".ui.menu.vertical:has(.item + .ui.menu) > .item").click(function() {
 				kimiCriss(this).toggleClass("selected");
 			});
-			kimiCriss('.selection').each(function(elem) {
-				var comBox = kimiCriss('> input, > .text', this);
-				comBox.click(function() {
-					kimiCriss(this.parentNode).addClass('active');
-				}).nextAll('.fa').click(function() {
-					kimiCriss(this.parentNode).toggleClass('active');
-				}).nextAll('.select').find(".option").click(function() {
-					kimiCriss('.option', this.parentNode).removeClass('selected');
-					kimiCriss(this).addClass('selected')
-					comBox.val(kimiCriss(this).attr('data-value'));
-					comBox.text(kimiCriss(this).attr('data-value'));
-					kimiCriss(elem).removeClass('active');
-				});
-				var comBoxEl = comBox.get(0);
-				kimiCriss(document).click(function(e) {
-					if ($.contains(elem, e.targetEl)) {
-						return false;
-					}
-					$(elem).removeClass('active');
-				});
+			kimiCriss(".ui.input > input + .ui.select").prev().css("border-right-width", 0);
+			kimiCriss(".ui.select > .select").hover("visible").find(" > .option").click(function(e) {
+				kimiCriss(this.parentNode).removeClass("visible").prevAll("input.ui.input").val(kimiCriss(this).text());
 			});
 		});
 	</script>
@@ -82,9 +65,9 @@
 	<div class="row-wrap">
 		<div class="ui label">label</div>
 		<div class="ui labels">
-			<div class="label">label-1</div>
+			<div class="label convex concave">label-1</div>
 			<div class="label">label-2</div>
-			<div class="label">label-3</div>
+			<div class="label concave">label-3</div>
 			<div class="label">label-4</div>
 			<div class="label">label-5</div>
 		</div>
@@ -93,11 +76,11 @@
 	<div class="row-wrap">
 		<div class="ui item">菜单</div>
 		<div class="ui menu transition">
-			<div class="item">菜单-1
+			<div class="item">菜单-10
 				<div class="ui menu transition towards-up">
 					<div class="item">子菜单-1
 						<div class="ui menu transition towards-right">
-							<div class="item">三级菜单-1
+							<div class="item">三级菜单-10
 								<div class="ui menu transition towards-down">
 									<div class="item">四级菜单-1</div>
 									<div class="item">四级菜单-2</div>
@@ -246,19 +229,19 @@
 	</div>
 	<div class="row-wrap">
 		<div class="ui check">
-			<input type="checked" />
-			<i class="label"></i><label></label>
-		</div>
-		<div class="ui check checked">
 			<input type="checkbox" />
 			<i class="label"></i><label></label>
 		</div>
 		<div class="ui check">
-			<input type="checked" />
+			<input type="checkbox" checked="checked" />
+			<i class="label"></i><label></label>
+		</div>
+		<div class="ui check">
+			<input type="checkbox" />
 			<i class="label"></i><label>复选框</label>
 		</div>
 		<div class="ui check checked">
-			<input type="checkbox" />
+			<input type="checkbox" checked="checked" />
 			<i class="label"></i><label>复选框</label>
 		</div>
 		<div class="ui check">
@@ -266,16 +249,16 @@
 			<i class="label"></i><label></label>
 		</div>
 		<div class="ui check checked">
-			<input type="radio" />
+			<input type="radio" checked="checked" />
 			<i class="label"></i><label></label>
-			<div class="ui check">
-				<input type="radio" />
-				<i class="label"></i><label>单选框</label>
-			</div>
-			<div class="ui check checked">
-				<input type="radio" />
-				<i class="label"></i><label>单选框</label>
-			</div>
+		</div>
+		<div class="ui check">
+			<input type="radio" />
+			<i class="label"></i><label>单选框</label>
+		</div>
+		<div class="ui check checked">
+			<input type="radio" checked="checked" />
+			<i class="label"></i><label>单选框</label>
 		</div>
 	</div>
 	<div class="row-wrap">
@@ -286,7 +269,7 @@
 	</div>
 	<div class="row-wrap">
 		<div class="ui input">
-			<div class="ui label"><i class="fa-user"></i></div>
+			<div class="ui label convex"><i class="fa-user"></i></div>
 			<input type="text">
 		</div>
 		<div class="ui input">
@@ -334,6 +317,97 @@
 				<div class="label"><i class="fa-user"></i></div>
 				<div class="label"><i class="fa-glass"></i></div>
 			</div>
+		</div>
+	</div>
+	<div class="row-wrap">
+		<div class="ui select">
+			<input class="ui input" type="text" value="">
+			<div class="select transition">
+				<div class="option">选择项-1</div>
+				<div class="option">选择项-2</div>
+				<div class="option">选择项-3</div>
+				<div class="option">选择项-4</div>
+				<div class="option">选择项-5</div>
+			</div>
+			<i class="fa-sort"></i>
+		</div>
+		<div class="ui select towards-up">
+			<select class="ui input"></select>
+			<input type="text" class="ui input"></input>
+			<div class="select transition">
+				<div class="option">选择项-1</div>
+				<div class="option">选择项-2</div>
+				<div class="option">选择项-3</div>
+				<div class="option">选择项-4</div>
+				<div class="option">选择项-5</div>
+			</div>
+			<i class="fa-sort"></i>
+		</div>
+	</div>
+	<div class="row-wrap">
+		<div class="ui input">
+			<div class="ui select">
+				<select class="ui input"></select>
+				<input type="text" class="ui input" value="树倒猢狲散看比赛的代表队圣彼得堡是不是代表的代表队">
+				<div class="select">
+					<div class="option">测试-1</div>
+					<div class="option">测试-2</div>
+					<div class="option">测试-3</div>
+					<div class="option">测试-4</div>
+					<div class="option">测试-5</div>
+				</div>
+				<i class="fa-sort"></i>
+			</div>
+			<input type="text">
+		</div>
+		<div class="ui input">
+			<input type="text" />
+			<div class="ui select">
+				<select class="ui input"></select>
+				<input class="ui input">
+				<div class="select">
+					<div class="option">测试-1</div>
+					<div class="option">测试-2</div>
+					<div class="option">测试-3</div>
+					<div class="option">测试-4</div>
+					<div class="option">测试-5</div>
+				</div>
+				<i class="fa-sort"></i>
+			</div>
+		</div>
+	</div>
+	<div class="row-wrap">
+		<div class="ui input">
+			<div class="ui label"><i class="fa-glass"></i></div>
+			<input type="text" />
+			<div class="ui select">
+				<input class="ui input">
+				<div class="select">
+					<div class="option">测试-1</div>
+					<div class="option">测试-2</div>
+					<div class="option">测试-3</div>
+					<div class="option">测试-4</div>
+					<div class="option">测试-5</div>
+				</div>
+				<i class="fa-sort"></i>
+			</div>
+			<div class="ui label"><i class="fa-clock-o"></i></div>
+		</div>
+		<div class="ui input">
+			<div class="ui label"><i class="fa-glass"></i></div>
+			<div class="ui select">
+				<input class="ui input">
+				<div class="select">
+					<div class="option">测试-1</div>
+					<div class="option">测试-2</div>
+					<div class="option">测试-3</div>
+					<div class="option">测试-4</div>
+					<div class="option">测试-5</div>
+				</div>
+				<i class="fa-sort"></i>
+			</div>
+			<input type="text" />
+			<div class="ui label"><i class="fa-clock-o"></i></div>
 		</div>
 	</div>
 </body>
