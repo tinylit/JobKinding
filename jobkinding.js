@@ -1,11 +1,11 @@
-(function (window) {
+(function(window) {
     var version = "1.1.1";
 
     var arr = [];
     var push = arr.push;
     var slice = arr.slice;
     var concat = arr.concat;
-    var indexOf = arr.indexOf || function (item, i) {
+    var indexOf = arr.indexOf || function(item, i) {
         var len = this.length || -1;
         i = i ? i < 0 ? Math.max(0, len + i) : i : 0;
         for (; i < len; i++) {
@@ -21,11 +21,11 @@
     var toString = class2type.toString;
     var hasOwn = class2type.hasOwnProperty;
 
-    var isArraylike = function (data) {
+    var isArraylike = function(data) {
         var len, type;
         return !(!data || data.window === data) && ((len = data.length) && data.nodeType === 1 || ((type = jobKinding.type(data)) === "array") || type === "string" || (type !== "function") && (len === 0 || typeof len === "number" && len > 0 && (len - 1) in data));
     };
-    var jobKinding = function (selector, context) {
+    var jobKinding = function(selector, context) {
         return new jobKinding.fn.init(selector, context);
     };
 
@@ -34,29 +34,29 @@
         constructor: jobKinding,
         selector: "",
         length: 0,
-        eq: function (i) {
+        eq: function(i) {
             i = i ? i < 0 ? +i + this.length : +i : 0;
             return this.pushStack((i in this) ? [this[i]] : []);
         },
-        get: function (i) {
+        get: function(i) {
             return i == null ? this.toArray() : this[i < 0 ? +i + this.length : i];
         },
-        first: function () {
+        first: function() {
             return this.eq(0);
         },
-        last: function () {
+        last: function() {
             return this.eq(-1);
         },
         push: push,
         sort: arr.sort,
-        indexOf: function (elem, i) {
+        indexOf: function(elem, i) {
             if (elem) {
                 var type = jobKinding.type(elem);
                 if (type === "string") {
                     var kimi = jobKinding(elem);
                     if (kimi.length > 1) {
                         type = "function";
-                        elem = function (elem) {
+                        elem = function(elem) {
                             return indexOf.call(kimi, elem, i) > -1;
                         };
                     } else {
@@ -75,17 +75,17 @@
             }
             return -1;
         },
-        slice: function () {
+        slice: function() {
             return this.pushStack(slice.apply(this, arguments));
         },
-        toArray: function () {
+        toArray: function() {
             return slice.call(this);
         }
     };
     var root;
     var rsingleTag = /^<(\w+)\s*\/?>(?:<\/\1>|)$/;
     var rquickExpr = /^(?:(<[\w\W]+>)[^>]*|#([\w-]*))$/;
-    jobKinding.fn.init = function (selector, context) {
+    jobKinding.fn.init = function(selector, context) {
         if (!selector) {
             return this;
         }
@@ -147,19 +147,19 @@
     }
     jobKinding.fn.init.prototype = jobKinding.fn;
 
-    var 
-    extendCallbak = function (value) {
-        return value;
-    },
-    improveCallbak = function (value, key, options) {
-        return options[key] == null ? value : options[key];
-    };
-    jobKinding.extension = function (args, callback) {
+    var
+        extendCallbak = function(value) {
+            return value;
+        },
+        improveCallbak = function(value, key, options) {
+            return options[key] == null ? value : options[key];
+        };
+    jobKinding.extension = function(args, callback) {
         var isArray, key, value, isTraverse = false,
-      configs, options, i = 1,
-      len = args.length,
-      target = args[0],
-      type = jobKinding.type(target);
+            configs, options, i = 1,
+            len = args.length,
+            target = args[0],
+            type = jobKinding.type(target);
         if (type === "boolean") {
             isTraverse = target;
             target = args[i++] || {};
@@ -172,7 +172,7 @@
             target = this;
             i--;
         }
-        var setConfigs = function (key) {
+        var setConfigs = function(key) {
             value = options[key];
             configs = target[key];
             if (!(value === configs || value === undefined)) {
@@ -201,19 +201,19 @@
         }
         return target;
     };
-    jobKinding.fn.extend = jobKinding.extend = function () {
+    jobKinding.fn.extend = jobKinding.extend = function() {
         return jobKinding.extension.call(this, arguments, extendCallbak);
     };
-    jobKinding.fn.improve = jobKinding.improve = function () {
+    jobKinding.fn.improve = jobKinding.improve = function() {
         return jobKinding.extension.call(this, arguments, extendCallbak);
     };
 
-    jobKinding.type = function (obj) {
+    jobKinding.type = function(obj) {
         return obj == null ? String(obj) : typeof obj === "object" || typeof obj === "function" ? class2type[toString.call(obj)] || "object" : typeof obj;
     };
 
     jobKinding.extend({
-        each: function (data, iterator, context) {
+        each: function(data, iterator, context) {
             if (iterator) {
                 var i = 0;
                 if (isArraylike(data)) {
@@ -232,11 +232,11 @@
             }
             return data;
         },
-        map: function (data, iterator, arg) {
+        map: function(data, iterator, arg) {
             var arr = [];
             if (iterator) {
                 var i = 0,
-          value;
+                    value;
                 if (isArraylike(data)) {
                     for (var len = data.length; i < len; i++) {
                         value = iterator.call(data, data[i], i, arg);
@@ -257,43 +257,43 @@
         }
     });
 
-    jobKinding.each(["Boolean", "Number", "String", "Function", "Array", "Date", "RegExp", "Object", "Error"], function (item) {
+    jobKinding.each(["Boolean", "Number", "String", "Function", "Array", "Date", "RegExp", "Object", "Error"], function(item) {
         class2type["[object " + item + "]"] = item.toLowerCase();
     });
 
-    var 
-    rmsPrefix = /^-ms-/,
-    rdashAlpha = /-([\da-z])/gi,
-    rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,
-    rxhtmlTag = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([a-z][^\/\0>\x20\t\r\n\f]*)[^>]*)\/>/gi,
-    fcamelCase = function (all, letter) {
-        return letter.toUpperCase();
-    };
+    var
+        rmsPrefix = /^-ms-/,
+        rdashAlpha = /-([\da-z])/gi,
+        rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,
+        rxhtmlTag = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([a-z][^\/\0>\x20\t\r\n\f]*)[^>]*)\/>/gi,
+        fcamelCase = function(all, letter) {
+            return letter.toUpperCase();
+        };
     jobKinding.extend({
-        trim: function (str) {
+        trim: function(str) {
             return str == null ? "" : str.replace(rtrim, '');
         },
-        camelCase: function (str) {
+        camelCase: function(str) {
             return str == null ? "" : String(str).replace(rmsPrefix, "ms-").replace(rdashAlpha, fcamelCase);
         },
-        htmlPrefilter: function (html) {
+        htmlPrefilter: function(html) {
             return html.replace(rxhtmlTag, "<$1></$2>");
         }
     });
 
     jobKinding.extend({
-        error: function (msg) {
+        error: function(msg) {
             throw new Error(msg);
         },
-        syntaxError: window.SyntaxError ? function (msg) {
+        syntaxError: window.SyntaxError ? function(msg) {
             throw new SyntaxError("Unrecognized expression: " + msg);
-        } : function (msg) {
+        } : function(msg) {
             throw new Error("Syntax error, unrecognized expression: " + msg);
         }
     });
 
     jobKinding.extend({
-        grep: function (array, callback, inv) {
+        grep: function(array, callback, inv) {
             if (callback) {
                 var val, arr = [];
                 if (array) {
@@ -309,13 +309,13 @@
             }
             return array;
         },
-        merge: function (arr, arr2) {
+        merge: function(arr, arr2) {
             arr = arr || [];
             if (arr2) {
-                var 
-          i = 0,
-          len = arr.length,
-          len2 = arr2.length;
+                var
+                    i = 0,
+                    len = arr.length,
+                    len2 = arr2.length;
                 if (typeof len2 === "number") {
                     while (i < len2) {
                         arr[len++] = arr2[i++];
@@ -329,7 +329,7 @@
             }
             return arr;
         },
-        makeArray: function (arr, results) {
+        makeArray: function(arr, results) {
             results = results || [];
             if (arr != null) {
                 if (isArraylike(arr)) {
@@ -340,35 +340,35 @@
             }
             return results;
         },
-        indexOfArray: function (item, arr, i) {
+        indexOfArray: function(item, arr, i) {
             return arr == null ? -1 : indexOf.call(arr, item, i);
         }
     });
 
     jobKinding.extend({
-        isNumber: function (num) {
+        isNumber: function(num) {
             return isFinite(num) && !isNaN(parseFloat(num));
         },
-        isString: function (str) {
+        isString: function(str) {
             return jobKinding.type(str) === "string";
         },
-        isWindow: function (window) {
+        isWindow: function(window) {
             return window.window === window;
         },
-        isFunction: function (fn) {
+        isFunction: function(fn) {
             return jobKinding.type(fn) === "function";
         },
-        isArray: Array.isArray || function (arr) {
+        isArray: Array.isArray || function(arr) {
             return jobKinding.type(arr) === "array";
         },
-        isEmptyObject: function (obj) {
+        isEmptyObject: function(obj) {
             var i;
             for (i in obj) {
                 return false;
             }
             return true;
         },
-        isPlainObject: function (obj) {
+        isPlainObject: function(obj) {
             if (!obj || jobKinding.type(obj) !== "object" || obj.nodeType || jobKinding.isWindow(obj)) {
                 return false;
             }
@@ -382,14 +382,14 @@
             }
 
             var key;
-            for (key in obj) { }
+            for (key in obj) {}
 
             return key === undefined || hasOwn.call(obj, key);
         }
     });
 
     jobKinding.extend({
-        nodeName: function (elem, tag) {
+        nodeName: function(elem, tag) {
             return elem && elem.nodeName && (!tag || tag === "*" || elem.nodeName.toLowerCase() === tag.toLowerCase());
         }
     });
@@ -397,7 +397,7 @@
     jobKinding.extend({
         propHooks: {
             tabIndex: {
-                get: function (elem) {
+                get: function(elem) {
                     var attr = elem.getAttributeNode("tabindex");
                     return attr && attr.specified ? parseInt(attr.value, 10) : rfocusable.test(elem.nodeName) || rclickable.test(elem.nodeName) && elem.href ? 0 : undefined;
                 }
@@ -419,7 +419,7 @@
         },
         attrHooks: {
             type: {
-                set: function (elem, value) {
+                set: function(elem, value) {
                     if (!support.radioValue && value === "radio" && jobKinding.nodeName(elem, "input")) {
                         var val = elem.value;
                         elem.setAttribute("type", value);
@@ -433,7 +433,7 @@
         }
     });
 
-    var getStyles = function (elem) {
+    var getStyles = function(elem) {
         var view = elem.ownerDocument.defaultView;
         if (!view || !view.opener) {
             view = window;
@@ -445,7 +445,7 @@
 
     function curCSS(elem, name, computed) {
         var width, minWidth, maxWidth, val,
-      style = elem.style;
+            style = elem.style;
         computed = computed || getStyles(elem);
         if (computed) {
             val = computed.getPropertyValue(name) || computed[name];
@@ -471,7 +471,7 @@
     jobKinding.extend({
         cssHooks: {
             opacity: {
-                get: function (elem, computed) {
+                get: function(elem, computed) {
                     if (computed) {
                         var val = curCSS(elem, "opacity");
                         return val === "" ? "1" : val;
@@ -500,9 +500,9 @@
     });
 
     var rdisplayswap = /^(none|table(?!-c[ea]).+)/;
-    jobKinding.each(["height", "width"], function (name) {
+    jobKinding.each(["height", "width"], function(name) {
         jobKinding.cssHooks[name] = {
-            get: function (elem, computed, extra) {
+            get: function(elem, computed, extra) {
                 if (computed) {
                     var val = elem["offset" + name.charAt(0).toUperCase() + name.slice(1)];
                     if (val <= 0 || val == null) {
@@ -524,7 +524,7 @@
     var whitespace = "[\\x20\\t\\r\\n\\f]";
     var booleans = "checked|selected|async|autofocus|autoplay|controls|defer|disabled|hidden|ismap|loop|multiple|open|readonly|required|scoped";
     var rbooleans = new RegExp("^(?:" + booleans + ")$", "i");
-    (function (support) {
+    (function(support) {
         function assert(fn, tag) {
             var el = document.createElement(tag || "fieldset");
             try {
@@ -538,7 +538,7 @@
                 el = null;
             }
         }
-        support.getElementsByTagName = assert(function (el) {
+        support.getElementsByTagName = assert(function(el) {
             el.appendChild(document.createComment(""));
             return !el.getElementsByTagName("*").length;
         });
@@ -548,30 +548,30 @@
 
         var expando = "tag" + (+new Date());
         var docElem = document.documentElement;
-        support.getElementById = assert(function (el) {
+        support.getElementById = assert(function(el) {
             docElem.appendChild(el).id = expando;
             return !document.getElementsByName || !document.getElementsByName(expando).length;
         });
 
-        assert(function (input) {
+        assert(function(input) {
             var select = document.createElement("select"),
-        option = select.appendChild(document.createElement("option"));
+                option = select.appendChild(document.createElement("option"));
 
             input.type = "checkbox";
             support.checkOn = input.value !== "";
             support.optionSelected = option.selected;
         }, "input");
 
-        assert(function (input) {
+        assert(function(input) {
             input = document.createElement("input");
             input.value = "t";
             input.type = "radio";
             support.radioValue = input.value === "t";
         }, "input");
 
-        assert(function (div) {
+        assert(function(div) {
             var fragment = document.createDocumentFragment(),
-        input = document.createElement("input");
+                input = document.createElement("input");
             div = fragment.appendChild(div);
             input.setAttribute("type", "radio");
             input.setAttribute("checked", "checked");
@@ -584,7 +584,7 @@
 
         }, "div");
 
-        assert(function (div) {
+        assert(function(div) {
             div.style.cssText = "top:1px;float:left;opacity:.5";
             support.style = /top/.test(div.getAttribute("style"));
             support.opacity = /^0.5/.test(div.style.opacity);
@@ -592,7 +592,7 @@
             support.cloneEvent = true;
             if (div.attachEvent) {
                 support.cloneEvent = false;
-                div.attachEvent("onclick", function () {
+                div.attachEvent("onclick", function() {
                     support.cloneEvent = true;
                 });
                 div.cloneNode(true).click();
@@ -604,21 +604,21 @@
 
         }, "div");
 
-        assert(function (div) {
+        assert(function(div) {
             div.innerHTML = "  ";
             support.leadingWhitespace = div.firstChild.nodeType === 3;
         }, "div")
 
-        support.html5Clone = assert(function (nav) {
+        support.html5Clone = assert(function(nav) {
             return nav.cloneNode(true).outerHTML !== "<:nav></:nav>";
         }, "nav");
 
-        if (assert(function (input) {
-            input.setAttribute("value", "");
-            return input.getAttribute("value") === "";
-        }, "input")) {
+        if (assert(function(input) {
+                input.setAttribute("value", "");
+                return input.getAttribute("value") === "";
+            }, "input")) {
             jobKinding.attrHooks["value"] = {
-                get: function (elem) {
+                get: function(elem) {
                     if (elem.nodeName.toLowerCase() === "input") {
                         return elem.defaultValue;
                     }
@@ -630,10 +630,10 @@
         var rbuggyQSA = [];
         var rbuggyMatches = [];
         if ((support.qsa = rnative.test(document.querySelectorAll))) {
-            assert(function (el) {
+            assert(function(el) {
                 docElem.appendChild(el).innerHTML = "<a id='" + expando + "'></a>" +
-          "<select id='" + expando + "-\r\\' msallowcapture=''>" +
-          "<option selected=''></option></select>";
+                    "<select id='" + expando + "-\r\\' msallowcapture=''>" +
+                    "<option selected=''></option></select>";
                 if (el.querySelectorAll("[msallowcapture^='']").length) {
                     rbuggyQSA.push("[*^$]=" + whitespace + "*(?:''|\"\")");
                 }
@@ -652,9 +652,9 @@
                 }
             });
 
-            assert(function (el) {
+            assert(function(el) {
                 el.innerHTML = "<a href='' disabled='disabled'></a>" +
-          "<select disabled='disabled'><option/></select>";
+                    "<select disabled='disabled'><option/></select>";
                 var input = document.createElement("input");
                 input.setAttribute("type", "hidden");
                 el.appendChild(input).setAttribute("name", "D");
@@ -674,7 +674,7 @@
         }
 
         if ((support.matchesSelector = rnative.test((matches = docElem.matches || docElem.webkitMatchesSelector || docElem.mozMatchesSelector || docElem.oMatchesSelector || docElem.msMatchesSelector)))) {
-            assert(function (el) {
+            assert(function(el) {
                 support.disconnectedMatch = matches.call(el, "*");
                 matches.call(el, "[s!='']:x");
                 rbuggyMatches.push("!=", pseudos);
@@ -686,28 +686,28 @@
         var hasCompare = rnative.test(docElem.compareDocumentPosition);
 
         var contains = hasCompare || rnative.test(docElem.contains) ?
-      function (a, b) {
-          var adown = a.nodeType === 9 ? a.documentElement : a,
-          bup = b && b.parentNode;
-          return a === bup || !!(bup && bup.nodeType === 1 && (
-          adown.contains ?
-          adown.contains(bup) :
-          a.compareDocumentPosition && a.compareDocumentPosition(bup) & 16
-        ));
-      } : function (a, b) {
-          if (b) {
-              while ((b = b.parentNode)) {
-                  if (b === a) {
-                      return true;
-                  }
-              }
-          }
-          return false;
-      };
+            function(a, b) {
+                var adown = a.nodeType === 9 ? a.documentElement : a,
+                    bup = b && b.parentNode;
+                return a === bup || !!(bup && bup.nodeType === 1 && (
+                    adown.contains ?
+                    adown.contains(bup) :
+                    a.compareDocumentPosition && a.compareDocumentPosition(bup) & 16
+                ));
+            } : function(a, b) {
+                if (b) {
+                    while ((b = b.parentNode)) {
+                        if (b === a) {
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            };
 
         function siblingCheck(a, b) {
             var cur = b && a,
-        diff = cur && a.nodeType === 1 && b.nodeType === 1 && a.sourceIndex - b.sourceIndex;
+                diff = cur && a.nodeType === 1 && b.nodeType === 1 && a.sourceIndex - b.sourceIndex;
 
             if (diff) {
                 return diff;
@@ -723,78 +723,78 @@
         }
 
         var hasDuplicate;
-        var sortOrder = function (a, b) {
+        var sortOrder = function(a, b) {
             if (a === b) {
                 hasDuplicate = true;
             }
             return 0;
         };
         support.sortStable = expando.split("").sort(sortOrder).join("") === expando;
-        support.sortDetached = assert(function (el) {
+        support.sortDetached = assert(function(el) {
             return el.compareDocumentPosition(document.createElement("fieldset")) & 1;
         });
         support.detectDuplicates = !!hasDuplicate;
         sortOrder = hasCompare ?
-      function (a, b) {
-          if (a === b) {
-              hasDuplicate = true;
-              return 0;
-          }
-          var compare = !a.compareDocumentPosition - !b.compareDocumentPosition;
-          if (compare) {
-              return compare;
-          }
-          compare = (a.ownerDocument || a) === (b.ownerDocument || b) ? a.compareDocumentPosition(b) : 1;
-          if (compare & 1 ||
-          (!support.sortDetached && b.compareDocumentPosition(a) === compare)) {
-              if (a === document || a.ownerDocument === document && contains(document, a)) {
-                  return -1;
-              }
-              if (b === document || b.ownerDocument === document && contains(document, b)) {
-                  return 1;
-              }
-              return sortInput ? (indexOf.call(sortInput, a) - indexOf.call(sortInput, b)) : 0;
-          }
+            function(a, b) {
+                if (a === b) {
+                    hasDuplicate = true;
+                    return 0;
+                }
+                var compare = !a.compareDocumentPosition - !b.compareDocumentPosition;
+                if (compare) {
+                    return compare;
+                }
+                compare = (a.ownerDocument || a) === (b.ownerDocument || b) ? a.compareDocumentPosition(b) : 1;
+                if (compare & 1 ||
+                    (!support.sortDetached && b.compareDocumentPosition(a) === compare)) {
+                    if (a === document || a.ownerDocument === document && contains(document, a)) {
+                        return -1;
+                    }
+                    if (b === document || b.ownerDocument === document && contains(document, b)) {
+                        return 1;
+                    }
+                    return sortInput ? (indexOf.call(sortInput, a) - indexOf.call(sortInput, b)) : 0;
+                }
 
-          return compare & 4 ? -1 : 1;
+                return compare & 4 ? -1 : 1;
 
-      } : function (a, b) {
-          if (a === b) {
-              hasDuplicate = true;
-              return 0;
-          }
+            } : function(a, b) {
+                if (a === b) {
+                    hasDuplicate = true;
+                    return 0;
+                }
 
-          var cur,
-          i = 0,
-          aup = a.parentNode,
-          bup = b.parentNode,
-          ap = [a],
-          bp = [b];
-          if (!aup || !bup) {
-              return a === document ? -1 :
-            b === document ? 1 :
-            aup ? -1 :
-            bup ? 1 :
-            sortInput ?
-            (indexOf.call(sortInput, a) - indexOf.call(sortInput, b)) :
-            0;
-          } else if (aup === bup) {
-              return siblingCheck(a, b);
-          }
-          cur = a;
-          while ((cur = cur.parentNode)) {
-              ap.unshift(cur);
-          }
-          cur = b;
-          while ((cur = cur.parentNode)) {
-              bp.unshift(cur);
-          }
-          while (ap[i] === bp[i]) {
-              i++;
-          }
+                var cur,
+                    i = 0,
+                    aup = a.parentNode,
+                    bup = b.parentNode,
+                    ap = [a],
+                    bp = [b];
+                if (!aup || !bup) {
+                    return a === document ? -1 :
+                        b === document ? 1 :
+                        aup ? -1 :
+                        bup ? 1 :
+                        sortInput ?
+                        (indexOf.call(sortInput, a) - indexOf.call(sortInput, b)) :
+                        0;
+                } else if (aup === bup) {
+                    return siblingCheck(a, b);
+                }
+                cur = a;
+                while ((cur = cur.parentNode)) {
+                    ap.unshift(cur);
+                }
+                cur = b;
+                while ((cur = cur.parentNode)) {
+                    bp.unshift(cur);
+                }
+                while (ap[i] === bp[i]) {
+                    i++;
+                }
 
-          return i ? siblingCheck(ap[i], bp[i]) : ap[i] === document ? -1 : bp[i] === document ? 1 : 0;
-      };
+                return i ? siblingCheck(ap[i], bp[i]) : ap[i] === document ? -1 : bp[i] === document ? 1 : 0;
+            };
 
         var push_native = push;
         var push = push_native;
@@ -804,24 +804,24 @@
         } catch (e) {
             push = {
                 apply: arr.length ?
-          function (target, els) {
-              push_native.apply(target, slice.call(els));
-          } : function (target, els) {
-              var node, i = 0,
-              l = target.length;
-              while ((node = els[i++])) {
-                  target[l++] = node;
-              }
-              target.length = l;
-          }
+                    function(target, els) {
+                        push_native.apply(target, slice.call(els));
+                    } : function(target, els) {
+                        var node, i = 0,
+                            l = target.length;
+                        while ((node = els[i++])) {
+                            target[l++] = node;
+                        }
+                        target.length = l;
+                    }
             };
         }
 
-        jobKinding.uniqueSort = function (results) {
+        jobKinding.uniqueSort = function(results) {
             var elem,
-        duplicates = [],
-        j = 0,
-        i = 0;
+                duplicates = [],
+                j = 0,
+                i = 0;
             hasDuplicate = !support.detectDuplicates;
             sortInput = !support.sortStable && results.slice(0);
             results.sort(sortOrder);
@@ -852,122 +852,122 @@
             }
             return cache;
         }
-        var 
-      classCache = createCache(),
-      tokenCache = createCache(),
-      compilerCache = createCache();
+        var
+            classCache = createCache(),
+            tokenCache = createCache(),
+            compilerCache = createCache();
 
-        var 
-      characterEncoding = "(?:\\\\.|[\\w-]|[^\\x00-\\xa0])+",
-      identifier = characterEncoding.replace("w", "w#"),
-      attributes = "\\[" + whitespace + "*(" + identifier + ")(?:" + whitespace +
-        // Operator (capture 2)
-      "*([*^$|!~]?=)" + whitespace +
-        // "Attribute values must be CSS identifiers [capture 5] or strings [capture 3 or capture 4]"
-      "*(?:'((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\"|(" + identifier + "))|)" + whitespace +
-      "*\\]",
+        var
+            characterEncoding = "(?:\\\\.|[\\w-]|[^\\x00-\\xa0])+",
+            identifier = characterEncoding.replace("w", "w#"),
+            attributes = "\\[" + whitespace + "*(" + identifier + ")(?:" + whitespace +
+            // Operator (capture 2)
+            "*([*^$|!~]?=)" + whitespace +
+            // "Attribute values must be CSS identifiers [capture 5] or strings [capture 3 or capture 4]"
+            "*(?:'((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\"|(" + identifier + "))|)" + whitespace +
+            "*\\]",
 
-      pseudos = ":(" + identifier + ")(?:\\((" +
-        // To reduce the number of selectors needing tokenize in the preFilter, prefer arguments:
-        // 1. quoted (capture 3; capture 4 or capture 5)
-      "('((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\")|" +
-        // 2. simple (capture 6)
-      "((?:\\\\.|[^\\\\()[\\]]|" + attributes + ")*)|" +
-        // 3. anything else (capture 2)
-      ".*" +
-      ")\\)|)",
-      rwhitespace = new RegExp(whitespace + "+", "g"),
-      rtrim = new RegExp("^" + whitespace + "+|((?:^|[^\\\\])(?:\\\\.)*)" + whitespace + "+$", "g"),
+            pseudos = ":(" + identifier + ")(?:\\((" +
+            // To reduce the number of selectors needing tokenize in the preFilter, prefer arguments:
+            // 1. quoted (capture 3; capture 4 or capture 5)
+            "('((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\")|" +
+            // 2. simple (capture 6)
+            "((?:\\\\.|[^\\\\()[\\]]|" + attributes + ")*)|" +
+            // 3. anything else (capture 2)
+            ".*" +
+            ")\\)|)",
+            rwhitespace = new RegExp(whitespace + "+", "g"),
+            rtrim = new RegExp("^" + whitespace + "+|((?:^|[^\\\\])(?:\\\\.)*)" + whitespace + "+$", "g"),
 
-      rcomma = new RegExp("^" + whitespace + "*," + whitespace + "*"),
-      rcombinators = new RegExp("^" + whitespace + "*([>+~]|" + whitespace + ")" + whitespace + "*"),
+            rcomma = new RegExp("^" + whitespace + "*," + whitespace + "*"),
+            rcombinators = new RegExp("^" + whitespace + "*([>+~]|" + whitespace + ")" + whitespace + "*"),
 
-      rattributeQuotes = new RegExp("=" + whitespace + "*([^\\]'\"]*?)" + whitespace + "*\\]", "g"),
+            rattributeQuotes = new RegExp("=" + whitespace + "*([^\\]'\"]*?)" + whitespace + "*\\]", "g"),
 
-      rpseudo = new RegExp(pseudos),
-      ridentifier = new RegExp("^" + identifier + "$"),
+            rpseudo = new RegExp(pseudos),
+            ridentifier = new RegExp("^" + identifier + "$"),
 
-      matchExpr = {
-          "ID": new RegExp("^#(" + identifier + ")"),
-          "CLASS": new RegExp("^\\.(" + identifier + ")"),
-          "TAG": new RegExp("^(" + identifier + "|[*])"),
-          "ATTR": new RegExp("^" + attributes),
-          "PSEUDO": new RegExp("^" + pseudos),
-          "CHILD": new RegExp("^:(only|first|last|nth|nth-last)-(child|of-type)(?:\\(" + whitespace +
-          "*(even|odd|(([+-]|)(\\d*)n|)" + whitespace + "*(?:([+-]|)" + whitespace +
-          "*(\\d+)|))" + whitespace + "*\\)|)", "i"),
-          "bool": rbooleans,
-          "needsContext": new RegExp("^" + whitespace + "*[>+~]|:(even|odd|eq|gt|lt|nth|first|last)(?:\\(" +
-          whitespace + "*((?:-\\d)?\\d*)" + whitespace + "*\\)|)(?=[^-]|$)", "i")
-      },
-      rinputs = /^(?:input|select|textarea|button)$/i,
-      rheader = /^h\d$/i,
-      rquickExpr = /^(?:#([\w-]+)|(\w+)|\.([\w-]+))$/,
-      rsibling = /[+~]/,
-      runescape = new RegExp("\\\\([\\da-f]{1,6}" + whitespace + "?|(" + whitespace + ")|.)", "ig"),
-      funescape = function (_, escaped, escapedWhitespace) {
-          var high = "0x" + escaped - 0x10000;
-          return high !== high || escapedWhitespace ?
-          escaped :
-          high < 0 ?
-          String.fromCharCode(high + 0x10000) :
-          String.fromCharCode(high >> 10 | 0xD800, high & 0x3FF | 0xDC00);
-      },
-      rcssescape = /([\0-\x1f\x7f]|^-?\d)|^-$|[^\0-\x1f\x7f-\uFFFF\w-]/g,
-      fcssescape = function (ch, asCodePoint) {
-          if (asCodePoint) {
-              if (ch === "\0") {
-                  return "\uFFFD";
-              }
-              return ch.slice(0, -1) + "\\" + ch.charCodeAt(ch.length - 1).toString(16) + " ";
-          }
-          return "\\" + ch;
-      },
-      addCombinator = function (matcher, combinator, base) {
-          var dir = combinator.dir,
-          skip = combinator.next,
-          key = skip || dir,
-          checkNonElements = base && key === "parentNode";
+            matchExpr = {
+                "ID": new RegExp("^#(" + identifier + ")"),
+                "CLASS": new RegExp("^\\.(" + identifier + ")"),
+                "TAG": new RegExp("^(" + identifier + "|[*])"),
+                "ATTR": new RegExp("^" + attributes),
+                "PSEUDO": new RegExp("^" + pseudos),
+                "CHILD": new RegExp("^:(only|first|last|nth|nth-last)-(child|of-type)(?:\\(" + whitespace +
+                    "*(even|odd|(([+-]|)(\\d*)n|)" + whitespace + "*(?:([+-]|)" + whitespace +
+                    "*(\\d+)|))" + whitespace + "*\\)|)", "i"),
+                "bool": rbooleans,
+                "needsContext": new RegExp("^" + whitespace + "*[>+~]|:(even|odd|eq|gt|lt|nth|first|last)(?:\\(" +
+                    whitespace + "*((?:-\\d)?\\d*)" + whitespace + "*\\)|)(?=[^-]|$)", "i")
+            },
+            rinputs = /^(?:input|select|textarea|button)$/i,
+            rheader = /^h\d$/i,
+            rquickExpr = /^(?:#([\w-]+)|(\w+)|\.([\w-]+))$/,
+            rsibling = /[+~]/,
+            runescape = new RegExp("\\\\([\\da-f]{1,6}" + whitespace + "?|(" + whitespace + ")|.)", "ig"),
+            funescape = function(_, escaped, escapedWhitespace) {
+                var high = "0x" + escaped - 0x10000;
+                return high !== high || escapedWhitespace ?
+                    escaped :
+                    high < 0 ?
+                    String.fromCharCode(high + 0x10000) :
+                    String.fromCharCode(high >> 10 | 0xD800, high & 0x3FF | 0xDC00);
+            },
+            rcssescape = /([\0-\x1f\x7f]|^-?\d)|^-$|[^\0-\x1f\x7f-\uFFFF\w-]/g,
+            fcssescape = function(ch, asCodePoint) {
+                if (asCodePoint) {
+                    if (ch === "\0") {
+                        return "\uFFFD";
+                    }
+                    return ch.slice(0, -1) + "\\" + ch.charCodeAt(ch.length - 1).toString(16) + " ";
+                }
+                return "\\" + ch;
+            },
+            addCombinator = function(matcher, combinator, base) {
+                var dir = combinator.dir,
+                    skip = combinator.next,
+                    key = skip || dir,
+                    checkNonElements = base && key === "parentNode";
 
-          return combinator.first ? function (elem, context) {
-              while ((elem = elem[dir])) {
-                  if (elem.nodeType === 1 || checkNonElements) {
-                      return matcher(elem, context);
-                  }
-              }
-              return false;
-          } : function (elem, context) {
-              while ((elem = elem[dir])) {
-                  if (elem.nodeType === 1 || checkNonElements) {
-                      if (skip && skip === elem.nodeName.toLowerCase()) {
-                          elem = elem[dir] || elem;
-                      } else {
-                          if (matcher(elem, context)) {
-                              return true;
-                          }
-                      }
-                  }
-              }
-              return false;
-          };
-      },
-      disabledAncestor = addCombinator(function (elem) {
-          return elem.disabled === true && ("form" in elem || "label" in elem);
-      }, {
-          dir: "parentNode",
-          next: "legend"
-      });
-        var toSelector = jobKinding.toSelector = function (tokens) {
+                return combinator.first ? function(elem, context) {
+                    while ((elem = elem[dir])) {
+                        if (elem.nodeType === 1 || checkNonElements) {
+                            return matcher(elem, context);
+                        }
+                    }
+                    return false;
+                } : function(elem, context) {
+                    while ((elem = elem[dir])) {
+                        if (elem.nodeType === 1 || checkNonElements) {
+                            if (skip && skip === elem.nodeName.toLowerCase()) {
+                                elem = elem[dir] || elem;
+                            } else {
+                                if (matcher(elem, context)) {
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+                    return false;
+                };
+            },
+            disabledAncestor = addCombinator(function(elem) {
+                return elem.disabled === true && ("form" in elem || "label" in elem);
+            }, {
+                dir: "parentNode",
+                next: "legend"
+            });
+        var toSelector = jobKinding.toSelector = function(tokens) {
             var i = 0,
-        len = tokens.length,
-        selector = "";
+                len = tokens.length,
+                selector = "";
             for (; i < len; i++) {
                 selector += tokens[i].value;
             }
             return selector;
         }
-        var makeFunction = function (fn) {
-            return function () {
+        var makeFunction = function(fn) {
+            return function() {
                 return fn;
             };
         };
@@ -991,7 +991,7 @@
                 }
             },
             preFilter: {
-                "ATTR": function (match) {
+                "ATTR": function(match) {
                     match[1] = match[1].replace(runescape, funescape);
                     match[3] = (match[3] || match[4] || match[5] || "").replace(runescape, funescape);
 
@@ -1002,7 +1002,7 @@
                     return match.slice(0, 4);
                 },
 
-                "CHILD": function (match) {
+                "CHILD": function(match) {
                     match[1] = match[1].toLowerCase();
 
                     if (match[1].slice(0, 3) === "nth") {
@@ -1017,7 +1017,7 @@
                     return match;
                 },
 
-                "PSEUDO": function (match) {
+                "PSEUDO": function(match) {
                     var excess, unquoted = !match[6] && match[2];
                     if (matchExpr["CHILD"].test(match[0])) {
                         return null;
@@ -1033,24 +1033,24 @@
             },
             filter: {
 
-                "TAG": function (nodeNameSelector) {
+                "TAG": function(nodeNameSelector) {
                     var nodeName = nodeNameSelector.replace(runescape, funescape).toLowerCase();
-                    return nodeNameSelector === "*" ? function () {
+                    return nodeNameSelector === "*" ? function() {
                         return true;
-                    } : function (elem) {
+                    } : function(elem) {
                         return elem.nodeName && elem.nodeName.toLowerCase() === nodeName;
                     };
                 },
 
-                "CLASS": function (className) {
+                "CLASS": function(className) {
                     var pattern = classCache[className + " "];
-                    return pattern || (pattern = new RegExp("(^|" + whitespace + ")" + className + "(" + whitespace + "|$)")) && classCache(className, function (elem) {
+                    return pattern || (pattern = new RegExp("(^|" + whitespace + ")" + className + "(" + whitespace + "|$)")) && classCache(className, function(elem) {
                         return pattern.test(typeof elem.className === "string" && elem.className || typeof elem.getAttribute !== "undefined" && elem.getAttribute("class") || "");
                     });
                 },
 
-                "ATTR": function (name, operator, check) {
-                    return function (elem) {
+                "ATTR": function(name, operator, check) {
+                    return function(elem) {
                         var result = jobKinding.attr(elem, name);
 
                         if (result == null) {
@@ -1063,30 +1063,30 @@
                         result += "";
 
                         return operator === "=" ? result === check :
-              operator === "!=" ? result !== check :
-              operator === "^=" ? check && result.indexOf(check) === 0 :
-              operator === "*=" ? check && result.indexOf(check) > -1 :
-              operator === "$=" ? check && result.slice(-check.length) === check :
-              operator === "~=" ? (" " + result.replace(rwhitespace, " ") + " ").indexOf(check) > -1 :
-              operator === "|=" ? result === check || result.slice(0, check.length + 1) === check + "-" :
-              false;
+                            operator === "!=" ? result !== check :
+                            operator === "^=" ? check && result.indexOf(check) === 0 :
+                            operator === "*=" ? check && result.indexOf(check) > -1 :
+                            operator === "$=" ? check && result.slice(-check.length) === check :
+                            operator === "~=" ? (" " + result.replace(rwhitespace, " ") + " ").indexOf(check) > -1 :
+                            operator === "|=" ? result === check || result.slice(0, check.length + 1) === check + "-" :
+                            false;
                     };
                 },
 
-                "CHILD": function (type, what, argument, first, last) {
+                "CHILD": function(type, what, argument, first, last) {
                     var simple = type.slice(0, 3) !== "nth",
-            forward = type.slice(-4) !== "last",
-            ofType = what === "of-type";
+                        forward = type.slice(-4) !== "last",
+                        ofType = what === "of-type";
 
-                    return first === 1 && last === 0 ? function (elem) {
+                    return first === 1 && last === 0 ? function(elem) {
                         return !!elem.parentNode;
-                    } : function (elem, context, xml) {
+                    } : function(elem, context, xml) {
                         var node, nodeIndex, start,
-              dir = simple !== forward ? "nextSibling" : "previousSibling",
-              parent = elem.parentNode,
-              name = ofType && elem.nodeName.toLowerCase(),
-              useCache = !xml && !ofType,
-              diff = false;
+                            dir = simple !== forward ? "nextSibling" : "previousSibling",
+                            parent = elem.parentNode,
+                            name = ofType && elem.nodeName.toLowerCase(),
+                            useCache = !xml && !ofType,
+                            diff = false;
 
                         if (parent) {
                             if (simple) {
@@ -1125,36 +1125,36 @@
                     };
                 },
 
-                "PSEUDO": function (pseudo, argument) {
+                "PSEUDO": function(pseudo, argument) {
                     return (Expr.pseudos[pseudo] || jobKinding.syntaxError("unsupported pseudo: " + pseudo))(argument);
                 }
             },
             pseudos: {
-                "not": function (selector) {
+                "not": function(selector) {
                     var matcher = compile(selector.replace(rtrim, "$1"));
-                    return function (elem) {
+                    return function(elem) {
                         return matcher([elem]).length == 0;
                     }
                 },
 
-                "has": function (selector) {
-                    return function (elem) {
+                "has": function(selector) {
+                    return function(elem) {
                         return jobKinding.expr(selector, elem).length > 0;
                     };
                 },
 
-                "contains": function (text) {
+                "contains": function(text) {
                     text = text.replace(runescape, funescape);
-                    return function (elem) {
+                    return function(elem) {
                         return (elem.textContent || elem.innerText || jobKinding.text(elem)).indexOf(text) > -1;
                     };
                 },
-                "lang": function (lang) {
+                "lang": function(lang) {
                     if (!ridentifier.test(lang || "")) {
                         jobKinding.syntaxError("unsupported lang: " + lang);
                     }
                     lang = lang.replace(runescape, funescape).toLowerCase();
-                    return function (elem) {
+                    return function(elem) {
                         var elemLang;
                         do {
                             if (elemLang = elem.lang) {
@@ -1165,33 +1165,33 @@
                         return false;
                     };
                 },
-                "target": makeFunction(function (elem) {
+                "target": makeFunction(function(elem) {
                     var hash = window.location && window.location.hash;
                     return hash && hash.slice(1) === elem.id;
                 }),
 
-                "root": makeFunction(function (elem) {
+                "root": makeFunction(function(elem) {
                     return elem === docElem;
                 }),
 
-                "focus": makeFunction(function (elem) {
+                "focus": makeFunction(function(elem) {
                     return elem === document.activeElement && (!document.hasFocus || document.hasFocus()) && !!(elem.type || elem.href || ~elem.tabIndex);
                 }),
                 "enabled": createDisabledPseudo(false),
                 "disabled": createDisabledPseudo(true),
 
-                "checked": makeFunction(function (elem) {
+                "checked": makeFunction(function(elem) {
                     var nodeName = elem.nodeName.toLowerCase();
                     return (nodeName === "input" && !!elem.checked) || (nodeName === "option" && !!elem.selected);
                 }),
 
-                "selected": makeFunction(function (elem) {
+                "selected": makeFunction(function(elem) {
                     if (elem.parentNode) {
                         elem.parentNode.selectedIndex;
                     }
                     return elem.selected === true;
                 }),
-                "empty": makeFunction(function (elem) {
+                "empty": makeFunction(function(elem) {
                     for (elem = elem.firstChild; elem; elem = elem.nextSibling) {
                         if (elem.nodeType < 6) {
                             return false;
@@ -1199,7 +1199,7 @@
                     }
                     return true;
                 }),
-                "parent": makeFunction(function (elem) {
+                "parent": makeFunction(function(elem) {
                     for (elem = elem.firstChild; elem; elem = elem.nextSibling) {
                         if (elem.nodeType < 6) {
                             return true;
@@ -1207,96 +1207,96 @@
                     }
                     return false;
                 }),
-                "header": makeFunction(function (elem) {
+                "header": makeFunction(function(elem) {
                     return rheader.test(elem.nodeName);
                 }),
 
-                "input": makeFunction(function (elem) {
+                "input": makeFunction(function(elem) {
                     return rinputs.test(elem.nodeName);
                 }),
 
-                "button": makeFunction(function (elem) {
+                "button": makeFunction(function(elem) {
                     var name = elem.nodeName.toLowerCase();
                     return name === "input" && elem.type === "button" || name === "button";
                 }),
 
-                "text": makeFunction(function (elem) {
+                "text": makeFunction(function(elem) {
                     var attr;
                     return elem.nodeName.toLowerCase() === "input" && elem.type === "text";
                 }),
-                "first": makeFunction(function (arr) {
+                "first": makeFunction(function(arr) {
                     return arr.slice(0, 1);
                 }),
 
-                "last": makeFunction(function (arr) {
+                "last": makeFunction(function(arr) {
                     return arr.slice(-1);
                 }),
 
-                "eq": function (i) {
+                "eq": function(i) {
                     i = +i;
-                    return function (arr, len) {
+                    return function(arr, len) {
                         i = i ? i < 0 ? i + len : i : 0;
                         return arr.slice(i, i + 1);
                     }
                 },
 
-                "even": makeFunction(function (arr, len) {
+                "even": makeFunction(function(arr, len) {
                     var i = 0,
-            r = [];
+                        r = [];
                     for (; i < len; i += 2) {
                         r.push(i);
                     }
                     return r;
                 }),
 
-                "odd": makeFunction(function (arr, len) {
+                "odd": makeFunction(function(arr, len) {
                     var i = 1,
-            r = [];
+                        r = [];
                     for (; i < len; i += 2) {
                         r.push(i);
                     }
                     return r;
                 }),
 
-                "lt": function (i) {
+                "lt": function(i) {
                     i = +i;
-                    return function (arr, len) {
+                    return function(arr, len) {
                         return arr.slice(0, i ? i < 0 ? i + len : i : 0);
                     };
                 },
 
-                "gt": function (i) {
+                "gt": function(i) {
                     i = +i;
-                    return function (arr, len) {
+                    return function(arr, len) {
                         return arr.slice(i ? i < 0 ? i + len : i : 0);
                     };
                 }
             }
         };
 
-        Expr.filter["ID"] = function (id) {
+        Expr.filter["ID"] = function(id) {
             var attrId = id.replace(runescape, funescape);
-            return function (elem) {
+            return function(elem) {
                 return elem.getAttribute("id") === attrId;
             };
         };
-        Expr.find["ID"] = function (id, context) {
+        Expr.find["ID"] = function(id, context) {
             if (context.getElementById) {
                 var elem = context.getElementById(id);
                 return elem ? [elem] : [];
             }
         };
-        Expr.find["TAG"] = support.getElementsByTagName ? function (tag, context) {
+        Expr.find["TAG"] = support.getElementsByTagName ? function(tag, context) {
             if (context.getElementsByTagName) {
                 return context.getElementsByTagName(tag);
             } else if (support.qsa) {
                 return context.querySelectorAll(tag);
             }
-        } : function (tag, context) {
+        } : function(tag, context) {
             var elem,
-        tmp = [],
-        i = 0,
-        results = context.getElementsByTagName(tag);
+                tmp = [],
+                i = 0,
+                results = context.getElementsByTagName(tag);
             if (tag === "*") {
                 while ((elem = results[i++])) {
                     if (elem.nodeType === 1) {
@@ -1307,14 +1307,14 @@
             }
             return results;
         };
-        Expr.find["CLASS"] = support.getElementsByClassName && function (className, context) {
+        Expr.find["CLASS"] = support.getElementsByClassName && function(className, context) {
             if (context.getElementsByClassName) {
                 return context.getElementsByClassName(className);
             }
         };
 
         Expr.pseudos["nth"] = Expr.pseudos["eq"];
-        var disabledAncestor = addCombinator(function (elem) {
+        var disabledAncestor = addCombinator(function(elem) {
             return elem.disabled === true && ("form" in elem || "label" in elem);
         }, {
             dir: "parentNode",
@@ -1322,7 +1322,7 @@
         });
 
         function createDisabledPseudo(disabled) {
-            return makeFunction(function (elem) {
+            return makeFunction(function(elem) {
                 if ("form" in elem) {
                     if (elem.parentNode && elem.disabled === false) {
                         if ("label" in elem) {
@@ -1343,37 +1343,37 @@
         }
 
         function createInputPseudo(type) {
-            return makeFunction(function (elem) {
+            return makeFunction(function(elem) {
                 var name = elem.nodeName.toLowerCase();
                 return name === "input" && elem.type === type;
             });
         }
 
         function createButtonPseudo(type) {
-            return makeFunction(function (elem) {
+            return makeFunction(function(elem) {
                 var name = elem.nodeName.toLowerCase();
                 return (name === "input" || name === "button") && elem.type === type;
             });
         }
         for (i in {
-            radio: true,
-            checkbox: true,
-            file: true,
-            password: true,
-            image: true
-        }) {
+                radio: true,
+                checkbox: true,
+                file: true,
+                password: true,
+                image: true
+            }) {
             Expr.pseudos[i] = createInputPseudo(i);
         }
         for (i in {
-            submit: true,
-            reset: true
-        }) {
+                submit: true,
+                reset: true
+            }) {
             Expr.pseudos[i] = createButtonPseudo(i);
         }
-        var elementMatcher = function (matchers) {
-            return matchers.length > 1 ? function (elem, context) {
+        var elementMatcher = function(matchers) {
+            return matchers.length > 1 ? function(elem, context) {
                 var i = 0,
-          len = matchers.length;
+                    len = matchers.length;
                 for (; i < len; i++) {
                     if (!matchers[i](elem, context)) {
                         return false;
@@ -1382,20 +1382,20 @@
                 return true;
             } : matchers[0];
         }
-        var elementContexMatcher = function (matchers) {
-            return matchers.length > 1 ? function (seed, context) {
+        var elementContexMatcher = function(matchers) {
+            return matchers.length > 1 ? function(seed, context) {
                 var i = 0,
-          len = matchers.length;
+                    len = matchers.length;
                 for (; i < len; i++) {
                     seed = matchers[i](seed, context);
                 }
                 return seed;
             } : matchers[0];
         };
-        var contextMatcherFromToken = function (matcher, contextMatcher) {
-            return function (seed, context) {
+        var contextMatcherFromToken = function(matcher, contextMatcher) {
+            return function(seed, context) {
                 var elem, i = 0,
-          r = [];
+                    r = [];
                 while (elem = seed[i++]) {
                     if (matcher(elem, context)) {
                         r.push(elem);
@@ -1405,24 +1405,24 @@
             };
         };
         var outermostContext;
-        var matcherFromTokens = function (tokens) {
+        var matcherFromTokens = function(tokens) {
             var checkContext, matcher, j,
-        len = tokens.length,
-        leadingRelative = Expr.relative[tokens[0].type],
-        implicitRelative = leadingRelative || Expr.relative[" "],
-        i = leadingRelative ? 1 : 0,
-        matchContext = addCombinator(function (elem) {
-            return elem === checkContext;
-        }, implicitRelative, true),
-        matchAnyContext = addCombinator(function (elem) {
-            return indexOf(checkContext, elem) > -1;
-        }, implicitRelative, true),
-        matchers = [function (elem, context) {
-            var ret = (!leadingRelative && (context !== outermostContext)) || ((checkContext = context).nodeType ? matchContext(elem, context) : matchAnyContext(elem, context));
-            checkContext = null;
-            return ret;
-        } ],
-        contextMatchers = [];
+                len = tokens.length,
+                leadingRelative = Expr.relative[tokens[0].type],
+                implicitRelative = leadingRelative || Expr.relative[" "],
+                i = leadingRelative ? 1 : 0,
+                matchContext = addCombinator(function(elem) {
+                    return elem === checkContext;
+                }, implicitRelative, true),
+                matchAnyContext = addCombinator(function(elem) {
+                    return indexOf(checkContext, elem) > -1;
+                }, implicitRelative, true),
+                matchers = [function(elem, context) {
+                    var ret = (!leadingRelative && (context !== outermostContext)) || ((checkContext = context).nodeType ? matchContext(elem, context) : matchAnyContext(elem, context));
+                    checkContext = null;
+                    return ret;
+                }],
+                contextMatchers = [];
 
             for (; i < len; i++) {
                 if ((matcher = Expr.relative[tokens[i].type])) {
@@ -1442,10 +1442,10 @@
             }
             return elementContexMatcher(contextMatchers);
         };
-        var tokenize = jobKinding.tokenize = function (selector, parseOnly) {
+        var tokenize = jobKinding.tokenize = function(selector, parseOnly) {
             var matched, match, tokens, type,
-        soFar, groups, preFilters,
-        cached = tokenCache[selector];
+                soFar, groups, preFilters,
+                cached = tokenCache[selector];
 
             if (cached) {
                 return parseOnly ? 0 : cached.slice(0);
@@ -1490,11 +1490,11 @@
             }
             return parseOnly ? soFar.length : soFar ? jobKinding.syntaxError(selector) : tokenCache(selector, groups).slice(0);
         };
-        var matcherFromGroupMatchers = function (elementMatcher) {
+        var matcherFromGroupMatchers = function(elementMatcher) {
             return function superMatcher(seed, context, results, outermost) {
                 var contextBackup = outermostContext;
                 var elems = seed || Expr.find["TAG"]("*", outermost),
-          len = elems.length;
+                    len = elems.length;
                 if (outermost) {
                     outermostContext = context === document || context || outermost;
                 }
@@ -1509,9 +1509,9 @@
                 return unmatched;
             };
         };
-        var compile = jobKinding.compile = function (selector, match) {
+        var compile = jobKinding.compile = function(selector, match) {
             var i, matchers = [],
-        cached = compilerCache[selector];
+                cached = compilerCache[selector];
             if (!cached) {
                 if (!match) {
                     match = tokenize(selector);
@@ -1525,20 +1525,20 @@
             }
             return cached;
         };
-        var testContext = function (context) {
+        var testContext = function(context) {
             return context && context.getElementsByTagName && context;
         };
 
-        jobKinding.select = function (selector, context, results, seed) {
+        jobKinding.select = function(selector, context, results, seed) {
             results = results || [];
             var compiled = typeof selector === "function" ? selector : compile(selector)
             return compiled(seed, context, results, !context || rsibling.test(selector) && testContext(context.parentNode) || context);
         };
 
-        jobKinding.expr = function (selector, context, results, seed) {
+        jobKinding.expr = function(selector, context, results, seed) {
             var m, i, elem, nid, match, groups, newSelector,
-        newContext = context && context.ownerDocument,
-        nodeType = context ? context.nodeType : 9;
+                newContext = context && context.ownerDocument,
+                nodeType = context ? context.nodeType : 9;
 
             results = results || [];
             if (!selector || typeof selector !== "string" || !(nodeType === 1 || nodeType === 9 || nodeType === 11)) {
@@ -1588,14 +1588,14 @@
                         }
                         newSelector = groups.join(",");
                         newContext = rsibling.test(selector) && testContext(context.parentNode) ||
-              context;
+                            context;
                     }
 
                     if (newSelector) {
                         try {
                             push.apply(results, newContext.querySelectorAll(newSelector));
                             return results;
-                        } catch (qsaError) { } finally {
+                        } catch (qsaError) {} finally {
                             if (nid === expando) {
                                 context.removeAttribute("id");
                             }
@@ -1606,11 +1606,11 @@
             return jobKinding.select(selector.replace(rtrim, "$1"), context, results, seed);
         };
 
-        jobKinding.matches = function (expr, elements) {
+        jobKinding.matches = function(expr, elements) {
             return jobKinding.expr(expr, null, null, elements);
         };
 
-        jobKinding.matchesSelector = function (elem, expr) {
+        jobKinding.matchesSelector = function(elem, expr) {
             expr = expr.replace(rattributeQuotes, "='$1']");
             if (support.matchesSelector && !compilerCache[expr] && (!rbuggyMatches || !rbuggyMatches.test(expr)) && (!rbuggyQSA || !rbuggyQSA.test(expr))) {
                 try {
@@ -1618,20 +1618,20 @@
                     if (r || support.disconnectedMatch || elem.document && elem.document.nodeType !== 11) {
                         return r;
                     }
-                } catch (e) { }
+                } catch (e) {}
             }
             return jobKinding.expr(expr, document, null, [elem]).length > 0;
         };
 
     })(support);
 
-    var 
-    rclickable = /^(?:a|area)$/i,
-    rnotwhite = (/[^\x20\t\r\n\f]+/g),
-    rfocusable = /^(?:input|select|textarea|button|object)$/i;
+    var
+        rclickable = /^(?:a|area)$/i,
+        rnotwhite = (/[^\x20\t\r\n\f]+/g),
+        rfocusable = /^(?:input|select|textarea|button|object)$/i;
 
     var boolHook = {
-        set: function (elem, value, name) {
+        set: function(elem, value, name) {
             if (value === false) {
                 jobKinding.removeAttr(elem, name);
             } else {
@@ -1642,14 +1642,14 @@
     };
     if (!support.optionSelected) {
         jobKinding.propHooks.selected = {
-            get: function (elem) {
+            get: function(elem) {
                 var parent = elem.parentNode;
                 if (parent && parent.parentNode) {
                     parent.parentNode.selectedIndex;
                 }
                 return null;
             },
-            set: function (elem) {
+            set: function(elem) {
                 var parent = elem.parentNode;
                 if (parent) {
                     parent.selectedIndex;
@@ -1661,21 +1661,21 @@
         };
     }
     jobKinding.each([
-    "tabIndex",
-    "readOnly",
-    "maxLength",
-    "cellSpacing",
-    "cellPadding",
-    "rowSpan",
-    "colSpan",
-    "useMap",
-    "frameBorder",
-    "contentEditable"
-  ], function (item) {
-      jobKinding.propFix[item.toLowerCase()] = item;
-  });
+        "tabIndex",
+        "readOnly",
+        "maxLength",
+        "cellSpacing",
+        "cellPadding",
+        "rowSpan",
+        "colSpan",
+        "useMap",
+        "frameBorder",
+        "contentEditable"
+    ], function(item) {
+        jobKinding.propFix[item.toLowerCase()] = item;
+    });
     jobKinding.extend({
-        prop: function (elem, name, value) {
+        prop: function(elem, name, value) {
             var nodeType = elem && elem.nodeType;
             if (!elem || !name || nodeType === 2 || nodeType === 3 || nodeType === 8) {
                 return;
@@ -1696,16 +1696,16 @@
             }
             return elem[name];
         },
-        removeProp: function (elem, value) {
+        removeProp: function(elem, value) {
             if (elem) {
                 var i = 0,
-          key, value = value && value.match(rnotwhite);
+                    key, value = value && value.match(rnotwhite);
                 while (key = value[i++]) {
                     delete elem[jobKinding.propFix[key] || key];
                 }
             }
         },
-        attr: function (elem, name, value) {
+        attr: function(elem, name, value) {
             var nodeType = elem && elem.nodeType;
             if (!elem || !name || nodeType === 2 || nodeType === 3 || nodeType === 8) {
                 return;
@@ -1732,10 +1732,10 @@
             }
             return elem.getAttribute(name);
         },
-        removeAttr: function (elem, value) {
+        removeAttr: function(elem, value) {
             if (elem && elem.nodeType === 1) {
                 var i = 0,
-          key, value = value && value.match(rnotwhite);
+                    key, value = value && value.match(rnotwhite);
                 while (key = value[i++]) {
                     elem.removeAttribute(name);
                 }
@@ -1743,10 +1743,10 @@
         }
     });
 
-    jobKinding.text = function (elem) {
+    jobKinding.text = function(elem) {
         var node, i = 0,
-      returnVal = "",
-      nodeType = elem && elem.nodeType;
+            returnVal = "",
+            nodeType = elem && elem.nodeType;
         if (!elem) {
             return returnVal;
         }
@@ -1774,19 +1774,19 @@
 
     jobKinding.valHooks = {
         option: {
-            get: function (elem) {
+            get: function(elem) {
                 var val = jobKinding.attr(elem, "value");
                 return val == null ? jobKinding.text(elem) : val;
             }
         },
         select: {
-            get: function (elem) {
+            get: function(elem) {
                 var value, option, i,
-          options = elem.options,
-          index = elem.selectedIndex,
-          one = elem.type === "select-one",
-          values = one ? null : [],
-          max = one ? index + 1 : options.length;
+                    options = elem.options,
+                    index = elem.selectedIndex,
+                    one = elem.type === "select-one",
+                    values = one ? null : [],
+                    max = one ? index + 1 : options.length;
 
                 if (index < 0) {
                     i = max;
@@ -1807,11 +1807,11 @@
                 return values;
             },
 
-            set: function (elem, value) {
+            set: function(elem, value) {
                 var optionSet, option,
-          options = elem.options,
-          values = jobKinding.makeArray(value),
-          i = options.length;
+                    options = elem.options,
+                    values = jobKinding.makeArray(value),
+                    i = options.length;
 
                 while (i--) {
                     option = options[i];
@@ -1827,23 +1827,23 @@
         }
     };
 
-    jobKinding.each(["radio", "checkbox"], function (item) {
+    jobKinding.each(["radio", "checkbox"], function(item) {
         jobKinding.valHooks[item] = {
-            set: function (elem, value) {
+            set: function(elem, value) {
                 if (jobKinding.isArray(value)) {
                     return (elem.checked = jobKinding.indexOfArray(jobKinding(elem).val(), value) > -1);
                 }
             }
         };
         if (!support.checkOn) {
-            jobKinding.valHooks[item].get = function (elem) {
+            jobKinding.valHooks[item].get = function(elem) {
                 return elem.getAttribute("value") === null ? "on" : elem.value;
             };
         }
     });
 
     var rreturn = /\r/g;
-    var valGet = function (elem) {
+    var valGet = function(elem) {
         var val, hooks = hooks = jobKinding.valHooks[elem.type] || jobKinding.valHooks[elem.nodeName.toLowerCase()];
         if (hooks && ("get" in hooks) && (val = hooks.get(elem)) != null) {
             return val;
@@ -1854,13 +1854,13 @@
         }
         return val == null ? "" : val;
     };
-    var valSet = function (elem, value) {
+    var valSet = function(elem, value) {
         var hooks = jobKinding.valHooks[elem.type] || jobKinding.valHooks[elem.nodeName.toLowerCase()];
         if (!hooks || !("set" in hooks) || hooks.set(elem, value, "value") == null) {
             elem.value = value;
         }
     };
-    var textSet = function (elem, value) {
+    var textSet = function(elem, value) {
         if (elem.nodeType === 1 || elem.nodeType === 9 || elem.nodeType === 11) {
             for (var node = elem.firstChild; node; node = node.nextSibling) {
                 elem.removeChild(node);
@@ -1869,24 +1869,24 @@
         }
     };
     jobKinding.fn.extend({
-        each: function (callback) {
-            return jobKinding.each(this, function (elem, i) {
+        each: function(callback) {
+            return jobKinding.each(this, function(elem, i) {
                 return callback.call(elem, i, elem);
             });
         },
-        map: function (callback) {
+        map: function(callback) {
             return this.pushStack(jobKinding.map(this, callback));
         },
-        pushStack: function (arr) {
+        pushStack: function(arr) {
             var r = jobKinding.merge(this.constructor(), arr);
             r.prevObject = this;
             r.context = this.context;
             return r;
         },
-        access: function (key, value, chainable, fnGet, fnSet) {
+        access: function(key, value, chainable, fnGet, fnSet) {
             fnSet = fnSet || fnGet;
             var i = 0,
-        len = this.length;
+                len = this.length;
             if (jobKinding.type(key) === "object") {
                 for (i in key) {
                     this.access(i, key[i], true, fnGet, fnSet);
@@ -1908,42 +1908,42 @@
                 return key == null ? fnGet(this[i]) : fnGet(this[i], key);
             }
         },
-        val: function (value) {
+        val: function(value) {
             return this.access(null, value, arguments.length > 0, valGet, valSet);
         },
-        text: function (value) {
+        text: function(value) {
             return this.access(null, value, arguments.length > 0, jobKinding.text, textSet);
         },
-        attr: function (name, value) {
+        attr: function(name, value) {
             return this.access(name, value, arguments.length > 1, jobKinding.attr);
         },
-        removeAttr: function (value) {
-            return this.each(function () {
+        removeAttr: function(value) {
+            return this.each(function() {
                 return jobKinding.removeAttr(this, value);
             });
         },
-        prop: function (name, value) {
+        prop: function(name, value) {
             return this.access(name, value, arguments.length > 1, jobKinding.prop);
         },
-        removeProp: function (value) {
-            return this.each(function () {
+        removeProp: function(value) {
+            return this.each(function() {
                 return jobKinding.removeProp(this, value);
             });
         }
     });
 
-    var 
-    cssShow = {
-        position: "absolute",
-        visibility: "hidden",
-        display: "block"
-    },
-    cssNormalTransform = {
-        letterSpacing: 0,
-        fontWeight: 400
-    },
-    cssExpand = ["Top", "Right", "Bottom", "Left"],
-    cssPrefixes = ["Webkit", "O", "Moz", "ms"];
+    var
+        cssShow = {
+            position: "absolute",
+            visibility: "hidden",
+            display: "block"
+        },
+        cssNormalTransform = {
+            letterSpacing: 0,
+            fontWeight: 400
+        },
+        cssExpand = ["Top", "Right", "Bottom", "Left"],
+        cssPrefixes = ["Webkit", "O", "Moz", "ms"];
 
     var emptyStyle = document.createElement("div").style;
 
@@ -1952,7 +1952,7 @@
             return name;
         }
         var capName = name[0].toUpperCase() + name.slice(1),
-      i = cssPrefixes.length;
+            i = cssPrefixes.length;
 
         while (i--) {
             name = cssPrefixes[i] + capName;
@@ -1963,22 +1963,22 @@
     }
     if (!support.opacity) {
 
-        var 
-      ralpha = /alpha\([^)]*\)/i,
-      ropacity = /opacity\s*=\s*([^)]*)/;
+        var
+            ralpha = /alpha\([^)]*\)/i,
+            ropacity = /opacity\s*=\s*([^)]*)/;
 
         jobKinding.cssHooks.opacity = {
-            get: function (elem, computed) {
+            get: function(elem, computed) {
                 return ropacity.test((computed && elem.currentStyle ? elem.currentStyle.filter : elem.style.filter) || "") ? (0.01 * parseFloat(RegExp.$1)) + "" : computed ? "1" : "";
             },
-            set: function (elem, value) {
+            set: function(elem, value) {
                 var style = elem.style,
-          currentStyle = elem.currentStyle,
-          opacity = jobKinding.isNumber(value) ? "alpha(opacity=" + value * 100 + ")" : "",
-          filter = currentStyle && currentStyle.filter || style.filter || "";
+                    currentStyle = elem.currentStyle,
+                    opacity = jobKinding.isNumber(value) ? "alpha(opacity=" + value * 100 + ")" : "",
+                    filter = currentStyle && currentStyle.filter || style.filter || "";
                 style.zoom = 1;
                 if ((value >= 1 || value === "") &&
-          jobKinding.trim(filter.replace(ralpha, "")) === "" && style.removeAttribute) {
+                    jobKinding.trim(filter.replace(ralpha, "")) === "" && style.removeAttribute) {
                     style.removeAttribute("filter");
                     if (value === "" || currentStyle && !currentStyle.filter) {
                         return;
@@ -1991,13 +1991,13 @@
 
     var rcssNum = /^(?:([+-])=|)((\d+\.)?\d+)([a-z%]*)$/i;
     jobKinding.extend({
-        style: function (elem, name, value, extra) {
+        style: function(elem, name, value, extra) {
             if (!elem || elem.nodeType === 3 || elem.nodeType === 8 || !elem.style) {
                 return;
             }
             var val, type, hooks,
-        origName = jobKinding.camelCase(name),
-        style = elem.style;
+                origName = jobKinding.camelCase(name),
+                style = elem.style;
 
             name = jobKinding.cssProps[origName] || (jobKinding.cssProps[origName] = vendorPropName(origName) || origName);
             hooks = jobKinding.cssHooks[name] || jobKinding.cssHooks[origName];
@@ -2030,9 +2030,9 @@
                 return style[name];
             }
         },
-        css: function (elem, name, extra, styles) {
+        css: function(elem, name, extra, styles) {
             var val, num, hooks,
-        origName = jobKinding.camelCase(name);
+                origName = jobKinding.camelCase(name);
             name = jobKinding.cssProps[origName] || (jobKinding.cssProps[origName] = vendorPropName(origName) || origName);
             hooks = jobKinding.cssHooks[name] || jobKinding.cssHooks[origName];
             if (hooks && "get" in hooks) {
@@ -2053,18 +2053,18 @@
     });
 
     var classCache = {};
-    var classModel = function (value, model, toggle) {
+    var classModel = function(value, model, toggle) {
         var isFunction = jobKinding.isFunction(value);
         if (!(isFunction || typeof value === "string")) {
             return this;
         }
-        return this.each(function (i) {
+        return this.each(function(i) {
             var valueCur = value;
-            if (!isFunction || typeof (valueCur = value.call(this, i, this.className, model)) === "string") {
+            if (!isFunction || typeof(valueCur = value.call(this, i, this.className, model)) === "string") {
                 var matchArr = valueCur && valueCur.match(rnotwhite);
 
                 var match, classNameOld, i = 0,
-          className = classNameOld = this.className;
+                    className = classNameOld = this.className;
                 while ((valueCur = matchArr[i++]) && ((match = classCache[valueCur] || (classCache[valueCur] = new RegExp("(^|" + whitespace + ")" + valueCur + "(" + whitespace + "|$)"))) && (((match = match.test(className)) === !model) || toggle))) {
                     if (model || toggle && !match) {
                         className += " " + valueCur;
@@ -2095,11 +2095,11 @@
         return jobKinding.css(elem, "display") === "none" || !jobKinding.contains(elem.ownerDocument, elem);
     }
     jobKinding.fn.extend({
-        css: function (name, value) {
-            return this.access(name, value, arguments.length > 1, function (elem, name) {
+        css: function(name, value) {
+            return this.access(name, value, arguments.length > 1, function(elem, name) {
                 if (jobKinding.isArray(name)) {
                     var map = {},
-            styles = getStyles(elem);
+                        styles = getStyles(elem);
                     for (var i = 0, len = name.length; i < len; i++) {
                         map[name[i]] = jobKinding.css(elem, name[i], false, styles);
                     }
@@ -2108,34 +2108,34 @@
                 return jobKinding.css(elem, name);
             }, jobKinding.style);
         },
-        show: function (value) {
+        show: function(value) {
             if (typeof value === "string") {
                 return this.css("display", value);
             }
             var isFunction = value && jobKinding.isFunction(value);
-            return this.each(function (i) {
+            return this.each(function(i) {
                 return jobKinding(this).css("display", isFunction ? value.call(this, i, this) : defaultPrefilter(this));
             });
         },
-        hide: function () {
+        hide: function() {
             return this.css("display", "none");
         },
-        toggle: function (state, value) {
+        toggle: function(state, value) {
             if (typeof state === "boolean") {
                 return state ? this.show(value) : this.hide();
             }
-            return this.each(function () {
+            return this.each(function() {
                 return isHidden(this) ? jobKinding(this).show(value) : jobKinding(this).hide();
             });
         },
 
-        addClass: function (value) {
+        addClass: function(value) {
             return classModel.call(this, value, true);
         },
-        removeClass: function (value) {
+        removeClass: function(value) {
             return classModel.call(this, value, false);
         },
-        toggleClass: function (value, stateVal) {
+        toggleClass: function(value, stateVal) {
             if (typeof stateVal === "boolean") {
                 return classModel.call(this, value, stateVal);
             }
@@ -2176,17 +2176,17 @@
         return elem;
     }
     jobKinding.fn.extend({
-        domManip: function (args, callback) {
+        domManip: function(args, callback) {
             args = concat.apply([], args);
             var node, first, length, fragment, scripts;
-            var 
-        i = 0,
-        len = this.length,
-        value = args[0],
-        xlen = len - 1,
-        isFunction = jobKinding.isFunction(value);
+            var
+                i = 0,
+                len = this.length,
+                value = args[0],
+                xlen = len - 1,
+                isFunction = jobKinding.isFunction(value);
             if (isFunction || (len > 1 && typeof value === "string" && !support.checkClone && rchecked.test(value))) {
-                return this.each(function (index) {
+                return this.each(function(index) {
                     var self = jobKinding(this);
                     if (isFunction) {
                         args[0] = value.call(this, index, self.html());
@@ -2233,38 +2233,38 @@
             }
             return this;
         },
-        append: function () {
-            return this.domManip(arguments, function (elem) {
+        append: function() {
+            return this.domManip(arguments, function(elem) {
                 if (this.nodeType === 1 || this.nodeType === 11 || this.nodeType === 9) {
                     var target = manipulationTarget(this, elem);
                     target.appendChild(elem);
                 }
             });
         },
-        prepend: function () {
-            return this.domManip(arguments, function (elem) {
+        prepend: function() {
+            return this.domManip(arguments, function(elem) {
                 if (this.nodeType === 1 || this.nodeType === 11 || this.nodeType === 9) {
                     var target = manipulationTarget(this, elem);
                     target.insertBefore(elem, target.firstChild);
                 }
             });
         },
-        before: function () {
-            return this.domManip(arguments, function (elem) {
+        before: function() {
+            return this.domManip(arguments, function(elem) {
                 if (this.parentNode) {
                     this.parentNode.insertBefore(elem, this);
                 }
             });
         },
-        after: function () {
-            return this.domManip(arguments, function (elem) {
+        after: function() {
+            return this.domManip(arguments, function(elem) {
                 if (this.parentNode) {
                     this.parentNode.insertBefore(elem, this.nextSibling);
                 }
             });
         },
-        empty: function () {
-            return this.each(function () {
+        empty: function() {
+            return this.each(function() {
                 if (this.nodeType === 1) {
                     for (var elem = this.firstChild; elem; elem = elem.nextSibling) {
                         this.removeChild(elem);
@@ -2273,17 +2273,17 @@
                 }
             });
         },
-        html: function (value) {
-            return this.access(null, value, arguments.length > 0, function (elem) {
+        html: function(value) {
+            return this.access(null, value, arguments.length > 0, function(elem) {
                 if (elem.nodeType === 1) {
                     return elem.innerHTML;
                 }
-            }, function (elem, value) {
+            }, function(elem, value) {
                 return jobKinding(elem).empty().append(value);
             });
         },
-        replaceWith: function () {
-            return this.domManip(arguments, function (elem) {
+        replaceWith: function() {
+            return this.domManip(arguments, function(elem) {
                 var parent = this.parentNode;
                 if (parent) {
                     parent.replaceChild(elem, this);
@@ -2292,13 +2292,13 @@
         }
     });
 
-    var 
-    rvalidchars = /^[\],:{}\s]*$/,
-    rvalidbraces = /(?:^|:|,)(?:\s*\[)+/g,
-    rvalidescape = /\\(?:["\\\/bfnrt]|u[\da-fA-F]{4})/g,
-    rvalidtokens = /"[^"\\\r\n]*"|true|false|null|-?(?:\d+\.|)\d+(?:[eE][+-]?\d+|)/g;
+    var
+        rvalidchars = /^[\],:{}\s]*$/,
+        rvalidbraces = /(?:^|:|,)(?:\s*\[)+/g,
+        rvalidescape = /\\(?:["\\\/bfnrt]|u[\da-fA-F]{4})/g,
+        rvalidtokens = /"[^"\\\r\n]*"|true|false|null|-?(?:\d+\.|)\d+(?:[eE][+-]?\d+|)/g;
     jobKinding.extend({
-        parseJSON: window.JSON && window.JSON.parse || function (data) {
+        parseJSON: window.JSON && window.JSON.parse || function(data) {
             if (data === null) {
                 return data;
             }
@@ -2312,7 +2312,7 @@
             }
             jobKinding.error("Invalid JSON: " + data);
         },
-        parseXML: function (data) {
+        parseXML: function(data) {
             var xml, tmp;
             if (!data || typeof data !== "string") {
                 return null;
@@ -2334,7 +2334,7 @@
             }
             return xml;
         },
-        parseHTML: function (data, context, keepScripts) {
+        parseHTML: function(data, context, keepScripts) {
             if (!data || typeof data !== "string") {
                 return null;
             }
@@ -2345,7 +2345,7 @@
             context = context || document;
 
             var parsed = rsingleTag.exec(data),
-        scripts = !keepScripts && [];
+                scripts = !keepScripts && [];
             if (parsed) {
                 return [context.createElement(parsed[1])];
             }
@@ -2359,33 +2359,33 @@
 
 
     var nodeNames = "abbr|article|aside|audio|bdi|canvas|data|datalist|details|figcaption|figure|footer|" +
-    "header|hgroup|mark|meter|nav|output|progress|section|summary|time|video",
-    rnoshimcache = new RegExp("<(?:" + nodeNames + ")[\\s/>]", "i"),
-    rleadingWhitespace = /^\s+/,
-    rxhtmlTag = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/gi,
-    rtagName = /<([\w:]+)/,
-    rtbody = /<tbody/i,
-    rhtml = /<|&#?\w+;/,
-    rnoInnerhtml = /<(?:script|style|link)/i,
-    rcheckableType = /^(?:checkbox|radio)$/i,
-    rchecked = /checked\s*(?:[^=]|=\s*.checked.)/i,
-    rscriptType = /^$|\/(?:java|ecma)script/i,
-    rscriptTypeMasked = /^true\/(.*)/,
-    rcleanScript = /^\s*<!(?:\[CDATA\[|--)|(?:\]\]|--)>\s*$/g,
+        "header|hgroup|mark|meter|nav|output|progress|section|summary|time|video",
+        rnoshimcache = new RegExp("<(?:" + nodeNames + ")[\\s/>]", "i"),
+        rleadingWhitespace = /^\s+/,
+        rxhtmlTag = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/gi,
+        rtagName = /<([\w:]+)/,
+        rtbody = /<tbody/i,
+        rhtml = /<|&#?\w+;/,
+        rnoInnerhtml = /<(?:script|style|link)/i,
+        rcheckableType = /^(?:checkbox|radio)$/i,
+        rchecked = /checked\s*(?:[^=]|=\s*.checked.)/i,
+        rscriptType = /^$|\/(?:java|ecma)script/i,
+        rscriptTypeMasked = /^true\/(.*)/,
+        rcleanScript = /^\s*<!(?:\[CDATA\[|--)|(?:\]\]|--)>\s*$/g,
 
-    wrapMap = {
-        option: [1, "<select multiple='multiple'>", "</select>"],
-        legend: [1, "<fieldset>", "</fieldset>"],
-        area: [1, "<map>", "</map>"],
-        param: [1, "<object>", "</object>"],
-        thead: [1, "<table>", "</table>"],
-        tr: [2, "<table><tbody>", "</tbody></table>"],
-        col: [2, "<table><tbody></tbody><colgroup>", "</colgroup></table>"],
-        td: [3, "<table><tbody><tr>", "</tr></tbody></table>"],
-        _default: support.htmlSerialize ? [0, "", ""] : [1, "X<div>", "</div>"]
-    },
-    safeFragment = createSafeFragment(document),
-    fragmentDiv = safeFragment.appendChild(document.createElement("div"));
+        wrapMap = {
+            option: [1, "<select multiple='multiple'>", "</select>"],
+            legend: [1, "<fieldset>", "</fieldset>"],
+            area: [1, "<map>", "</map>"],
+            param: [1, "<object>", "</object>"],
+            thead: [1, "<table>", "</table>"],
+            tr: [2, "<table><tbody>", "</tbody></table>"],
+            col: [2, "<table><tbody></tbody><colgroup>", "</colgroup></table>"],
+            td: [3, "<table><tbody><tr>", "</tr></tbody></table>"],
+            _default: support.htmlSerialize ? [0, "", ""] : [1, "X<div>", "</div>"]
+        },
+        safeFragment = createSafeFragment(document),
+        fragmentDiv = safeFragment.appendChild(document.createElement("div"));
 
     wrapMap.optgroup = wrapMap.option;
     wrapMap.tbody = wrapMap.tfoot = wrapMap.colgroup = wrapMap.caption = wrapMap.thead;
@@ -2393,12 +2393,12 @@
 
     function getAll(context, tag) {
         var elems, elem,
-      i = 0,
-      arr = context.getElementsByTagName ? context.getElementsByTagName(tag || "*") : context.querySelectorAll ? context.querySelectorAll(tag || "*") : null;
+            i = 0,
+            arr = context.getElementsByTagName ? context.getElementsByTagName(tag || "*") : context.querySelectorAll ? context.querySelectorAll(tag || "*") : null;
 
         if (!arr) {
             for (arr = [], elems = context.childNodes || context;
-        (elem = elems[i]) != null; i++) {
+                (elem = elems[i]) != null; i++) {
                 if (!tag || tag === "*" || jobKinding.nodeName(elem, tag)) {
                     arr.push(elem);
                 } else {
@@ -2411,7 +2411,7 @@
 
     function createSafeFragment(document) {
         var list = nodeNames.split("|"),
-      safeFrag = document.createDocumentFragment();
+            safeFrag = document.createDocumentFragment();
 
         if (safeFrag.createElement) {
             while (list.length) {
@@ -2421,13 +2421,13 @@
         return safeFrag;
     }
 
-    jobKinding.buildFragment = function (elems, context, scripts, selection) {
+    jobKinding.buildFragment = function(elems, context, scripts, selection) {
         var j, elem, contains,
-      tmp, tag, tbody, wrap,
-      l = elems.length,
-      safe = createSafeFragment(context),
-      nodes = [],
-      i = 0;
+            tmp, tag, tbody, wrap,
+            l = elems.length,
+            safe = createSafeFragment(context),
+            nodes = [],
+            i = 0;
 
         for (; i < l; i++) {
             elem = elems[i];
@@ -2483,20 +2483,20 @@
     }
 
     var risSimple = /^.[^:#\[\.,]*$/;
-    jobKinding.filter = function (selector, elems, not) {
+    jobKinding.filter = function(selector, elems, not) {
         if (jobKinding.isFunction(selector)) {
-            return jobKinding.grep(elems, function (elem, i) {
+            return jobKinding.grep(elems, function(elem, i) {
                 return !!selector.call(elem, i, elem);
             }, !!not);
         }
         if (selector.nodeType) {
-            return jobKinding.grep(elems, function (elem) {
+            return jobKinding.grep(elems, function(elem) {
                 return (elem === selector) === !not;
             });
         }
 
         if (typeof selector !== "string") {
-            return jobKinding.grep(elems, function (elem) {
+            return jobKinding.grep(elems, function(elem) {
                 return (indexOf.call(selector, elem) > -1) === !not;
             });
         }
@@ -2507,22 +2507,22 @@
         if (elems.length === 1 && elem.nodeType === 1) {
             return jobKinding.matchesSelector(elem, selector) ? [elem] : [];
         }
-        var results = jobKinding.matches(selector, jobKinding.grep(elems, function (elem) {
+        var results = jobKinding.matches(selector, jobKinding.grep(elems, function(elem) {
             return elem.nodeType === 1;
         }));
-        return risSimple.test(selector) ? results : jobKinding.grep(elems, function (elem) {
+        return risSimple.test(selector) ? results : jobKinding.grep(elems, function(elem) {
             return elem.nodeType === 1 && (indexOf.call(results, elem) > -1) === !not;
         });
     };
 
     jobKinding.fn.extend({
-        find: function (selector) {
+        find: function(selector) {
             var i, ret,
-        len = this.length,
-        self = this;
+                len = this.length,
+                self = this;
 
             if (typeof selector !== "string") {
-                return this.pushStack(jobKinding(selector).filter(function () {
+                return this.pushStack(jobKinding(selector).filter(function() {
                     for (i = 0; i < len; i++) {
                         if (jobKinding.contains(self[i], this)) {
                             return true;
@@ -2538,13 +2538,13 @@
             }
             return len > 1 ? jobKinding.uniqueSort(ret) : ret;
         },
-        filter: function (selector) {
+        filter: function(selector) {
             return this.pushStack(jobKinding.filter(selector, this));
         },
-        has: function (selector) {
+        has: function(selector) {
             var selector = jobKinding(selector, this),
-        l = selector.length;
-            return this.filter(function () {
+                l = selector.length;
+            return this.filter(function() {
                 for (var i = 0; i < l; i++) {
                     if (jobKinding.contains(this, selector[i])) {
                         return true;
@@ -2552,10 +2552,10 @@
                 }
             });
         },
-        not: function (selector) {
+        not: function(selector) {
             return this.pushStack(jobKinding.filter(selector, this, true));
         },
-        is: function (selector) {
+        is: function(selector) {
             return jobKinding.filter(selector, this).length > 0;
         }
     });
@@ -2569,16 +2569,16 @@
     var dataGuid = 0;
     var dataEvt = {};
     var dataPriv = {
-        receive: function (elem) {
+        receive: function(elem) {
             return elem.nodeType === 1 || elem.nodeType === 9 || !(+elem.nodeType);
         },
-        has: function (elem) {
+        has: function(elem) {
             return dataEvt[elem[jobKinding.expando]];
         },
-        get: function (elem, type) {
+        get: function(elem, type) {
             return dataPriv.has(elem) && type && dataPriv.has(elem)[type];
         },
-        set: function (elem, cache) {
+        set: function(elem, cache) {
             var dataId = elem[jobKinding.expando];
             if (cache) {
                 dataId = dataId || (elem[jobKinding.expando] = ++dataGuid);
@@ -2603,7 +2603,7 @@
                 noBubble: true
             },
             click: {
-                trigger: function () {
+                trigger: function() {
                     if (jobKinding.nodeName(this, "input") && this.type === "checkbox" && this.click) {
                         this.click();
                         return false;
@@ -2611,43 +2611,43 @@
                 }
             },
             focus: {
-                trigger: function () {
+                trigger: function() {
                     if (this !== document.activeElement && this.focus) {
                         try {
                             this.focus();
                             return false;
-                        } catch (e) { }
+                        } catch (e) {}
                     }
                 },
                 delegateType: "focusin"
             },
             blur: {
-                trigger: function () {
+                trigger: function() {
                     if (this === document.activeElement && this.blur) {
                         try {
                             this.blur();
                             return false;
-                        } catch (e) { }
+                        } catch (e) {}
                     }
                 },
                 delegateType: "focusout"
             },
             beforeunload: {
-                postDispatch: function (event) {
+                postDispatch: function(event) {
                     if (event.result !== undefined) {
                         event.originalEvent.returnValue = event.result;
                     }
                 }
             }
         },
-        add: function (elem, type, handle) {
+        add: function(elem, type, handle) {
             if (elem.addEventListener) {
                 elem.addEventListener(type, handle, false);
             } else if (elem.attachEvent) {
                 elem.attachEvent("on" + type, handle);
             }
         },
-        remove: function (elem, type, handle) {
+        remove: function(elem, type, handle) {
             if (elem.removeEventListener) {
                 elem.removeEventListener(type, handle, false);
             } else if (elem.detachEvent) {
@@ -2658,7 +2658,7 @@
         fixHooks: {},
         keyHooks: {
             props: "char charCode key keyCode".split(" "),
-            filter: function (event, original) {
+            filter: function(event, original) {
                 if (event.which == null) {
                     event.which = original.charCode != null ? original.charCode : original.keyCode;
                 }
@@ -2667,10 +2667,10 @@
         },
         mouseHooks: {
             props: "button buttons clientX clientY fromElement offsetX offsetY pageX pageY screenX screenY toElement".split(" "),
-            filter: function (event, original) {
+            filter: function(event, original) {
                 var body, eventDoc, doc,
-          button = original.button,
-          fromElement = original.fromElement;
+                    button = original.button,
+                    fromElement = original.fromElement;
                 if (event.pageX == null && original.clientX != null) {
                     eventDoc = event.target.ownerDocument || document;
                     doc = eventDoc.documentElement;
@@ -2688,14 +2688,14 @@
                 return event;
             }
         },
-        process: function (event) {
+        process: function(event) {
             event = jobKinding.fix(event);
 
             var i, ret, handleObj, matched, j,
-        handlerQueue = [],
-        args = slice.call(arguments),
-        handlers = (dataPriv.get(this, "events") || {})[event.type] || [],
-        fix = jobKinding.event.fix[event.type] || {};
+                handlerQueue = [],
+                args = slice.call(arguments),
+                handlers = (dataPriv.get(this, "events") || {})[event.type] || [],
+                fix = jobKinding.event.fix[event.type] || {};
             args[0] = event;
             event.delegateTarget = this;
 
@@ -2731,11 +2731,11 @@
 
             return event.result;
         },
-        handlers: function (event, handlers) {
+        handlers: function(event, handlers) {
             var sel, handleObj, matches, i,
-        handlerQueue = [],
-        delegateCount = handlers.delegateCount,
-        cur = event.target;
+                handlerQueue = [],
+                delegateCount = handlers.delegateCount,
+                cur = event.target;
             if (delegateCount && cur.nodeType && (!event.button || event.type !== "click")) {
 
                 for (; cur != this; cur = cur.parentNode || this) {
@@ -2747,8 +2747,8 @@
                             sel = handleObj.selector;
                             if (matches[sel] === undefined) {
                                 matches[sel] = handleObj.needsContext ?
-                  jobKinding(sel, this).indexOf(cur) > -1 :
-                  jobKinding.expr(sel, this, null, [cur]).length;
+                                    jobKinding(sel, this).indexOf(cur) > -1 :
+                                    jobKinding.expr(sel, this, null, [cur]).length;
                             }
                             if (matches[sel]) {
                                 matches.push(handleObj);
@@ -2785,7 +2785,7 @@
     function cloneCopyEvent(src, dest) {
         var type, cache, handle, events;
         if ((cache = dataPriv.has(src)) && cache.handle && (events = cache.events)) {
-            handle = function () {
+            handle = function() {
                 return jobKinding.event.process.apply(handle.elem, arguments);
             };
             handle.elem = dest;
@@ -2800,7 +2800,7 @@
         dest = null;
     }
 
-    jobKinding.clone = function (node, dataAndEvents, deepDataAndEvents) {
+    jobKinding.clone = function(node, dataAndEvents, deepDataAndEvents) {
         var i, len, srcElements, destElements;
         var clone = elem.cloneNode(true);
         if (support.cloneChecked && (elem.nodeType === 1 || elem.nodeType === 11)) {
@@ -2832,7 +2832,7 @@
     function returnFalse() {
         return false;
     }
-    jobKinding.Event = function (src, props) {
+    jobKinding.Event = function(src, props) {
         if (!(this instanceof jobKinding.Event)) {
             return new jobKinding.Event(src, props);
         }
@@ -2840,7 +2840,7 @@
             this.originalEvent = src;
             this.type = src.type;
             this.isDefaultPrevented = (src.defaultPrevented || src.returnValue === false ||
-        src.getPreventDefault && src.getPreventDefault()) ? returnTrue : returnFalse;
+                src.getPreventDefault && src.getPreventDefault()) ? returnTrue : returnFalse;
         } else {
             this.type = src;
         }
@@ -2857,7 +2857,7 @@
         isPropagationStopped: returnFalse,
         isImmediatePropagationStopped: returnFalse,
 
-        preventDefault: function () {
+        preventDefault: function() {
             var e = this.originalEvent;
             this.isDefaultPrevented = returnTrue;
             if (!e) {
@@ -2869,7 +2869,7 @@
                 e.returnValue = false;
             }
         },
-        stopPropagation: function () {
+        stopPropagation: function() {
             var e = this.originalEvent;
 
             this.isPropagationStopped = returnTrue;
@@ -2881,20 +2881,20 @@
             }
             e.cancelBubble = true;
         },
-        stopImmediatePropagation: function () {
+        stopImmediatePropagation: function() {
             this.isImmediatePropagationStopped = returnTrue;
             this.stopPropagation();
         }
     };
 
-    var 
-    rkeyEvent = /^key/,
-    rmouseEvent = /^(?:mouse|contextmenu)|click|dblclick/,
-    rfocusMorph = /^(?:focusinfocus|focusoutblur)$/,
-    rtypenamespace = /^([^.]*)(?:\.(.+)|)$/;
+    var
+        rkeyEvent = /^key/,
+        rmouseEvent = /^(?:mouse|contextmenu)|click|dblclick/,
+        rfocusMorph = /^(?:focusinfocus|focusoutblur)$/,
+        rtypenamespace = /^([^.]*)(?:\.(.+)|)$/;
 
     jobKinding.extend({
-        del: function (data /* ,args*/) {
+        del: function(data /* ,args*/ ) {
             var key, arr = slice.call(arguments, 1);
             if (data && arr.length > 0) {
                 try {
@@ -2912,7 +2912,7 @@
                 }
             }
         },
-        on: function (elem, types, handler, data, selector) {
+        on: function(elem, types, handler, data, selector) {
             if (!elem || !types || !handler || !dataPriv.receive(elem)) {
                 return;
             }
@@ -2927,12 +2927,12 @@
             }
             var cache = dataPriv.has(elem) || dataPriv.set(elem, {});
             var i, tmp, fix, type, _type, events, handlers, namespaces, handleObj, eventHandle,
-        needsContext = selector && jobKinding.selectors.match.needsContext.test(selector);
+                needsContext = selector && jobKinding.selectors.match.needsContext.test(selector);
             if (!(events = cache.events)) {
                 events = cache.events = {};
             }
             if (!(eventHandle = cache.handle)) {
-                eventHandle = cache.handle = function () {
+                eventHandle = cache.handle = function() {
                     return jobKinding.event.process.apply(eventHandle.elem, arguments);
                 };
                 eventHandle.elem = elem;
@@ -2978,7 +2978,7 @@
             }
             elem = null;
         },
-        off: function (elem, types, handler, selector, mappedTypes) {
+        off: function(elem, types, handler, selector, mappedTypes) {
             var events, cache = elem && dataPriv.get(elem);
             if (!cache || !(events = cache.events)) {
                 return;
@@ -3005,9 +3005,9 @@
                     handleObj = handlers[j];
 
                     if ((mappedTypes || _type === handleObj._type) &&
-            (!handler || handler.dataGuid === handleObj.dataGuid) &&
-            (!tmp || tmp.test(handleObj.namespace)) &&
-            (!selector || selector === handleObj.selector || selector === "**" && handleObj.selector)) {
+                        (!handler || handler.dataGuid === handleObj.dataGuid) &&
+                        (!tmp || tmp.test(handleObj.namespace)) &&
+                        (!selector || selector === handleObj.selector || selector === "**" && handleObj.selector)) {
                         handlers.splice(j, 1);
 
                         if (handleObj.selector) {
@@ -3029,19 +3029,19 @@
                 dataPriv.set(elem);
             }
         },
-        fix: function (event) {
+        fix: function(event) {
             if (event[jobKinding.expando]) {
                 return event;
             }
             var i, prop, props,
-        type = event.type,
-        originalEvent = event,
-        fixHook = jobKinding.event.fixHooks[type];
+                type = event.type,
+                originalEvent = event,
+                fixHook = jobKinding.event.fixHooks[type];
 
             if (!fixHook) {
                 jobKinding.event.fixHooks[type] = fixHook =
-          rmouseEvent.test(type) ? jobKinding.event.mouseHooks :
-          rkeyEvent.test(type) ? jobKinding.event.keyHooks : {};
+                    rmouseEvent.test(type) ? jobKinding.event.mouseHooks :
+                    rkeyEvent.test(type) ? jobKinding.event.keyHooks : {};
             }
             props = fixHook.props ? jobKinding.event.props.concat(fixHook.props) : jobKinding.event.props;
 
@@ -3062,12 +3062,12 @@
 
             return fixHook.filter ? fixHook.filter(event, originalEvent) : event;
         },
-        trigger: function (event, data, elem, onlyHandlers) {
+        trigger: function(event, data, elem, onlyHandlers) {
             var handle, ontype, cur,
-        bubbleType, fix, tmp, i,
-        eventPath = [],
-        type = hasOwn.call(event, "type") ? event.type : event,
-        namespaces = hasOwn.call(event, "namespace") ? event.namespace.split(".") : [];
+                bubbleType, fix, tmp, i,
+                eventPath = [],
+                type = hasOwn.call(event, "type") ? event.type : event,
+                namespaces = hasOwn.call(event, "namespace") ? event.namespace.split(".") : [];
 
             cur = tmp = elem = elem || document;
 
@@ -3150,25 +3150,25 @@
     });
 
     jobKinding.each(("blur focus focusin focusout load resize scroll unload click dblclick " +
-    "mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave " +
-    "change select submit keydown keypress keyup error contextmenu").split(" "), function (type) {
-        jobKinding.fn[type] = function (data, fn) {
+        "mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave " +
+        "change select submit keydown keypress keyup error contextmenu").split(" "), function(type) {
+        jobKinding.fn[type] = function(data, fn) {
             return arguments.length > 0 ?
-        this.on(type, null, data, fn) :
-        this.trigger(type);
+                this.on(type, null, data, fn) :
+                this.trigger(type);
         };
     });
-    jobKinding.fn.hover = function (fnOver, fnOut) {
+    jobKinding.fn.hover = function(fnOver, fnOut) {
         if (arguments.length === 1 && typeof fnOver === "string") {
             var _fnOver = fnOver;
-            fnOver = function (e) {
+            fnOver = function(e) {
                 jobKinding(this).toggleClass(_fnOver, e.type == "mouseenter");
             }
         }
         return this.mouseenter(fnOver).mouseleave(fnOut || fnOver);
     };
     jobKinding.fn.extend({
-        on: function (types, selector, data, fn, /*INTERNAL*/one) {
+        on: function(types, selector, data, fn, /*INTERNAL*/ one) {
             var type, origFn;
             if (typeof types === "object") {
                 if (typeof selector !== "string") {
@@ -3202,28 +3202,28 @@
 
             if (one === 1) {
                 origFn = fn;
-                fn = function (event) {
+                fn = function(event) {
                     jobKinding.fn.off(event);
                     return origFn.apply(this, arguments);
                 };
                 fn.dataGuid = origFn.dataGuid || (origFn.dataGuid = jobKinding.dataGuid++);
             }
-            return this.each(function () {
+            return this.each(function() {
                 jobKinding.on(this, types, fn, data, selector);
             });
         },
-        one: function (types, selector, data, fn) {
+        one: function(types, selector, data, fn) {
             return this.on(types, selector, data, fn, 1);
         },
-        off: function (types, selector, fn) {
+        off: function(types, selector, fn) {
             var handleObj, type;
             if (types && types.preventDefault && types.handleObj) {
                 handleObj = types.handleObj;
                 jobKinding(types.delegateTarget).off(
-          handleObj.namespace ? handleObj._type + "." + handleObj.namespace : handleObj._type,
-          handleObj.selector,
-          handleObj.handler
-        );
+                    handleObj.namespace ? handleObj._type + "." + handleObj.namespace : handleObj._type,
+                    handleObj.selector,
+                    handleObj.handler
+                );
                 return this;
             }
             if (typeof types === "object") {
@@ -3239,29 +3239,28 @@
             if (fn === false) {
                 fn = returnFalse;
             }
-            return this.each(function () {
+            return this.each(function() {
                 jobKinding.off(this, types, fn, selector);
             });
         },
-
-        bind: function (types, data, fn) {
+        bind: function(types, data, fn) {
             return this.on(types, null, data, fn);
         },
-        unbind: function (types, fn) {
+        unbind: function(types, fn) {
             return this.off(types, null, fn);
         },
-        delegate: function (selector, types, data, fn) {
+        delegate: function(selector, types, data, fn) {
             return this.on(types, selector, data, fn);
         },
-        undelegate: function (selector, types, fn) {
+        undelegate: function(selector, types, fn) {
             return arguments.length === 1 ? this.off(selector, "**") : this.off(types, selector || "**", fn);
         },
-        trigger: function (type, data) {
-            return this.each(function () {
+        trigger: function(type, data) {
+            return this.each(function() {
                 jobKinding.trigger(type, data, this);
             });
         },
-        triggerHandler: function (type, data) {
+        triggerHandler: function(type, data) {
             var elem = this[0];
             if (elem) {
                 return jobKinding.trigger(type, data, elem, true);
@@ -3270,9 +3269,9 @@
     });
 
     jobKinding.extend({
-        dir: function (elem, dir, until) {
+        dir: function(elem, dir, until) {
             var matched = [],
-        truncate = until !== undefined;
+                truncate = until !== undefined;
             while ((elem = elem[dir]) && elem.nodeType !== 9) {
                 if (elem.nodeType === 1) {
                     if (truncate && jobKinding(elem).is(until)) {
@@ -3283,11 +3282,11 @@
             }
             return matched;
         },
-        sibling: function (elem, dir) {
-            while ((elem = elem[dir]) && elem.nodeType !== 1) { }
+        sibling: function(elem, dir) {
+            while ((elem = elem[dir]) && elem.nodeType !== 1) {}
             return elem;
         },
-        siblings: function (elem, exclude) {
+        siblings: function(elem, exclude) {
             var matched = [];
             for (; elem; elem = elem.nextSibling) {
                 if (elem.nodeType === 1 && elem !== exclude) {
@@ -3299,52 +3298,52 @@
     });
 
     var rparentsprev = /^(?:parent|prev(?:All))/,
-    guaranteedUnique = {
-        children: true,
-        contents: true,
-        firstChild: true,
-        lastChild: true,
-        next: true,
-        prev: true
-    };
+        guaranteedUnique = {
+            children: true,
+            contents: true,
+            firstChild: true,
+            lastChild: true,
+            next: true,
+            prev: true
+        };
     jobKinding.each({
-        next: function (elem) {
+        next: function(elem) {
             return jobKinding.sibling(elem, "nextSibling");
         },
-        prev: function (elem) {
+        prev: function(elem) {
             return jobKinding.sibling(elem, "previousSibling");
         },
-        parent: function (elem) {
+        parent: function(elem) {
             var parent = elem.parentNode;
             return parent && parent.nodeType !== 11 ? parent : null;
         },
-        nextAll: function (elem, i, until) {
+        nextAll: function(elem, i, until) {
             return jobKinding.dir(elem, "nextSibling", until);
         },
-        prevAll: function (elem, i, until) {
+        prevAll: function(elem, i, until) {
             return jobKinding.dir(elem, "previousSibling", until);
         },
-        parentAll: function (elem, i, until) {
+        parentAll: function(elem, i, until) {
             return jobKinding.dir(elem, "parentNode", until);
         },
-        firstChild: function (elem) {
+        firstChild: function(elem) {
             return jobKinding.sibling({
                 nextSibling: elem.firstChild
             }, "nextSibling");
         },
-        lastChild: function (elem) {
+        lastChild: function(elem) {
             return jobKinding.sibling({
                 previousSibling: elem.lastChild
             }, "previousSibling");
         },
-        children: function (elem) {
+        children: function(elem) {
             return jobKinding.siblings(elem.firstChild);
         },
-        contents: function (elem) {
+        contents: function(elem) {
             return elem.contentDocument || jobKinding.merge([], elem.childNodes);
         }
-    }, function (fn, name) {
-        jobKinding.fn[name] = function (selector, until) {
+    }, function(fn, name) {
+        jobKinding.fn[name] = function(selector, until) {
             var matched = jobKinding.map(this, fn, until);
             if (selector && typeof selector === "string") {
                 matched = jobKinding.filter(selector, matched);
@@ -3362,19 +3361,19 @@
     });
 
 
-    var 
-    nonce = +(new Date()),
-    location = window.location,
-    rquery = (/\?/),
-    rbracket = /\[\]$/,
-    rCRLF = /\r?\n/g,
-    rsubmitterTypes = /^(?:submit|button|image|reset|file)$/i,
-    rsubmittable = /^(?:input|select|textarea|keygen)/i;
+    var
+        nonce = +(new Date()),
+        location = window.location,
+        rquery = (/\?/),
+        rbracket = /\[\]$/,
+        rCRLF = /\r?\n/g,
+        rsubmitterTypes = /^(?:submit|button|image|reset|file)$/i,
+        rsubmittable = /^(?:input|select|textarea|keygen)/i;
 
     function buildParams(prefix, obj, traditional, add) {
         var name;
         if (jobKinding.isArray(obj)) {
-            jobKinding.each(obj, function (v, i) {
+            jobKinding.each(obj, function(v, i) {
                 if (traditional || rbracket.test(prefix)) {
                     add(prefix, v)
                 } else {
@@ -3390,14 +3389,14 @@
         }
     }
 
-    jobKinding.param = function (a, traditional) {
+    jobKinding.param = function(a, traditional) {
         var prefix, s = [],
-      add = function (key, valueOrFunction) {
-          var value = jobKinding.isFunction(valueOrFunction) ? valueOrFunction() : valueOrFunction;
-          s[s.length] = encodeURIComponent(key) + "=" + encodeURIComponent(value == null ? "" : value)
-      };
+            add = function(key, valueOrFunction) {
+                var value = jobKinding.isFunction(valueOrFunction) ? valueOrFunction() : valueOrFunction;
+                s[s.length] = encodeURIComponent(key) + "=" + encodeURIComponent(value == null ? "" : value)
+            };
         if (jobKinding.isArray(a) || (a.jobKinding && !jobKinding.isPlainObject(a))) {
-            jobKinding.each(a, function (v) {
+            jobKinding.each(a, function(v) {
                 add(v.name, v.value);
             })
         } else {
@@ -3408,28 +3407,28 @@
         return s.join("&");
     };
 
-    var 
-    r20 = /%20/g,
-    rhash = /#.*$/,
-    rantiCache = /([?&])_=[^&]*/,
-    rheaders = /^(.*?):[ \t]*([^\r\n]*)$/mg,
-    rlocalProtocol = /^(?:about|app|app-storage|.+-extension|file|res|widget):$/,
-    rnoContent = /^(?:GET|HEAD)$/,
-    rprotocol = /^\/\//,
-    prefilters = {},
-    transports = {},
-    allTypes = "*/".concat("*"),
-    originAnchor = document.createElement("a");
+    var
+        r20 = /%20/g,
+        rhash = /#.*$/,
+        rantiCache = /([?&])_=[^&]*/,
+        rheaders = /^(.*?):[ \t]*([^\r\n]*)$/mg,
+        rlocalProtocol = /^(?:about|app|app-storage|.+-extension|file|res|widget):$/,
+        rnoContent = /^(?:GET|HEAD)$/,
+        rprotocol = /^\/\//,
+        prefilters = {},
+        transports = {},
+        allTypes = "*/".concat("*"),
+        originAnchor = document.createElement("a");
     originAnchor.href = location.href;
 
     function addToPrefiltersOrTransports(structure) {
-        return function (dataTypeExpression, callback) {
+        return function(dataTypeExpression, callback) {
             if (typeof dataTypeExpression !== "string") {
                 callback = dataTypeExpression;
                 dataTypeExpression = "*"
             }
             var dataType, i = 0,
-        dataTypes = dataTypeExpression.toLowerCase().match(rnotwhite) || [];
+                dataTypes = dataTypeExpression.toLowerCase().match(rnotwhite) || [];
             if (jobKinding.isFunction(callback)) {
                 while (dataType = dataTypes[i++]) {
                     if (dataType[0] === "+") {
@@ -3445,12 +3444,12 @@
 
     function inspectPrefiltersOrTransports(structure, options, originalOptions, jqXHR) {
         var inspected = {},
-      seekingTransport = (structure === transports);
+            seekingTransport = (structure === transports);
 
         function inspect(dataType) {
             var selected;
             inspected[dataType] = true;
-            jobKinding.each(structure[dataType] || [], function (prefilterOrFactory) {
+            jobKinding.each(structure[dataType] || [], function(prefilterOrFactory) {
                 var dataTypeOrTransport = prefilterOrFactory(options, originalOptions, jqXHR);
                 if (typeof dataTypeOrTransport === "string" && !seekingTransport && !inspected[dataTypeOrTransport]) {
                     options.dataTypes.unshift(dataTypeOrTransport);
@@ -3480,7 +3479,7 @@
 
     function ajaxHandleResponses(s, jqXHR, responses) {
         var ct, type, finalDataType, firstDataType, contents = s.contents,
-      dataTypes = s.dataTypes;
+            dataTypes = s.dataTypes;
         while (dataTypes[0] === "*") {
             dataTypes.shift();
             if (ct === undefined) {
@@ -3519,7 +3518,7 @@
 
     function ajaxConvert(s, response, jqXHR, isSuccess) {
         var conv2, current, conv, tmp, prev, converters = {},
-      dataTypes = s.dataTypes.slice();
+            dataTypes = s.dataTypes.slice();
         if (dataTypes[1]) {
             for (conv in s.converters) {
                 converters[conv.toLowerCase()] = s.converters[conv]
@@ -3619,92 +3618,92 @@
                 context: true
             }
         },
-        ajaxSetup: function (target, settings) {
+        ajaxSetup: function(target, settings) {
             return settings ? ajaxExtend(ajaxExtend(target, jobKinding.ajaxSettings), settings) : ajaxExtend(jobKinding.ajaxSettings, target)
         },
         ajaxPrefilter: addToPrefiltersOrTransports(prefilters),
         ajaxTransport: addToPrefiltersOrTransports(transports),
-        ajax: function (url, options) {
+        ajax: function(url, options) {
             if (typeof url === "object") {
                 options = url;
                 url = undefined;
             }
             options = options || {};
 
-            var 
-        transport,
-        cacheURL,
-        responseHeadersString,
-        responseHeaders,
-        timeoutTimer,
-        urlAnchor,
-        completed,
-        fireGlobals,
-        i,
-        uncached,
-        s = jobKinding.ajaxSetup({}, options),
-        callbackContext = s.context || s,
-        globalEventContext = s.context && (callbackContext.nodeType || callbackContext.jquery) ? jobKinding(callbackContext) : root,
-        deferred = jobKinding.Deferred(),
-        completeDeferred = jobKinding.Callbacks("once memory"),
-        statusCode = s.statusCode || {},
-        requestHeaders = {},
-        requestHeadersNames = {},
-        strAbort = "canceled",
-        jqXHR = {
-            readyState: 0,
-            getResponseHeader: function (key) {
-                var match;
-                if (completed) {
-                    if (!responseHeaders) {
-                        responseHeaders = {};
-                        while ((match = rheaders.exec(responseHeadersString))) {
-                            responseHeaders[match[1].toLowerCase()] = match[2];
+            var
+                transport,
+                cacheURL,
+                responseHeadersString,
+                responseHeaders,
+                timeoutTimer,
+                urlAnchor,
+                completed,
+                fireGlobals,
+                i,
+                uncached,
+                s = jobKinding.ajaxSetup({}, options),
+                callbackContext = s.context || s,
+                globalEventContext = s.context && (callbackContext.nodeType || callbackContext.jquery) ? jobKinding(callbackContext) : root,
+                deferred = jobKinding.Deferred(),
+                completeDeferred = jobKinding.Callbacks("once memory"),
+                statusCode = s.statusCode || {},
+                requestHeaders = {},
+                requestHeadersNames = {},
+                strAbort = "canceled",
+                jqXHR = {
+                    readyState: 0,
+                    getResponseHeader: function(key) {
+                        var match;
+                        if (completed) {
+                            if (!responseHeaders) {
+                                responseHeaders = {};
+                                while ((match = rheaders.exec(responseHeadersString))) {
+                                    responseHeaders[match[1].toLowerCase()] = match[2];
+                                }
+                            }
+                            match = responseHeaders[key.toLowerCase()];
                         }
-                    }
-                    match = responseHeaders[key.toLowerCase()];
-                }
-                return match == null ? null : match;
-            },
-            getAllResponseHeaders: function () {
-                return completed ? responseHeadersString : null;
-            },
-            setRequestHeader: function (name, value) {
-                if (completed == null) {
-                    name = requestHeadersNames[name.toLowerCase()] =
-                requestHeadersNames[name.toLowerCase()] || name;
-                    requestHeaders[name] = value;
-                }
-                return this;
-            },
-            overrideMimeType: function (type) {
-                if (completed == null) {
-                    s.mimeType = type;
-                }
-                return this;
-            },
-            statusCode: function (map) {
-                var code;
-                if (map) {
-                    if (completed) {
-                        jqXHR.always(map[jqXHR.status]);
-                    } else {
-                        for (code in map) {
-                            statusCode[code] = [statusCode[code], map[code]];
+                        return match == null ? null : match;
+                    },
+                    getAllResponseHeaders: function() {
+                        return completed ? responseHeadersString : null;
+                    },
+                    setRequestHeader: function(name, value) {
+                        if (completed == null) {
+                            name = requestHeadersNames[name.toLowerCase()] =
+                                requestHeadersNames[name.toLowerCase()] || name;
+                            requestHeaders[name] = value;
                         }
+                        return this;
+                    },
+                    overrideMimeType: function(type) {
+                        if (completed == null) {
+                            s.mimeType = type;
+                        }
+                        return this;
+                    },
+                    statusCode: function(map) {
+                        var code;
+                        if (map) {
+                            if (completed) {
+                                jqXHR.always(map[jqXHR.status]);
+                            } else {
+                                for (code in map) {
+                                    statusCode[code] = [statusCode[code], map[code]];
+                                }
+                            }
+                        }
+                        return this;
+                    },
+                    abort: function(statusText) {
+                        var finalText = statusText || strAbort;
+                        if (transport) {
+                            transport.abort(finalText);
+                        }
+                        done(0, finalText);
+                        return this;
                     }
-                }
-                return this;
-            },
-            abort: function (statusText) {
-                var finalText = statusText || strAbort;
-                if (transport) {
-                    transport.abort(finalText);
-                }
-                done(0, finalText);
-                return this;
-            }
-        };
+                };
 
             deferred.promise(jqXHR);
             s.url = ((url || s.url || location.href) + "").replace(rprotocol, location.protocol + "//");
@@ -3760,8 +3759,8 @@
                 jqXHR.setRequestHeader("Content-Type", s.contentType);
             }
             jqXHR.setRequestHeader(
-        "Accept",
-        s.dataTypes[0] && s.accepts[s.dataTypes[0]] ? s.accepts[s.dataTypes[0]] + (s.dataTypes[0] !== "*" ? ", " + allTypes + "; q=0.01" : "") : s.accepts["*"]);
+                "Accept",
+                s.dataTypes[0] && s.accepts[s.dataTypes[0]] ? s.accepts[s.dataTypes[0]] + (s.dataTypes[0] !== "*" ? ", " + allTypes + "; q=0.01" : "") : s.accepts["*"]);
             if (s.headers) {
                 for (i in s.headers) {
                     jqXHR.setRequestHeader(i, s.headers[i]);
@@ -3788,7 +3787,7 @@
                     return jqXHR;
                 }
                 if (s.async && s.timeout > 0) {
-                    timeoutTimer = window.setTimeout(function () {
+                    timeoutTimer = window.setTimeout(function() {
                         jqXHR.abort("timeout");
                     }, s.timeout);
                 }
@@ -3877,8 +3876,8 @@
             return jqXHR;
         }
     });
-    jobKinding.each(["get", "post"], function (method) {
-        jobKinding[method] = function (url, data, callback, type) {
+    jobKinding.each(["get", "post"], function(method) {
+        jobKinding[method] = function(url, data, callback, type) {
             if (jobKinding.isFunction(data)) {
                 type = type || callback;
                 callback = data;
@@ -3893,7 +3892,7 @@
             }, jobKinding.isPlainObject(url) && url))
         }
     });
-    jobKinding._evalUrl = function (url) {
+    jobKinding._evalUrl = function(url) {
         return jobKinding.ajax({
             url: url,
             type: "GET",
@@ -3905,24 +3904,24 @@
         })
     };
 
-    jobKinding.ajaxSettings.xhr = function () {
+    jobKinding.ajaxSettings.xhr = function() {
         try {
             return new window.XMLHttpRequest();
-        } catch (e) { }
+        } catch (e) {}
     };
-    var 
-    xhrSuccessStatus = {
-        0: 200,
-        1223: 204
-    },
-    xhrSupported = jobKinding.ajaxSettings.xhr();
+    var
+        xhrSuccessStatus = {
+            0: 200,
+            1223: 204
+        },
+        xhrSupported = jobKinding.ajaxSettings.xhr();
     support.cors = !!xhrSupported && ("withCredentials" in xhrSupported);
     support.ajax = xhrSupported = !!xhrSupported;
-    jobKinding.ajaxTransport(function (options) {
+    jobKinding.ajaxTransport(function(options) {
         var callback, tryCallback, errorCallback;
         if (support.cors || xhrSupported && !options.crossDomain) {
             return {
-                send: function (headers, complete) {
+                send: function(headers, complete) {
                     var i, xhr = options.xhr();
                     if (options.username) {
                         xhr.open(options.type, options.url, options.async, options.username, options.password);
@@ -3943,8 +3942,8 @@
                     for (i in headers) {
                         xhr.setRequestHeader(i, headers[i]);
                     }
-                    callback = function (type) {
-                        return function () {
+                    callback = function(type) {
+                        return function() {
                             if (callback) {
                                 callback = tryCallback = errorCallback = xhr.onload = xhr.onerror = xhr.onabort = xhr.onreadystatechange = null;
                                 if (type === "abort") {
@@ -3983,9 +3982,9 @@
                     if (xhr.onabort !== undefined) {
                         xhr.onabort = callback;
                     } else {
-                        xhr.onreadystatechange = function () {
+                        xhr.onreadystatechange = function() {
                             if (xhr.readyState === 4) {
-                                window.setTimeout(function () {
+                                window.setTimeout(function() {
                                     if (callback) {
                                         tryCallback();
                                     }
@@ -4001,7 +4000,7 @@
                         }
                     }
                 },
-                abort: function () {
+                abort: function() {
                     if (callback) {
                         callback()
                     }
@@ -4009,7 +4008,7 @@
             }
         }
     });
-    jobKinding.ajaxPrefilter(function (s) {
+    jobKinding.ajaxPrefilter(function(s) {
         if (s.crossDomain) {
             s.contents.script = false;
         }
@@ -4022,13 +4021,13 @@
             script: /\b(?:java|ecma)script\b/
         },
         converters: {
-            "text script": function (text) {
+            "text script": function(text) {
                 jobKinding.globalEval(text);
                 return text;
             }
         }
     });
-    jobKinding.ajaxPrefilter("script", function (s) {
+    jobKinding.ajaxPrefilter("script", function(s) {
         if (s.cache === undefined) {
             s.cache = false;
         }
@@ -4036,15 +4035,15 @@
             s.type = "GET";
         }
     });
-    jobKinding.ajaxTransport("script", function (s) {
+    jobKinding.ajaxTransport("script", function(s) {
         if (s.crossDomain) {
             var script, callback;
             return {
-                send: function (_, complete) {
+                send: function(_, complete) {
                     script = jobKinding("<script>").prop({
                         charset: s.scriptCharset,
                         src: s.url
-                    }).on("load error", callback = function (evt) {
+                    }).on("load error", callback = function(evt) {
                         script.remove();
                         callback = null;
                         if (evt) {
@@ -4053,7 +4052,7 @@
                     });
                     (document.head || document.body).appendChild(script[0]);
                 },
-                abort: function () {
+                abort: function() {
                     if (callback) {
                         callback();
                     }
@@ -4061,18 +4060,18 @@
             }
         }
     });
-    var 
-    oldCallbacks = [],
-    rjsonp = /(=)\?(?=&|$)|\?\?/;
+    var
+        oldCallbacks = [],
+        rjsonp = /(=)\?(?=&|$)|\?\?/;
     jobKinding.ajaxSetup({
         jsonp: "callback",
-        jsonpCallback: function () {
+        jsonpCallback: function() {
             var callback = oldCallbacks.pop() || (_jschar_ + "_" + (nonce++));
             this[callback] = true;
             return callback;
         }
     });
-    jobKinding.ajaxPrefilter("json jsonp", function (s, originalSettings, jqXHR) {
+    jobKinding.ajaxPrefilter("json jsonp", function(s, originalSettings, jqXHR) {
         var callbackName, overwritten, responseContainer, jsonProp = s.jsonp !== false && (rjsonp.test(s.url) ? "url" : typeof s.data === "string" && (s.contentType || "").indexOf("application/x-www-form-urlencoded") === 0 && rjsonp.test(s.data) && "data");
         if (jsonProp || s.dataTypes[0] === "jsonp") {
             callbackName = s.jsonpCallback = jobKinding.isFunction(s.jsonpCallback) ? s.jsonpCallback() : s.jsonpCallback;
@@ -4081,7 +4080,7 @@
             } else if (s.jsonp !== false) {
                 s.url += (rquery.test(s.url) ? "&" : "?") + s.jsonp + "=" + callbackName;
             }
-            s.converters["script json"] = function () {
+            s.converters["script json"] = function() {
                 if (!responseContainer) {
                     jobKinding.error(callbackName + " was not called");
                 }
@@ -4089,10 +4088,10 @@
             };
             s.dataTypes[0] = "json";
             overwritten = window[callbackName];
-            window[callbackName] = function () {
+            window[callbackName] = function() {
                 responseContainer = arguments;
             };
-            jqXHR.always(function () {
+            jqXHR.always(function() {
                 if (overwritten === undefined) {
                     jobKinding(window).removeProp(callbackName);
                 } else {
@@ -4110,8 +4109,8 @@
             return "script";
         }
     });
-    jobKinding.each(["ajaxStart", "ajaxStop", "ajaxComplete", "ajaxError", "ajaxSuccess", "ajaxSend"], function (type) {
-        jobKinding.fn[type] = function (fn) {
+    jobKinding.each(["ajaxStart", "ajaxStop", "ajaxComplete", "ajaxError", "ajaxSuccess", "ajaxSend"], function(type) {
+        jobKinding.fn[type] = function(fn) {
             return this.bind(type, fn);
         };
     });
@@ -4120,124 +4119,124 @@
 
     function createOptions(options) {
         var object = {};
-        jobKinding.each(options.match(rnotwhite), function (flag) {
+        jobKinding.each(options.match(rnotwhite), function(flag) {
             object[flag] = true;
         });
         return object;
     }
 
-    jobKinding.Callbacks = function (options) {
+    jobKinding.Callbacks = function(options) {
         options = jobKinding.isString(options) ? createOptions(options) : jobKinding.extend({}, options);
-        var 
-      firing, memory, fired, locked, list = [],
-      queue = [],
-      firingIndex = -1,
-      fire = function () {
-          locked = options.once;
-          fired = firing = true;
-          for (; queue.length; firingIndex = -1) {
-              memory = queue.shift();
-              while (++firingIndex < list.length) {
-                  if (list[firingIndex].apply(memory[0], memory[1]) === false && options.stopOnFalse) {
-                      firingIndex = list.length;
-                      memory = false;
-                  }
-              }
-          }
-          if (!options.memory) {
-              memory = false;
-          }
+        var
+            firing, memory, fired, locked, list = [],
+            queue = [],
+            firingIndex = -1,
+            fire = function() {
+                locked = options.once;
+                fired = firing = true;
+                for (; queue.length; firingIndex = -1) {
+                    memory = queue.shift();
+                    while (++firingIndex < list.length) {
+                        if (list[firingIndex].apply(memory[0], memory[1]) === false && options.stopOnFalse) {
+                            firingIndex = list.length;
+                            memory = false;
+                        }
+                    }
+                }
+                if (!options.memory) {
+                    memory = false;
+                }
 
-          firing = false;
-          if (locked) {
-              if (memory) {
-                  list = [];
-              } else {
-                  list = "";
-              }
-          }
-      },
-      self = {
-          add: function () {
-              if (list) {
-                  if (memory && !firing) {
-                      firingIndex = list.length - 1;
-                      queue.push(memory);
-                  } (function add(args) {
-                      jobKinding.each(args, function (arg) {
-                          if (jobKinding.isFunction(arg)) {
-                              if (!options.unique || !self.has(arg)) {
-                                  list.push(arg);
-                              }
-                          } else if (arg && arg.length && !jobKinding.isString(arg)) {
-                              add(arg);
-                          }
-                      });
-                  })(arguments);
-                  if (memory && !firing) {
-                      fire();
-                  }
-              }
-              return this;
-          },
-          remove: function () {
-              jobKinding.each(arguments, function (arg) {
-                  var index;
-                  while ((index = jobKinding.indexOfArray(arg, list, index)) > -1) {
-                      list.splice(index, 1);
-                      if (index <= firingIndex) {
-                          firingIndex--;
-                      }
-                  }
-              });
-              return this;
-          },
-          has: function (fn) {
-              return fn ? jobKinding.indexOfArray(fn, list) > -1 : list.length > 0;
-          },
-          empty: function () {
-              if (list) {
-                  list = [];
-              }
-              return this;
-          },
-          disable: function () {
-              locked = queue = [];
-              list = memory = "";
-              return this;
-          },
-          disabled: function () {
-              return !list;
-          },
-          lock: function () {
-              locked = queue = [];
-              if (!memory && !firing) {
-                  list = memory = "";
-              }
-              return this;
-          },
-          locked: function () {
-              return !!locked;
-          },
-          fireWith: function (context, args) {
-              if (!locked) {
-                  args = args || [];
-                  args = [context, args.slice ? args.slice() : args];
-                  queue.push(args);
-                  if (!firing) {
-                      fire();
-                  }
-              }
-              return this;
-          },
-          fire: function () {
-              self.fireWith(this, arguments);
-              return this;
-          },
-          fired: function () {
-              return !!fired;
-          }
-      };
+                firing = false;
+                if (locked) {
+                    if (memory) {
+                        list = [];
+                    } else {
+                        list = "";
+                    }
+                }
+            },
+            self = {
+                add: function() {
+                    if (list) {
+                        if (memory && !firing) {
+                            firingIndex = list.length - 1;
+                            queue.push(memory);
+                        }(function add(args) {
+                            jobKinding.each(args, function(arg) {
+                                if (jobKinding.isFunction(arg)) {
+                                    if (!options.unique || !self.has(arg)) {
+                                        list.push(arg);
+                                    }
+                                } else if (arg && arg.length && !jobKinding.isString(arg)) {
+                                    add(arg);
+                                }
+                            });
+                        })(arguments);
+                        if (memory && !firing) {
+                            fire();
+                        }
+                    }
+                    return this;
+                },
+                remove: function() {
+                    jobKinding.each(arguments, function(arg) {
+                        var index;
+                        while ((index = jobKinding.indexOfArray(arg, list, index)) > -1) {
+                            list.splice(index, 1);
+                            if (index <= firingIndex) {
+                                firingIndex--;
+                            }
+                        }
+                    });
+                    return this;
+                },
+                has: function(fn) {
+                    return fn ? jobKinding.indexOfArray(fn, list) > -1 : list.length > 0;
+                },
+                empty: function() {
+                    if (list) {
+                        list = [];
+                    }
+                    return this;
+                },
+                disable: function() {
+                    locked = queue = [];
+                    list = memory = "";
+                    return this;
+                },
+                disabled: function() {
+                    return !list;
+                },
+                lock: function() {
+                    locked = queue = [];
+                    if (!memory && !firing) {
+                        list = memory = "";
+                    }
+                    return this;
+                },
+                locked: function() {
+                    return !!locked;
+                },
+                fireWith: function(context, args) {
+                    if (!locked) {
+                        args = args || [];
+                        args = [context, args.slice ? args.slice() : args];
+                        queue.push(args);
+                        if (!firing) {
+                            fire();
+                        }
+                    }
+                    return this;
+                },
+                fire: function() {
+                    self.fireWith(this, arguments);
+                    return this;
+                },
+                fired: function() {
+                    return !!fired;
+                }
+            };
         return self;
     };
 
@@ -4265,105 +4264,105 @@
     }
 
     jobKinding.extend({
-        Deferred: function (callback) {
-            var 
-        tuples = [
-          ["solve", "progress", jobKinding.Callbacks("memory"), jobKinding.Callbacks("memory"), 2],
-          ["resolve", "done", jobKinding.Callbacks("once memory"), jobKinding.Callbacks("once memory"), 0, "success"],
-          ["unsolve", "fail", jobKinding.Callbacks("once memory"), jobKinding.Callbacks("once memory"), 1, "error"]
-        ],
-        state = "pending",
-        promise = {
-            state: function () {
-                return state;
-            },
-            always: function () {
-                deferred.done(arguments).fail(arguments);
-                return this;
-            },
-            catchErr: function (fn) {
-                return promise.then(null, fn);
-            },
-            then: function (onFulfilled, onRejected, onProgress) {
-                var maxDepth = 0;
+        Deferred: function(callback) {
+            var
+                tuples = [
+                    ["solve", "progress", jobKinding.Callbacks("memory"), jobKinding.Callbacks("memory"), 2],
+                    ["resolve", "done", jobKinding.Callbacks("once memory"), jobKinding.Callbacks("once memory"), 0, "success"],
+                    ["unsolve", "fail", jobKinding.Callbacks("once memory"), jobKinding.Callbacks("once memory"), 1, "error"]
+                ],
+                state = "pending",
+                promise = {
+                    state: function() {
+                        return state;
+                    },
+                    always: function() {
+                        deferred.done(arguments).fail(arguments);
+                        return this;
+                    },
+                    catchErr: function(fn) {
+                        return promise.then(null, fn);
+                    },
+                    then: function(onFulfilled, onRejected, onProgress) {
+                        var maxDepth = 0;
 
-                function resolve(depth, deferred, handler, special) {
-                    return function () {
-                        var that = this,
-                  args = arguments,
-                  mightThrow = function () {
-                      var returned, then;
-                      if (depth < maxDepth) {
-                          return
-                      }
-                      returned = handler.apply(that, args);
-                      if (returned === deferred.promise()) {
-                          throw new TypeError("Thenable self-resolution");
-                      }
-                      then = returned && (typeof returned === "object" || typeof returned === "function") && returned.then;
-                      if (jobKinding.isFunction(then)) {
-                          if (special) {
-                              then.call(returned, resolve(maxDepth, deferred, Identity, special), resolve(maxDepth, deferred, Thrower, special))
-                          } else {
-                              maxDepth++;
-                              then.call(returned, resolve(maxDepth, deferred, Identity, special), resolve(maxDepth, deferred, Thrower, special), resolve(maxDepth, deferred, Identity, deferred.solveWith))
-                          }
-                      } else {
-                          if (handler !== Identity) {
-                              that = undefined;
-                              args = [returned]
-                          } (special || deferred.resolveWith)(that, args)
-                      }
-                  },
-                  process = special ? mightThrow : function () {
-                      try {
-                          mightThrow();
-                      } catch (e) {
-                          if (WebErrorHook) {
-                              WebErrorHook(e, process.stackTrace);
-                          }
-                          if (depth + 1 >= maxDepth) {
-                              if (handler !== Thrower) {
-                                  that = undefined;
-                                  args = [e]
-                              }
-                              deferred.unsolveWith(that, args);
-                          }
-                      }
-                  };
-                        if (depth) {
-                            process()
-                        } else {
-                            if (jobKinding.Deferred.getStackHook) {
-                                process.stackTrace = jobKinding.Deferred.getStackHook();
+                        function resolve(depth, deferred, handler, special) {
+                            return function() {
+                                var that = this,
+                                    args = arguments,
+                                    mightThrow = function() {
+                                        var returned, then;
+                                        if (depth < maxDepth) {
+                                            return
+                                        }
+                                        returned = handler.apply(that, args);
+                                        if (returned === deferred.promise()) {
+                                            throw new TypeError("Thenable self-resolution");
+                                        }
+                                        then = returned && (typeof returned === "object" || typeof returned === "function") && returned.then;
+                                        if (jobKinding.isFunction(then)) {
+                                            if (special) {
+                                                then.call(returned, resolve(maxDepth, deferred, Identity, special), resolve(maxDepth, deferred, Thrower, special))
+                                            } else {
+                                                maxDepth++;
+                                                then.call(returned, resolve(maxDepth, deferred, Identity, special), resolve(maxDepth, deferred, Thrower, special), resolve(maxDepth, deferred, Identity, deferred.solveWith))
+                                            }
+                                        } else {
+                                            if (handler !== Identity) {
+                                                that = undefined;
+                                                args = [returned]
+                                            }(special || deferred.resolveWith)(that, args)
+                                        }
+                                    },
+                                    process = special ? mightThrow : function() {
+                                        try {
+                                            mightThrow();
+                                        } catch (e) {
+                                            if (WebErrorHook) {
+                                                WebErrorHook(e, process.stackTrace);
+                                            }
+                                            if (depth + 1 >= maxDepth) {
+                                                if (handler !== Thrower) {
+                                                    that = undefined;
+                                                    args = [e]
+                                                }
+                                                deferred.unsolveWith(that, args);
+                                            }
+                                        }
+                                    };
+                                if (depth) {
+                                    process()
+                                } else {
+                                    if (jobKinding.Deferred.getStackHook) {
+                                        process.stackTrace = jobKinding.Deferred.getStackHook();
+                                    }
+                                    window.setTimeout(process);
+                                }
                             }
-                            window.setTimeout(process);
                         }
+                        return jobKinding.Deferred(function(newDefer) {
+                            tuples[0][3].add(resolve(0, newDefer, jobKinding.isFunction(onProgress) ? onProgress : Identity, newDefer.solveWith));
+                            tuples[1][3].add(resolve(0, newDefer, jobKinding.isFunction(onFulfilled) ? onFulfilled : Identity));
+                            tuples[2][3].add(resolve(0, newDefer, jobKinding.isFunction(onRejected) ? onRejected : Thrower))
+                        }).promise();
+                    },
+                    promise: function(obj) {
+                        return obj != null ? jobKinding.extend(obj, promise) : promise;
                     }
-                }
-                return jobKinding.Deferred(function (newDefer) {
-                    tuples[0][3].add(resolve(0, newDefer, jobKinding.isFunction(onProgress) ? onProgress : Identity, newDefer.solveWith));
-                    tuples[1][3].add(resolve(0, newDefer, jobKinding.isFunction(onFulfilled) ? onFulfilled : Identity));
-                    tuples[2][3].add(resolve(0, newDefer, jobKinding.isFunction(onRejected) ? onRejected : Thrower))
-                }).promise();
-            },
-            promise: function (obj) {
-                return obj != null ? jobKinding.extend(obj, promise) : promise;
-            }
-        },
-        deferred = {};
-            jobKinding.each(tuples, function (tuple, i) {
-                var 
-          list = tuple[2],
-          stateString = tuple[5];
+                },
+                deferred = {};
+            jobKinding.each(tuples, function(tuple, i) {
+                var
+                    list = tuple[2],
+                    stateString = tuple[5];
                 promise[tuple[1]] = list.add;
                 if (stateString) {
-                    list.add(function () {
+                    list.add(function() {
                         state = stateString
                     }, tuples[3 - i][2].disable, tuples[0][2].lock);
                 }
                 list.add(tuple[3].fire);
-                deferred[tuple[0]] = function () {
+                deferred[tuple[0]] = function() {
                     deferred[tuple[0] + "With"](this === deferred ? undefined : this, arguments);
                     return this;
                 };
@@ -4375,22 +4374,22 @@
             }
             return deferred;
         },
-        when: function (singleValue) {
-            var 
-        remaining = arguments.length,
-        i = remaining,
-        resolveContexts = Array(i),
-        resolveValues = slice.call(arguments),
-        master = jobKinding.Deferred(),
-        updateFunc = function (i) {
-            return function (value) {
-                resolveContexts[i] = this;
-                resolveValues[i] = arguments.length > 1 ? slice.call(arguments) : value;
-                if (!(--remaining)) {
-                    master.resolveWith(resolveContexts, resolveValues)
-                }
-            }
-        };
+        when: function(singleValue) {
+            var
+                remaining = arguments.length,
+                i = remaining,
+                resolveContexts = Array(i),
+                resolveValues = slice.call(arguments),
+                master = jobKinding.Deferred(),
+                updateFunc = function(i) {
+                    return function(value) {
+                        resolveContexts[i] = this;
+                        resolveValues[i] = arguments.length > 1 ? slice.call(arguments) : value;
+                        if (!(--remaining)) {
+                            master.resolveWith(resolveContexts, resolveValues)
+                        }
+                    }
+                };
             if (remaining <= 1) {
                 adoptValue(singleValue, master.done(updateFunc(i)).resolve, master.unsolve);
                 if (master.state() === "pending" || jobKinding.isFunction(resolveValues[i] && resolveValues[i].then)) {
@@ -4404,19 +4403,19 @@
         }
     });
 
-    WebErrorHook = function (error, stack) {
+    WebErrorHook = function(error, stack) {
         if (window.console && window.console.warn && error && rerrorNames.test(error.name)) {
             window.console.warn("Error: " + error.message, "\n" + error.stack, "\nStackTrace: " + (stack || "NULL."));
         }
     };
-    jobKinding.readyException = function (error) {
-        window.setTimeout(function () {
+    jobKinding.readyException = function(error) {
+        window.setTimeout(function() {
             throw error;
         });
     };
     var readyList = jobKinding.Deferred();
-    jobKinding.fn.ready = function (fn) {
-        readyList.then(fn).catchErr(function (error) {
+    jobKinding.fn.ready = function(fn) {
+        readyList.then(fn).catchErr(function(error) {
             jobKinding.readyException(error);
         });
         return this;
@@ -4424,14 +4423,14 @@
     jobKinding.extend({
         isReady: false,
         readyWait: 1,
-        holdReady: function (hold) {
+        holdReady: function(hold) {
             if (hold) {
                 jobKinding.readyWait++;
             } else {
                 jobKinding.ready(true);
             }
         },
-        ready: function (wait) {
+        ready: function(wait) {
             if (wait === true ? --jobKinding.readyWait : jobKinding.isReady) {
                 return false;
             }
