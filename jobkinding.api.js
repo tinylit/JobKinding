@@ -1,4 +1,4 @@
-﻿(function ($) {
+(function ($) {
     var arr = [];
     var push = arr.push;
     var slice = arr.slice;
@@ -17,9 +17,13 @@
         return $.api.init.apply(null, arguments);
     }
     $.extend($.api, {
+        isReady: false,
         uri: $.uri,
         baseUri: $.baseUri,
         control: {},
+        load: function () { 
+        
+        },
         baseConfigs: function (tag, context) {
             var i, base = { tag: tag };
             for (i in $.api.base) {
@@ -199,7 +203,7 @@
                     document.append('<div class="this-split" style="width:', options, 'px"></div>');
                     break;
                 case "string":
-                    document.append($.ui.dynamic(options));
+                    document.append($.lib.html(options));
                     break;
                 default:
                     document.append(window.document.createTextNode(options));
@@ -279,7 +283,7 @@
 
     var ready = $.fn.ready;
     $.fn.ready = function (fn) {
-        if ($.ui.isReady) {
+        if ($.api.isReady) {
             return ready.apply(this, arguments);
         }
         return this.readyControl(fn);
@@ -292,7 +296,7 @@
                 });
             }
             return $.fn.ready(function () {
-                $.ui.load(tag);
+                $.api.load(tag);
             });
         });
         return this;
