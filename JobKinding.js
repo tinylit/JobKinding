@@ -4468,6 +4468,6 @@
     }
   }
 
-  window.kimiCriss = kimiCriss;
+  window.kimiCriss = window.$ = kimiCriss;
 
 })(window);
