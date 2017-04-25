@@ -5,10 +5,10 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>kimiCriss</title>
+	<title>$</title>
 	<link href="link/fa.css" rel="stylesheet" type="text/css" />
-	<link href="link/kimicriss.css" rel="stylesheet" type="text/css" />
-	<link href="link/kimicriss.lib.css" rel="stylesheet" type="text/css" />
+	<link href="link/jobkinding.css" rel="stylesheet" type="text/css" />
+	<link href="link/jobkinding.lib.css" rel="stylesheet" type="text/css" />
 	<style type="text/css">
 		body {
 			padding: 15px;
@@ -33,20 +33,20 @@
 			border: 1px solid #DCDCDC;
 		}
 	</style>
-	<script src="kimiCriss.js" type="text/javascript"></script>
-	<script src="kimiCriss.lib.js" type="text/javascript"></script>
-	<script src="js/kimiCriss.ui.js" type="text/javascript"></script>
+	<script src="jobkinding.js" type="text/javascript"></script>
+	<script src="jobkinding.lib.js" type="text/javascript"></script>
+	<script src="js/jobkinding.ui.js" type="text/javascript"></script>
 	<script type="text/javascript">
-		kimiCriss(document).ready(function(e) {
-			kimiCriss(".check > input").click(function() {
-				kimiCriss(this.parentNode).toggleClass("checked", this.checked);
+		$(document).ready(function(e) {
+			$(".check > input").click(function() {
+				$(this.parentNode).toggleClass("checked", this.checked);
 			});
-			kimiCriss(".ui.menu.vertical:has(.item + .ui.menu) > .item").click(function() {
-				kimiCriss(this).toggleClass("selected");
+			$(".ui.menu.vertical:has(.item + .ui.menu) > .item").click(function() {
+				$(this).toggleClass("selected");
 			});
-			kimiCriss(".ui.input > input + .ui.select").prev().css("border-right-width", 0);
-			kimiCriss(".ui.select > .select").hover("visible").find(" > .option").click(function(e) {
-				kimiCriss(this.parentNode).removeClass("visible").prevAll("input.ui.input").val(kimiCriss(this).text());
+			$(".ui.input > input + .ui.select").prev().css("border-right-width", 0);
+			$(".ui.select > .select").hover("visible").find(" > .option").click(function(e) {
+				$(this.parentNode).removeClass("visible").prevAll("input.ui.input").val($(this).text());
 			});
 		});
 	</script>
@@ -408,6 +408,33 @@
 			</div>
 			<input type="text" />
 			<div class="ui label"><i class="fa-clock-o"></i></div>
+		</div>
+	</div>
+	<div class="row-test">
+		<div class="ui content"></div>
+	</div>
+	<div class="row-test">
+		<div class="ui content hint towards-up"></div>
+		<div class="ui content hint towards-right"></div>
+		<div class="ui content hint towards-down"></div>
+		<div class="ui content hint towards-left"></div>
+	</div>
+	<div class="row-wrap">
+		<div class="ui input">
+			<span class="ui hint towards-up border-info-color font-info-color"><i class="fa-info-circle"></i>上提示框</span>
+			<input type="text">
+		</div>
+		<div class="ui input">
+			<span class="ui hint towards-right border-warning-color font-warning-color"><i class="fa-info-circle"></i>右提示框</span>
+			<input type="text">
+		</div>
+		<div class="ui input">
+			<span class="ui hint towards-down border-danger-color font-danger-color"><i class="fa-info-circle"></i>下提示框</span>
+			<input type="text">
+		</div>
+		<div class="ui input">
+			<span class="ui hint towards-left"><i class="fa-info-circle"></i>左提示框</span>
+			<input type="text">
 		</div>
 	</div>
 </body>

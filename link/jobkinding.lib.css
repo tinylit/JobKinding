@@ -3,6 +3,8 @@
 {
     font-size: 1.2em;
 
+    position: relative;
+
     border-radius: .25em;
 }
 
@@ -68,6 +70,7 @@
 
 .ui.item,
 .ui.link,
+.ui.hint,
 .ui.check,
 .ui.label,
 .ui.button,
@@ -94,6 +97,8 @@
 .ui.select .option,
 .ui.select .select,
 .ui.buttons .button,
+.ui.input > .hint,
+.ui.inputs > .input > .hint,
 input.ui.input,
 select.ui.input,
 textarea.ui.input,
@@ -118,6 +123,7 @@ textarea.ui.input,
 .ui.label,
 .ui.button,
 .ui.labels,
+.ui.content,
 .ui.links .link,
 .ui.select .option,
 .ui.select .select,
@@ -126,7 +132,9 @@ input.ui.input,
 select.ui.input,
 textarea.ui.input,
 .ui.input > input,
-.ui.input > textarea
+.ui.input > .hint,
+.ui.input > textarea,
+.ui.inputs > .input > .hint
 {
     border-width: .0625em;
 }
@@ -139,11 +147,14 @@ textarea.ui.input,
 .ui.select,
 .ui.button,
 .ui.buttons,
+.ui.content,
 input.ui.input,
 select.ui.input,
 textarea.ui.input,
+.ui.input > .hint,
 .ui.input > input,
-.ui.input > textarea
+.ui.input > textarea,
+.ui.inputs > .input > .hint
 {
     border-style: solid;
     border-color: #c0c0c0;
@@ -224,6 +235,10 @@ textarea.ui.input
 .ui.labels > .label.convex:before,
 .ui.labels > .label.concave + .label:after,
 .ui.labels > .label.concave + .label:before,
+.ui.input > .hint:after,
+.ui.input > .hint:before,
+.ui.inputs > .input > .hint:after,
+.ui.inputs > .input > .hint:before,
 .ui.menu > .item > .ui.menu > .item:after,
 .ui.menu > .item > .ui.menu > .item:before
 {
@@ -267,6 +282,10 @@ textarea.ui.input
 }
 .ui.label.convex:after,
 .ui.label.convex:before,
+.ui.input > .hint:after,
+.ui.input > .hint:before,
+.ui.inputs > .input > .hint:after,
+.ui.inputs > .input > .hint:before,
 .ui.label.concave + .label:after,
 .ui.label.concave + .label:before,
 .ui.labels > .label.convex:after,
@@ -280,7 +299,9 @@ textarea.ui.input
     border-color: transparent;
 }
 .ui.item,
-.ui.menu .item
+.ui.menu .item,
+.ui.input > .hint,
+.ui.inputs > .input > .hint
 {
     box-shadow: 0 .0625em .125em 0 rgba(34, 36, 38, .15);
 }
@@ -369,6 +390,7 @@ textarea.ui.input
     border-bottom-right-radius: inherit;
     border-bottom-left-radius: inherit;
 }
+
 .ui.menu > .item > .ui.menu.towards-up > .item.last-child:hover:after,
 .ui.menu > .item > .ui.menu.towards-up > .item:last-child:hover:after
 {
@@ -392,6 +414,8 @@ textarea.ui.input
     right: -.0625em;
     left: -.0625em;
 }
+.ui.input > .hint.towards-up,
+.ui.inputs > .input > .hint.towards-up,
 .ui.menu > .item > .ui.menu.towards-up
 {
     bottom: 100%;
@@ -402,6 +426,14 @@ textarea.ui.input
 .ui.label.concave + .label:after,
 .ui.labels > .label.convex:after,
 .ui.labels > .label.concave + .label:after,
+.ui.input > .hint.towards-up:after,
+.ui.input > .hint.towards-right:after,
+.ui.input > .hint.towards-down:after,
+.ui.input > .hint.towards-left:after,
+.ui.inputs > .input > .hint.towards-up:after,
+.ui.inputs > .input > .hint.towards-right:after,
+.ui.inputs > .input > .hint.towards-left:after,
+.ui.inputs > .input > .hint.towards-down:after,
 .ui.menu > .item > .ui.menu.towards-up > .item.last-child:after,
 .ui.menu > .item > .ui.menu.towards-up > .item:last-child:after,
 .ui.menu > .item > .ui.menu.towards-down > .item:first-child:after,
@@ -416,6 +448,14 @@ textarea.ui.input
 .ui.label.concave + .label:before,
 .ui.labels > .label.convex:before,
 .ui.labels > .label.concave + .label:before,
+.ui.input > .hint.towards-up:before,
+.ui.input > .hint.towards-right:before,
+.ui.input > .hint.towards-down:before,
+.ui.input > .hint.towards-left:before,
+.ui.inputs > .input > .hint.towards-up:before,
+.ui.inputs > .input > .hint.towards-right:before,
+.ui.inputs > .input > .hint.towards-left:before,
+.ui.inputs > .input > .hint.towards-down:before,
 .ui.menu > .item > .ui.menu.towards-up > .item.last-child:before,
 .ui.menu > .item > .ui.menu.towards-up > .item:last-child:before,
 .ui.menu > .item > .ui.menu.towards-down > .item:first-child:before,
@@ -426,6 +466,14 @@ textarea.ui.input
 
     border-width: .6em;
 }
+.ui.input > .hint.towards-up:after,
+.ui.input > .hint.towards-up:before,
+.ui.input > .hint.towards-down:after,
+.ui.input > .hint.towards-down:before,
+.ui.inputs > .input > .hint.towards-up:after,
+.ui.inputs > .input > .hint.towards-up:before,
+.ui.inputs > .input > .hint.towards-down:after,
+.ui.inputs > .input > .hint.towards-down:before,
 .ui.menu > .item > .ui.menu.towards-up > .item.last-child:after,
 .ui.menu > .item > .ui.menu.towards-up > .item:last-child:after,
 .ui.menu > .item > .ui.menu.towards-up > .item.last-child:before,
@@ -436,6 +484,10 @@ textarea.ui.input
     right: 0;
     left: 0;
 }
+.ui.input > .hint.towards-up:after,
+.ui.input > .hint.towards-up:before,
+.ui.inputs > .input > .hint.towards-down:after,
+.ui.inputs > .input > .hint.towards-down:before,
 .ui.menu > .item > .ui.menu.towards-up > .item.last-child:after,
 .ui.menu > .item > .ui.menu.towards-up > .item:last-child:after,
 .ui.menu > .item > .ui.menu.towards-up > .item.last-child:before,
@@ -443,31 +495,45 @@ textarea.ui.input
 {
     top: 100%;
 }
+.ui.input > .hint.towards-up:after,
+.ui.inputs > .input > .hint.towards-up:after,
 .ui.menu > .item > .ui.menu.towards-up > .item.last-child:after,
 .ui.menu > .item > .ui.menu.towards-up > .item:last-child:after
 {
     border-top-color: #fff;
 }
+.ui.input > .hint.towards-up:before,
+.ui.inputs > .input > .hint.towards-up:before,
 .ui.menu > .item > .ui.menu.towards-up > .item.last-child:before,
 .ui.menu > .item > .ui.menu.towards-up > .item:last-child:before
 {
     border-top-color: inherit;
 }
+.ui.input > .hint.towards-down,
+.ui.inputs > .input > .hint.towards-down,
 .ui.menu > .item > .ui.menu.towards-down
 {
     top: 100%;
 
     margin-top: .8em;
 }
+.ui.input > .hint.towards-down:after,
+.ui.input > .hint.towards-down:before,
+.ui.inputs > .input > .hint.towards-down:after,
+.ui.inputs > .input > .hint.towards-down:before,
 .ui.menu > .item > .ui.menu.towards-down > .item:first-child:after,
 .ui.menu > .item > .ui.menu.towards-down > .item:first-child:before
 {
     bottom: 100%;
 }
+.ui.input > .hint.towards-down:after,
+.ui.inputs > .input > .hint.towards-down:after,
 .ui.menu > .item > .ui.menu.towards-down > .item:first-child:after
 {
     border-bottom-color: #fff;
 }
+.ui.input > .hint.towards-down:before,
+.ui.inputs > .input > .hint.towards-down:before,
 .ui.menu > .item > .ui.menu.towards-down > .item:first-child:before
 {
     border-bottom-color: inherit;
@@ -479,24 +545,40 @@ textarea.ui.input
     top: -.0625em;
     bottom: auto;
 }
+.ui.input > .hint.towards-left,
+.ui.inputs > .input > .hint.towards-left,
 .ui.menu > .item > .ui.menu.towards-left
 {
     right: 100%;
 
     margin-right: .8em;
 }
+.ui.input > .hint.towards-right,
+.ui.inputs > .input > .hint.towards-right,
 .ui.menu > .item > .ui.menu.towards-right
 {
     left: 100%;
 
     margin-left: .8em;
 }
+.ui.input > .hint.towards-left,
+.ui.input > .hint.towards-right,
+.ui.inputs > .input > .hint.towards-left,
+.ui.inputs > .input > .hint.towards-right,
 .ui.menu > .item > .ui.menu.towards-left > .item,
 .ui.menu > .item > .ui.menu.towards-right > .item
 {
     white-space: nowrap;
     word-break: keep-all;
 }
+.ui.input > .hint.towards-left:after,
+.ui.input > .hint.towards-left:before,
+.ui.input > .hint.towards-right:after,
+.ui.input > .hint.towards-right:before,
+.ui.inputs > .input > .hint.towards-left:after,
+.ui.inputs > .input > .hint.towards-left:before,
+.ui.inputs > .input > .hint.towards-right:after,
+.ui.inputs > .input > .hint.towards-right:before,
 .ui.menu > .item > .ui.menu.towards-left > .item:after,
 .ui.menu > .item > .ui.menu.towards-left > .item:before,
 .ui.menu > .item > .ui.menu.towards-right > .item:after,
@@ -505,6 +587,10 @@ textarea.ui.input
     top: 0;
     bottom: 0;
 }
+.ui.input > .hint.towards-right:after,
+.ui.input > .hint.towards-right:before,
+.ui.inputs > .input > .hint.towards-right:after,
+.ui.inputs > .input > .hint.towards-right:before,
 .ui.menu > .item > .ui.menu.towards-right > .item:first-child:after,
 .ui.menu > .item > .ui.menu.towards-right > .item:first-child:before
 {
@@ -512,16 +598,24 @@ textarea.ui.input
 }
 .ui.label.concave + .label:after,
 .ui.labels > .label.concave + .label:after,
+.ui.input > .hint.towards-right:after,
+.ui.inputs > .input > .hint.towards-right:after,
 .ui.menu > .item > .ui.menu.towards-right > .item:first-child:after
 {
     border-right-color: #fff;
 }
 .ui.label.concave + .label:before,
 .ui.labels > .label.concave + .label:before,
+.ui.input > .hint.towards-right:before,
+.ui.inputs > .input > .hint.towards-right:before,
 .ui.menu > .item > .ui.menu.towards-right > .item:first-child:before
 {
     border-right-color: inherit;
 }
+.ui.input > .hint.towards-left:after,
+.ui.input > .hint.towards-left:before,
+.ui.inputs > .input > .hint.towards-left:after,
+.ui.inputs > .input > .hint.towards-left:before,
 .ui.menu > .item > .ui.menu.towards-left > .item:first-child:after,
 .ui.menu > .item > .ui.menu.towards-left > .item:first-child:before
 {
@@ -529,12 +623,16 @@ textarea.ui.input
 }
 .ui.label.convex:after,
 .ui.labels > .label.convex:after,
+.ui.input > .hint.towards-left:after,
+.ui.inputs > .input > .hint.towards-left:after,
 .ui.menu > .item > .ui.menu.towards-left > .item:first-child:after
 {
     border-left-color: #fff;
 }
 .ui.label.convex:before,
 .ui.labels > .label.convex:before,
+.ui.input > .hint.towards-left:before,
+.ui.inputs > .input > .hint.towards-left:before,
 .ui.menu > .item > .ui.menu.towards-left > .item:first-child:before
 {
     border-left-color: inherit;
@@ -1040,4 +1138,72 @@ textarea.ui.input:focus,
     border-top-right-radius: .25em !important;
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
+}
+
+.ui.content
+{
+    min-width: 15.75em;
+    max-width: 100%;
+    min-height: 5em;
+}
+.ui.content + .ui.content
+{
+    margin-top: .75em;
+}
+.ui.content.hint.towards-up
+{
+    border-top-width: .375em;
+}
+.ui.content.hint.towards-right
+{
+    border-right-width: .375em;
+}
+.ui.content.hint.towards-down
+{
+    border-bottom-width: .375em;
+}
+.ui.content.hint.towards-left
+{
+    border-left-width: .375em;
+}
+
+.ui.input > .hint,
+.ui.inputs > .input > .hint
+{
+    position: absolute;
+    z-index: 2016;
+
+    margin: auto;
+
+    background-color: #fff;
+}
+.ui.input > .hint + *,
+.ui.inputs > .input > .hint + *
+{
+    border-top-left-radius: inherit;
+    border-bottom-left-radius: inherit;
+}
+
+.ui.input > .hint.towards-up,
+.ui.input > .hint.towards-down,
+.ui.inputs > .input > .hint.towards-up,
+.ui.inputs > .input > .hint.towards-down
+{
+    right: 0;
+    left: 0;
+}
+.ui.input > .hint.towards-left,
+.ui.input > .hint.towards-right,
+.ui.inputs > .input > .hint.towards-left,
+.ui.inputs > .input > .hint.towards-right
+{
+    top: 0;
+    bottom: 0;
+}
+.ui.input > .hint.towards-up > *[class^='fa-'],
+.ui.input > .hint.towards-down > *[class^='fa-'],
+.ui.inputs > .input > .hint.towards-up > *[class^='fa-'],
+.ui.inputs > .input > .hint.towards-down > *[class^='fa-']
+{
+    display: block;
 }

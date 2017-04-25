@@ -21,8 +21,8 @@
         uri: $.uri,
         baseUri: $.baseUri,
         control: {},
-        load: function () { 
-        
+        load: function () {
+
         },
         baseConfigs: function (tag, context) {
             var i, base = { tag: tag };
