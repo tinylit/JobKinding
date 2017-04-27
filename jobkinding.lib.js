@@ -1,4 +1,4 @@
-﻿(function ($) {
+(function ($) {
 
     var version = "1.0.1";
     var whitespace = "[\\x20\\t\\r\\n\\f]";
