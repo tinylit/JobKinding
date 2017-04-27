@@ -14,41 +14,65 @@
         if ($.api.control[tag]) {
             return new $.api.control[tag].apply(null, arguments);
         }
-        return $.api.init.apply(null, arguments);
+        return new $.api.fn.init.apply(null, arguments);
     }
     $.extend($.api, {
         isReady: false,
+        readyWait: 0,
         uri: $.uri,
         baseUri: $.baseUri,
-        control: {},
-        load: function () {
-
-        },
-        baseConfigs: function (tag, context) {
-            var i, base = { tag: tag };
-            for (i in $.api.base) {
-                base[i] = function () {
-                    return $.api.base[i].apply(context, arguments);
-                }
+        baseConfigs: function (type, options) {
+            if (arguments.length === 1) {
+                options = type;
+                type = null;
             }
-            return base.base = base;
-        },
-        init: function (tag, configs) {
-            var type = $.type(configs);
-            if (type === "function") {
-                return $.api.control[tag] = configs;
-            }
+            type = type || $.type(options);
             if (type === "string") {
-                configs = (function (o) {
-                    $.each(configs.match(rnotwhite), function (key) {
+                options = (function (o) {
+                    $.each(options.match(rnotwhite), function (key) {
                         o[key] = true;
                     });
                     return o;
                 })({});
             }
-            return $.api.control[tag] = function (tag, selector, options) {
-                return $.api(tag, selector, options, configs);
-            };
+            if (type === "object" || type === "string") {
+                var callbacks = {};
+                if (type === "object") {
+                    for (type in options) {
+                        if (options[type] && $.isFunction(options[type])) {
+                            callbacks[type] = options[type];
+                        }
+                    }
+                }
+                $.extend(options, {
+                    baseConfigs: function (object, context) {
+                        object = object || {};
+                        context = context || this;
+                        $.api.fn.baseConfigs(object, context);
+                        for (var i in callbacks) {
+                            object[i] = function () {
+                                return callbacks[i].apply(context, arguments);
+                            }
+                        }
+                        if (this.base) {
+                            $.api.fn.baseConfigs(this.base.base = {}, this);
+                        }
+                        return object;
+                    }
+                });
+            }
+            return $.improve(options, $.api.fn);
+        },
+        init: function (tag, options) {
+            var type = $.type(options);
+            if (type === "function") {
+                return $.api.control[tag] = options;
+            }
+            var init = function (tag, selector, options) {
+                this.init(tag, selector, options);
+            }
+            init.prototype = $.api.baseConfigs(type, options);
+            return $.api.control[tag] = init;
         }
     });
     $.api.fn = {
@@ -59,51 +83,181 @@
             resolve: 4,
             commit: 8
         },
-        baseConfigs: function (key, value, base) {
-            base = base || this.base;
-            if (key in base) {
-                var lyt = this;
-                base[key] = function () {
-                    return value.apply(lyt, arguments);
+        control: {},
+        baseConfigs: function (object, context) {
+            object = object || {};
+            context = context || this;
+            object.init = function (tag) {
+                context.document = $(context.selector, context.context).append(document.createElement(tag || "div"));
+                context.$ = context.$.lastChild();
+            };
+            object.render = function () {
+                if (context.tag) {
+                    context.$.prop(context.tag, context);
+                    context.$.addClass(context.tag.slice(0, 2).toLowerCase() + context.tag.slice(2));
                 }
-            }
+                if (!context.enabled) {
+                    context.setEnabled(context.enabled);
+                }
+                if (!context.visible) {
+                    context.hide();
+                }
+                if (context.css) {
+                    context.$.css(context.css);
+                }
+                if (context.width) {
+                    context.setWidth(context.width);
+                }
+                if (context.height) {
+                    context.setHeight(context.height);
+                }
+                if (context.addClass) {
+                    context.$.addClass(context.addClass);
+                }
+                if (context.border) {
+                    if ($.lib.support("box-shadow")) {
+                        context.$.addClass("shadow");
+                    } else {
+                        context.$.addClass("border");
+                    }
+                }
+                if (context.focus) {
+                    context.tryfocus();
+                }
+            };
+            object.resolve = function () { };
+            object.commit = function () {
+                context.$.bind(context.on);
+            };
+            object.trigger = function (type, data) {
+                context.$.trigger(type, data);
+            };
+            object.dynamic = function (options, document) {
+                if (options == null || document == null || document.version == null) {
+                    return context;
+                }
+                switch ($.type(options)) {
+                    case "object":
+                        if (options.nodeType) {
+                            document.append(options);
+                            break;
+                        }
+                        if (options.addClass) {
+                            document.addClass(options.addClass);
+                        }
+                        var tag = options.tag;
+                        if ($.type(tag) === "string") {
+                            tag = tag.slice(0, 2).toLowerCase() + tag.slice(2);
+                            if (typeof $[tag] === "function") {
+                                $.api(tag, options.selector, options.options);
+                            }
+                        }
+                        break;
+                    case "function":
+                        context.dynamic(options.call(context, document, context), document);
+                        break;
+                    case "array":
+                        $.each(options, function (value) {
+                            context.dynamic(value, document);
+                        });
+                        break;
+                    case "number":
+                        document.append('<div class="context-split" style="width:', options, 'px"></div>');
+                        break;
+                    case "string":
+                        document.append($.lib.html(options));
+                        break;
+                    default:
+                        document.append(window.document.createTextNode(String(options)));
+                        break;
+                }
+                return context;
+            };
+            object.whenThen = function (state) {
+                state = state || context.state;
+                switch (state) {
+                    case "pending": context.init();
+                    case "init": context.render();
+                    case "render": context.resolve();
+                    case "resolve": context.commit();
+                    case "commit": context.commit = "commit"; break;
+                    default: $.syntaxError('Undefined state: ' + state + ', relevant methods '); break;
+                }
+            };
+            object.destroy = function (v) {
+                context.$.remove();
+                context.base.base = $.api.destroy(context.base.base, false);
+                context.base = $.api.destroy(context.base, false);
+                $.api.destroy(context, v);
+            };
+            object.contains = function (el) {
+                for (var i = 0, len = context.$.length; i < len; i++) {
+                    if ($.contains(context.$.get(i), el)) {
+                        return true;
+                    }
+                }
+                return false;
+            };
+            object.hide = function () {
+                context.setVisible(false);
+            };
+            object.show = function () {
+                context.setVisible(true);
+            };
+            object.toggle = function (v) {
+                if (typeof v === "boolean") {
+                    return v ? context.show() : context.hide();
+                }
+                return context.toggle(!context.visible);
+            };
+            object.tryfocus = function () {
+                try {
+                    context.$.eq(0).focus();
+                } catch (e) { }
+            };
+            object.setWidth = function (v) {
+                if (!!(v = $.reg.o2stylenumber.exec(v))) {
+                    context.width = +v[1 * (!v[2] || v[2] == "px")] || v[0] || 0;
+                    context.$.width(v[0]);
+                    return v;
+                }
+            };
+            object.setHeight = function (v) {
+                if (!!(v = $.reg.o2stylenumber.exec(v))) {
+                    context.height = +v[1 * (!v[2] || v[2] == "px")] || v[0] || 0;
+                    context.$.height(v[0]);
+                    return v;
+                }
+            };
+            object.setVisible = function (v) {
+                if ($.reg.bool.test(v)) {
+                    context.$.toggleClass("hide", !(context.visible = (v === true || v === "true")));
+                    return true;
+                }
+            };
+            object.setEnabled = function (v) {
+                if ($.reg.bool.test(v)) {
+                    context.$.attr("disabled", !(context.enabled = (v === true || v === "true")));
+                    return true;
+                }
+            };
+            return object;
         },
-        init: function (tag, selector, options, configs) {
-
-            var i = 0;
-
-            this.visible = true;
-            this.enabled = true;
-            this.selector = selector;
-
-            this.base = $.api.baseConfigs(tag, this);
-
-            if (configs) {
-                this.base.base = $.api.baseConfigs(tag, this);
-                if (typeof configs === "string") {
-                    for (var arr = configs.match(rnotwhite) || [], len = arr.length; i < len; i++) {
-                        this[arr[i]] = this.base[arr[i]] = true;
-                    }
-                } else {
-                    for (i in configs) {
-                        this.baseConfigs(i, this.base[i], this.base);
-                        this.baseConfigs(i, this[i]);
-                        this[i] = configs[i];
-                    }
-                }
+        init: function (tag, selector, options) {
+            if ($.isString(options)) {
+                options = (function (o) {
+                    $.each(options.match(rnotwhite), function (key) {
+                        o[key] = true;
+                    });
+                    return o;
+                })({});
             }
-            if (options) {
-                if (typeof options === "string") {
-                    for (var arr = options.match(rnotwhite) || [], len = arr.length; i < len; i++) {
-                        this[arr[i]] = true;
-                    }
-                } else {
-                    for (i in options) {
-                        this.baseConfigs(i, this[i]);
-                        this[i] = configs[i];
-                    }
-                }
-            }
+
+            this.baseConfigs();
+
+            this.baseConfigs(this.base = {}, this);
+
+            $.extend(true, this, options);
 
             this.state = "pending";
             if (this.init() === false) {
@@ -124,163 +278,97 @@
             }
         }
     };
-    $.api.fn.init.prototype = $.api.base = {
-        init: function (tag) {
-            this.document = $(this.selector, this.context).append(document.createElement(tag || "div"));
-            this.$ = this.$.lastChild();
-        },
-        render: function () {
-            if (this.tag) {
-                this.$.prop(this.tag, this);
-                this.$.addClass(this.tag.slice(0, 2).toLowerCase() + this.tag.slice(2));
+    $.api.fn.init.prototype = $.api.fn;
+
+    var readyList = jschar.Deferred();
+    var readyRegExp = navigator.platform === 'PLAYSTATION 3' ? /^complete$/ : /^(complete|loaded)$/;
+    function _load(tag, uri, base) {
+        var url = base ? $.api.baseUri : $.api.uri;
+        if ($.isString(uri)) {
+            if (uri.indexOf("~/")) {
+                url = $.api.baseUri;
+                uri = uri.slice(2);
             }
-            if (!this.enabled) {
-                this.setEnabled(this.enabled);
-            }
-            if (!this.visible) {
-                this.hide();
-            }
-            if (this.css) {
-                this.$.css(this.css);
-            }
-            if (this.width) {
-                this.setWidth(this.width);
-            }
-            if (this.height) {
-                this.setHeight(this.height);
-            }
-            if (this.addClass) {
-                this.$.addClass(this.addClass);
-            }
-            if (this.border) {
-                if ($.lib.support("box-shadow")) {
-                    this.$.addClass("shadow");
-                } else {
-                    this.$.addClass("border");
+            if (uri.indexOf("../") > -1) {
+                var uriArr = url.split("/");
+                while (uri.indexOf("../") > -1) {
+                    uriArr.pop();
+                    uri = uri.slice(3);
                 }
-            }
-            if (this.focus) {
-                this.tryfocus();
-            }
-        },
-        resolve: function () { },
-        commit: function () {
-            this.$.bind(this.on);
-        },
-        trigger: function (type, data) {
-            this.$.trigger(type, data);
-        },
-        dynamic: function (options, document) {
-            if (options == null || document == null || document.version == null) {
-                return this;
-            }
-            switch ($.type(options)) {
-                case "object":
-                    if (options.nodeType) {
-                        document.append(options);
-                        break;
-                    }
-                    if (options.addClass) {
-                        document.addClass(options.addClass);
-                    }
-                    var tag = options.tag;
-                    if ($.type(tag) === "string") {
-                        tag = tag.slice(0, 2).toLowerCase() + tag.slice(2);
-                        if (typeof $[tag] === "function") {
-                            $.api(tag, options.selector, options.options);
-                        }
-                    }
-                    break;
-                case "function":
-                    this.dynamic(options.call(this, document, this), document);
-                    break;
-                case "array":
-                    $.each(options, function (value) {
-                        this.dynamic(value, document);
-                    });
-                    break;
-                case "number":
-                    document.append('<div class="this-split" style="width:', options, 'px"></div>');
-                    break;
-                case "string":
-                    document.append($.lib.html(options));
-                    break;
-                default:
-                    document.append(window.document.createTextNode(options));
-                    break;
-            }
-            return this;
-        },
-        whenThen: function (state) {
-            state = state || this.state;
-            switch (state) {
-                case "pending": this.init();
-                case "init": this.render();
-                case "render": this.resolve();
-                case "resolve": this.commit();
-                case "commit": this.commit = "commit"; break;
-                default: $.syntaxError('Undefined state: ' + state + ', relevant methods '); break;
-            }
-        },
-        destroy: function (v) {
-            this.$.remove();
-            this.base.base = $.ui.destroy(this.base.base, false);
-            this.base = $.ui.destroy(this.base, false);
-            $.ui.destroy(this, v);
-        },
-        contains: function (el) {
-            for (var i = 0, len = this.$.length; i < len; i++) {
-                if ($.contains(this.$.get(i), el)) {
-                    return true;
-                }
-            }
-            return false;
-        },
-        hide: function () {
-            this.setVisible(false);
-        },
-        show: function () {
-            this.setVisible(true);
-        },
-        toggle: function (v) {
-            if (typeof v === "boolean") {
-                return v ? this.show() : this.hide();
-            }
-            return this.toggle(!this.visible);
-        },
-        tryfocus: function () {
-            try {
-                this.$.eq(0).focus();
-            } catch (e) { }
-        },
-        setWidth: function (v) {
-            if (!!(v = $.reg.o2stylenumber.exec(v))) {
-                this.width = +v[1 * (!v[2] || v[2] == "px")] || v[0] || 0;
-                this.$.width(v[0]);
-                return v;
-            }
-        },
-        setHeight: function (v) {
-            if (!!(v = $.reg.o2stylenumber.exec(v))) {
-                this.height = +v[1 * (!v[2] || v[2] == "px")] || v[0] || 0;
-                this.$.height(v[0]);
-                return v;
-            }
-        },
-        setVisible: function (v) {
-            if ($.reg.bool.test(v)) {
-                this.$.toggleClass("hide", !(this.visible = (v === true || v === "true")));
-                return true;
-            }
-        },
-        setEnabled: function (v) {
-            if ($.reg.bool.test(v)) {
-                this.$.attr("disabled", !(this.enabled = (v === true || v === "true")));
-                return true;
+                url = uriArr.join("/") + uri;
             }
         }
+        if (uri.indexOf(".js") == uri.length - 3) {
+            return url;
+        }
+        return url += $.lib.formatString("jobkinding.{0}.js", tag.slice(0, 2).toLowerCase() + tag.slice(2));
     };
-
+    function load(e) {
+        var callbak = e.data, target = e.target || e.targetEl || e.currentTarget || e.srcElement;
+        if (e.type === 'load' || target && readyRegExp.test(target.readyState)) {
+            $.api.isReady = --$.api.readyWait < 1;
+            if (callbak && typeof callbak === "function") {
+                callbak.apply(this, arguments);
+            }
+            if ($.api.isReady) {
+                $(document).ready(function () {
+                    readyList.resolveWith(document, [$]);
+                });
+            }
+        }
+    }
+    $.extend($.api, {
+        load: function (tag, uri, base) {
+            if ($.isArray(tag)) {
+                return $.each(tag, function (tag) {
+                    $.api.load(tag, uri, base);
+                });
+            }
+            if ($.isString(tag)) {
+                $._evalUrl(_load(tag, uri, base));
+            }
+        },
+        loadV2: function (tag, uri, base, callbak) {
+            if ($.isFuction(base)) {
+                callbak = callbak || base;
+                base = false;
+            }
+            if ($.isFuction(uri)) {
+                callbak = callbak || uri;
+                uri = null;
+            }
+            var readyWait = 0;
+            if (callbak) {
+                var _callbak = callbak;
+                callbak = function () {
+                    if (--readyWait < 1) {
+                        tag = $.map(tag, function (tag) {
+                            if (typeof tag === "string") {
+                                return window[tag];
+                            }
+                        });
+                        _callbak.apply(this, tag);
+                    }
+                }
+            }
+            $.each(tag = $.makeArray(tag, []), function (tag) {
+                if (typeof tag === "string") {
+                    var script = document.createElement("script");
+                    script.type = "text/javascript";
+                    script.src = _load(tag, uri, base);
+                    if (document.head) {
+                        document.head.appendChild(script);
+                    } else {
+                        document.body.appendChild(script);
+                    }
+                    callbakArr.push(tag);
+                    readyWait = readyWait + 1;
+                    $.api.isReady = ++$.api.readyWait < 1;
+                    $(script).on("load readystatechange", load, callbak);
+                }
+            });
+        }
+    });
     var ready = $.fn.ready;
     $.fn.ready = function (fn) {
         if ($.api.isReady) {
@@ -296,9 +384,14 @@
                 });
             }
             return $.fn.ready(function () {
-                $.api.load(tag);
+                if ($.isArray(tag)) {
+                    $.api.load.apply(null, slice.call(tag, 0));
+                } else {
+                    $.api.load(tag);
+                }
             });
         });
         return this;
     }
+
 })(jobKinding);
