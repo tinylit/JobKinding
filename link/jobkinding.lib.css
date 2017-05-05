@@ -38,6 +38,9 @@
 
 .ui *[class^='fa-']
 {
+    line-height: 1;
+
+    height: 1.385em;
     padding-right: .25em;
     padding-left: .25em;
 }
@@ -100,7 +103,6 @@
 .ui.input > .hint,
 .ui.inputs > .input > .hint,
 input.ui.input,
-select.ui.input,
 textarea.ui.input,
 .ui.input > input,
 .ui.input > textarea
@@ -117,6 +119,19 @@ textarea.ui.input,
 
     -webkit-tap-highlight-color: transparent;
 }
+
+input.ui.input,
+textarea.ui.input,
+.ui.input > input,
+.ui.input > textarea
+{
+    height: 2.3335em;
+}
+.ui.select
+{
+    min-height: 2.3335em;
+}
+
 .ui.item,
 .ui.link,
 .ui.menu,
@@ -129,7 +144,6 @@ textarea.ui.input,
 .ui.select .select,
 .ui.buttons .button,
 input.ui.input,
-select.ui.input,
 textarea.ui.input,
 .ui.input > input,
 .ui.input > .hint,
@@ -149,7 +163,6 @@ textarea.ui.input,
 .ui.buttons,
 .ui.content,
 input.ui.input,
-select.ui.input,
 textarea.ui.input,
 .ui.input > .hint,
 .ui.input > input,
@@ -175,7 +188,6 @@ textarea.ui.input,
 .ui.label,
 .ui.button,
 input.ui.input,
-select.ui.input,
 textarea.ui.input
 {
     display: inline-block;
@@ -945,7 +957,6 @@ input.ui.input,
     word-break: keep-all;
 }
 input.ui.input,
-select.ui.input,
 textarea.ui.input,
 .ui.input > input,
 .ui.input > textarea
@@ -962,13 +973,11 @@ textarea.ui.input,
 }
 
 input.ui.input:focus,
-select.ui.input:focus,
 textarea.ui.input:focus,
 .ui.input > input:focus,
 .ui.input > textarea:focus,
 .ui.select > .ui.input:focus + .input,
-.ui.select > .ui.input:focus + .select,
-.ui.select > .ui.input:focus + .ui.input + .select
+.ui.select > .ui.input:focus + .select
 {
     border-color: #66afe9;
     box-shadow: inset 0 .0625em .0625em rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
@@ -991,7 +1000,6 @@ textarea.ui.input:focus,
 .ui.input > .ui.select > .ui.input
 {
     width: inherit;
-    min-width: 100%;
 
     border-radius: 0;
 }
@@ -1008,7 +1016,7 @@ textarea.ui.input:focus,
 
 .ui.input > .ui.labels > .label
 {
-    display: inline-block;
+    display: table-cell;
     float: none !important;
 }
 .ui.input > .ui.label:first-child,
@@ -1046,7 +1054,7 @@ textarea.ui.input:focus,
 .ui.select,
 .ui.select > .select
 {
-    padding: 0;
+    padding: 0 !important;
 }
 .ui.select > .select
 {
@@ -1066,36 +1074,18 @@ textarea.ui.input:focus,
 
     cursor: default;
 }
-.ui.select > select.ui.input
+.ui.select > .ui.input:focus
 {
-    position: absolute;
-    z-index: 15;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-
-    width: 100%;
-    height: 100%;
-
-    opacity: 0;
-
-    filter: alpha(opacity=0);
-}
-
-.ui.select > .ui.input:focus,
-.ui.select > select.ui.input:focus + .ui.input
-{
-    border-bottom-right-radius: 0 !important;
+    border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
 }
 .ui.select > *[class^='fa-']
 {
     position: absolute;
     z-index: 5;
-    top: 0;
+    top: .375em;
     right: .5em;
-    bottom: 0;
+    bottom: .375em;
 
     display: table;
 
