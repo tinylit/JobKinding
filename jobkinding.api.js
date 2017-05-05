@@ -407,28 +407,20 @@
         return this.readyControl.apply(this, arguments);
     };
     $.readyControl = $.fn.readyControl = function () {
-        var context = this;
-        var isDebugging = arguments[0] === true;
+        var isDebugging, context = this;
         $.each(arguments, function (tag) {
-            if ($.isFunction(tag)) {
+            var type = $.type(tag);
+            if (type === "boolean") {
+                isDebugging = tag;
+                return;
+            }
+            if (type === "function") {
                 return $.api.isReady ? ready.call(context, tag) : readyList.then(tag).catchErr(function (error) {
                     $.readyException(error);
                 });
             }
             return $.fn.ready(function () {
-                if ($.isArray(tag)) {
-                    if (isDebugging) {
-                        $.api.loadV2.apply(null, slice.call(tag, 0));
-                    } else {
-                        $.api.load.apply(null, slice.call(tag, 0));
-                    }
-                } else {
-                    if (isDebugging) {
-                        $.api.loadV2(tag);
-                    } else {
-                        $.api.load(tag);
-                    }
-                }
+                return $.api[isDebugging ? "loadV2" : "load"][type === "array" ? "apply" : "call"](this, tag);
             });
         });
         return this;
