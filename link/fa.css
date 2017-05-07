@@ -7,7 +7,7 @@
     src: url('../fonts/bootstrap.eot?v=4.6.1');
     src: url('../fonts/bootstrap.eot?#iefix&v=4.6.1') format('embedded-opentype'), url('../fonts/bootstrap.woff?v=4.6.1') format('woff'), url('../fonts/bootstrap.ttf?v=4.6.1') format('truetype'), url('../fonts/bootstrap.svg?v=4.6.1#fontawesomeregular') format('svg');
 }
-
+.fa,
 *[class^='fa-']
 {
     font: normal normal normal 14px/1 bootstrap;

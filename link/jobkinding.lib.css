@@ -36,6 +36,7 @@
     text-shadow: none;
 }
 
+.ui .fa,
 .ui *[class^='fa-']
 {
     line-height: 1;
@@ -45,25 +46,31 @@
     padding-left: .25em;
 }
 
-.ui > *:first-child,
-.ui > .hidden:first-child + *,
-.ui > .hidden:first-child + .hidden + *
+.ui.menu > *:first-child,
+.ui.labels > *:first-child,
+.ui.menu > .hidden:first-child + *,
+.ui.labels > .hidden:first-child + *,
+.ui.menu > .hidden:first-child + .hidden + *
+.ui.labels > .hidden:first-child + .hidden + *
 {
     border-top-left-radius: inherit;
 }
 
-.ui > *:only-child
+.ui.menu > *:only-child,
+.ui.labels > *:only-child
 {
     border-top-right-radius: inherit;
     border-bottom-left-radius: inherit;
 }
 
-.ui > *:last-child
+.ui.menu > *:last-child,
+.ui.labels > *:last-child
 {
     border-bottom-right-radius: inherit;
 }
 
-.ui > * + .ui:last-child
+.ui.menu > * + *:last-child,
+.ui.labels > * + *:last-child
 {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
@@ -77,6 +84,7 @@
 .ui.check,
 .ui.label,
 .ui.button,
+.ui.content,
 .ui.menu .item,
 .ui.links .link,
 .ui.labels .label,
@@ -94,6 +102,7 @@
 .ui.check,
 .ui.button,
 .ui.select,
+.ui.content,
 .ui.menu .item,
 .ui.links .link,
 .ui.labels .label,
@@ -310,6 +319,50 @@ textarea.ui.input
     border-style: solid;
     border-color: transparent;
 }
+
+.ui.label.extra
+{
+    line-height: inherit;
+
+    min-width: -webkit-max-content;
+    min-width:    -moz-max-content;
+    min-width:         max-content;
+    margin: 0;
+
+    background-color: #fff;
+}
+
+.ui.label.extra:before
+{
+    position: absolute;
+    top: 100%;
+
+    width: 0;
+    height: 0;
+
+    content: '';
+
+    border-width: 0;
+    border-style: solid;
+    border-color: transparent;
+    background-color: transparent !important;
+}
+.ui.label.extra
+{
+    left: -2.2625em;/*&{margin-right}+^{border-left-width,padding-left}*/
+
+    margin-right: -1.2em;/*&:before{border-left-width}*/
+    padding-left: 2.2625em;/*&{left}*/
+}
+.ui.label.extra:before
+{
+    left: 0;
+
+    border-right-width: 1.2em;
+    border-right-color: inherit;
+    border-bottom-width: 1.2em;
+}
+
 .ui.item,
 .ui.menu .item,
 .ui.input > .hint,
@@ -717,6 +770,58 @@ textarea.ui.input
     border-right-width: .0625em;
     border-left-width: .0625em;
 }
+.ui.menu.tabular
+{
+    border-width: 0;
+    background-color: #fff;
+}
+.ui.menu.tabular > .item
+{
+    position: relative;
+    z-index: 10;
+
+    margin-bottom: -.0625em;
+
+    border-width: .0625em;
+    border-color: transparent;
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+    background-color: transparent;
+    box-shadow: none;
+}
+.ui.menu.tabular > .item.active
+{
+    border-color: inherit;
+    border-bottom-color: transparent;
+    background-color: inherit;
+}
+.ui.content.tabular
+{
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.ui.menu.tabular + .ui.content.tabular
+{
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: .25em;
+    border-bottom-left-radius: .25em;
+}
+.ui.content.tabular + .ui.menu.tabular > .item
+{
+    margin-top: -.0625em;
+    margin-bottom: auto;
+
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: inherit;
+    border-bottom-left-radius: inherit;
+}
+.ui.content.tabular + .ui.menu.tabular > .item.active
+{
+    border-top-color: transparent;
+    border-bottom-color: inherit;
+}
 
 .ui.link,
 .ui.links .link
@@ -1006,12 +1111,14 @@ textarea.ui.input:focus,
 .ui.input > input:first-child,
 .ui.input > textarea:first-child
 {
+    border-top-left-radius: inherit;
     border-bottom-left-radius: inherit;
 }
 .ui.input > input:last-child,
 .ui.input > textarea:last-child
 {
     border-top-right-radius: inherit;
+    border-bottom-right-radius: inherit;
 }
 
 .ui.input > .ui.labels > .label
@@ -1042,6 +1149,11 @@ textarea.ui.input:focus,
     border-right-width: .0625em;
     border-top-left-radius: inherit;
     border-bottom-left-radius: inherit;
+}
+.ui.input > * + *
+{
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
 }
 .ui.input > .ui.select + *,
 .ui.input > input + .ui.label,
@@ -1135,6 +1247,8 @@ textarea.ui.input:focus,
     min-width: 15.75em;
     max-width: 100%;
     min-height: 5em;
+
+    text-align: left;
 }
 .ui.content + .ui.content
 {

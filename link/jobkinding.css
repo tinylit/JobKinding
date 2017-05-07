@@ -853,27 +853,27 @@ h4 > a::before
 
 .fr
 {
-    float: right;
+    float: right !important;
 }
 
 .fl
 {
-    float: left;
+    float: left !important;
 }
 
 .tr
 {
-    text-align: right;
+    text-align: right !important;
 }
 
 .tl
 {
-    text-align: left;
+    text-align: left !important;
 }
 
 .tv
 {
-    text-align: center;
+    text-align: center !important;
 }
 
 .mit
