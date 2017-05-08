@@ -270,6 +270,7 @@
             return letter.toUpperCase();
         };
     jobKinding.extend({
+        noop: function () { },
         trim: function (str) {
             return str == null ? "" : str.replace(rtrim, '');
         },
