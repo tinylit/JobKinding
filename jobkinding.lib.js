@@ -3,7 +3,7 @@
     var version = "1.0.1";
     var whitespace = "[\\x20\\t\\r\\n\\f]";
     var rtirm = new RegExp("^" + whitespace + "+|" + whitespace + "+$", 'g');
-    var identifier = "(?:\\\\.|[\\w-]|[^\0-\\xa0])+";
+    var identifier = "(?:\\\\.|[\\w-])+";
     var attributes = "\\[" + whitespace + "*(" + identifier + ")(?:" + whitespace +
     // Operator (capture 2)
 		"*([*^$|!~]?=)" + whitespace +
@@ -377,7 +377,7 @@
             }
 
         }
-        htmls = ["<", htmls.join(" "), matched ? ">" : "/>"];
+        htmls = ["<", htmls.join(" "), matched === false || rsingleTag.test(htmlObj["TAG"]) ? "/>" : ">"];
         if (matched) {
             htmls.push(htmlObj["CONTENT"]);
         }
