@@ -103,6 +103,9 @@
 .ui.button,
 .ui.select,
 .ui.content,
+.ui.header,
+.ui.contaiter,
+.ui.footer,
 .ui.menu .item,
 .ui.links .link,
 .ui.labels .label,
@@ -122,11 +125,27 @@ textarea.ui.input,
 
     -webkit-transition: opacity .1s ease, background-color .1s ease, color .1s ease, box-shadow .1s ease, background .1s ease;
             transition: opacity .1s ease, background-color .1s ease, color .1s ease, box-shadow .1s ease, background .1s ease;
-    text-align: center;
 
     background-color: transparent;
 
     -webkit-tap-highlight-color: transparent;
+}
+.ui.item,
+.ui.link,
+.ui.label,
+.ui.check,
+.ui.button,
+.ui.select,
+.ui.menu .item,
+.ui.links .link,
+.ui.labels .label,
+.ui.select .option,
+.ui.select .select,
+.ui.buttons .button,
+.ui.input > .hint,
+.ui.inputs > .input > .hint
+{
+    text-align: center;
 }
 
 input.ui.input,
@@ -148,6 +167,9 @@ textarea.ui.input,
 .ui.button,
 .ui.labels,
 .ui.content,
+.ui.header,
+.ui.contaiter,
+.ui.footer,
 .ui.links .link,
 .ui.select .option,
 .ui.select .select,
@@ -171,6 +193,9 @@ textarea.ui.input,
 .ui.button,
 .ui.buttons,
 .ui.content,
+.ui.header,
+.ui.contaiter,
+.ui.footer,
 input.ui.input,
 textarea.ui.input,
 .ui.input > .hint,
@@ -345,22 +370,40 @@ textarea.ui.input
     border-width: 0;
     border-style: solid;
     border-color: transparent;
+    border-bottom-width: 1.2em;
     background-color: transparent !important;
 }
-.ui.label.extra
+.ui.label.extra.towards-left
 {
     left: -2.2625em;/*&{margin-right}+^{border-left-width,padding-left}*/
+
+    float: left;
 
     margin-right: -1.2em;/*&:before{border-left-width}*/
     padding-left: 2.2625em;/*&{left}*/
 }
-.ui.label.extra:before
+.ui.label.extra.towards-left:before
 {
     left: 0;
 
     border-right-width: 1.2em;
     border-right-color: inherit;
-    border-bottom-width: 1.2em;
+}
+.ui.label.extra.towards-right
+{
+    right: -2.2625em;/*&{margin-right}+^{border-left-width,padding-left}*/
+
+    float: left;
+
+    margin-left: -1.2em;/*&:before{border-left-width}*/
+    padding-right: 2.2625em;/*&{left}*/
+}
+.ui.label.extra.towards-right:before
+{
+    right: 0;
+
+    border-left-width: 1.2em;
+    border-left-color: inherit;
 }
 
 .ui.item,
