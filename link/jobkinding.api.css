@@ -1,0 +1,85 @@
+﻿.api.dialog
+{
+    position: fixed;
+    z-index: 2017;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    margin: auto;
+
+    border-radius: .25em;
+    background-color: #fff;
+}
+.api.dialog + .layer
+{
+    position: fixed;
+    z-index: 2016;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,.15);
+
+    filter: alpha(opacity=15);
+}
+
+.api.dialog > .header > .fa,
+.api.dialog > .header > *[class^='fa-']
+{
+    margin: 0 .125em;
+
+    cursor: pointer;
+
+    border-radius: 50%;
+}
+.api.dialog > .header > .fa:hover,
+.api.dialog > .header > *[class^='fa-']:hover
+{
+    color: #fff;
+    background-color: #000;
+}
+
+.api.dialog > .header,
+.api.dialog > .contaiter,
+.api.dialog > .footer
+{
+    position: absolute;right: 0;left: 0;
+}
+.api.dialog > .header
+{border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.api.dialog > .footer
+{
+    border-top-left-radius: 0;border-top-right-radius: 0;
+}
+.api.dialog > .footer,
+.api.dialog > .header
+{
+    height: 2.771em;
+}
+.api.dialog > .contaiter
+{
+    top: 0;bottom: 0;overflow: auto;
+}
+.api.dialog > .footer
+{
+    bottom: 0;
+}
+.api.dialog > .header + .contaiter,
+.api.dialog > .header + .footer + .contaiter
+{
+    top: 2.771em;border-top-width: 0;border-top-left-radius: 0;border-top-right-radius: 0;
+}
+.api.dialog > .footer + .contaiter
+{
+    bottom: 2.771em;border-bottom-width: 0;
+}
+.api.dialog > .header + .footer + .contaiter
+{border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
