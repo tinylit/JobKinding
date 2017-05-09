@@ -12,14 +12,15 @@
     $.baseUri = uri[2];
     $.api = function (tag, selector, options) {
         if ($.api.control[tag]) {
-            return new $.api.control[tag].apply(null, arguments);
+            return new $.api.control[tag](tag, selector, options);
         }
-        return new $.api.fn.init.apply(null, arguments);
+        return new $.api.fn.init(tag, selector, options);
     }
     $.extend($.api, {
-        isReady: false,
+        isReady: true,
         readyWait: 0,
         uri: $.uri,
+        control: {},
         baseUri: $.baseUri,
         baseConfigs: function (type, options) {
             if (arguments.length === 1) {
@@ -45,15 +46,18 @@
                     }
                 }
                 $.extend(options, {
-                    baseConfigs: function (object, context) {
-                        object = object || {};
+                    baseConfigs: function (object, context, options) {
+                        object = object || this;
                         context = context || this;
                         $.api.fn.baseConfigs(object, context);
-                        for (var i in callbacks) {
-                            object[i] = function () {
-                                return callbacks[i].apply(context, arguments);
-                            }
-                        }
+                        $.each(callbacks, function (callback, type) {
+                            object[type] = options && (type in options) ? function () {
+                                context.base = object.base;
+                                var val = callback.apply(context, arguments);
+                                context.base = object;
+                                return val;
+                            } : context === object ? callback : object[type] || $.noop;
+                        });
                         if (this.base) {
                             $.api.fn.baseConfigs(this.base.base = {}, this);
                         }
@@ -69,7 +73,7 @@
                 return $.api.control[tag] = options;
             }
             var init = function (tag, selector, options) {
-                this.init(tag, selector, options);
+                $.api.fn.init.call(this, tag, selector, options);
             }
             init.prototype = $.api.baseConfigs(type, options);
             return $.api.control[tag] = init;
@@ -83,15 +87,17 @@
             resolve: 4,
             commit: 8
         },
-        control: {},
+        constructor: $.api,
+        control: $.api.control,
         baseConfigs: function (object, context) {
-            object = object || {};
+            object = object || this;
             context = context || this;
             object.init = function (tag) {
                 context.document = $(context.selector, context.context).append(document.createElement(tag || "div"));
-                context.$ = context.$.lastChild();
+                context.$ = context.document.lastChild();
             };
             object.render = function () {
+                context.$.addClass("api");
                 if (context.tag) {
                     context.$.prop(context.tag, context);
                     context.$.addClass(context.tag.slice(0, 2).toLowerCase() + context.tag.slice(2));
@@ -116,7 +122,7 @@
                 }
                 if (context.border) {
                     if ($.lib.support("box-shadow")) {
-                        context.$.addClass("shadow");
+                        context.$.addClass("box-shadow");
                     } else {
                         context.$.addClass("border");
                     }
@@ -125,7 +131,7 @@
                     context.tryfocus();
                 }
             };
-            object.resolve = function () { };
+            object.resolve = $.noop;
             object.commit = function () {
                 context.$.bind(context.on);
             };
@@ -133,8 +139,13 @@
                 context.$.trigger(type, data);
             };
             object.dynamic = function (options, document) {
-                if (options == null || document == null || document.version == null) {
-                    return context;
+                if (options == null || document == null) {
+                    return null;
+                }
+                if (typeof document === "string") {
+                    document = context.$.append($.lib.html(document)).find(document);
+                } else if (document.version == null) {
+                    return null;
                 }
                 switch ($.type(options)) {
                     case "object":
@@ -144,6 +155,15 @@
                         }
                         if (options.addClass) {
                             document.addClass(options.addClass);
+                        }
+                        if (options.on) {
+                            for (var i in options.on) {
+                                if (typeof options.on[i] === "object") {
+                                    document.find(i).on(options.on[i]);
+                                } else {
+                                    document.find(i).click(options.on[i]);
+                                }
+                            }
                         }
                         var tag = options.tag;
                         if ($.type(tag) === "string") {
@@ -171,10 +191,10 @@
                         document.append(window.document.createTextNode(String(options)));
                         break;
                 }
-                return context;
+                return document;
             };
             object.whenThen = function (state) {
-                state = state || context.state;
+                state = state || context.state || "pending";
                 switch (state) {
                     case "pending": context.init();
                     case "init": context.render();
@@ -216,27 +236,27 @@
                 } catch (e) { }
             };
             object.setWidth = function (v) {
-                if (!!(v = $.reg.o2stylenumber.exec(v))) {
+                if (!!(v = $.jreg.o2stylenumber.exec(v))) {
                     context.width = +v[1 * (!v[2] || v[2] == "px")] || v[0] || 0;
                     context.$.width(v[0]);
                     return v;
                 }
             };
             object.setHeight = function (v) {
-                if (!!(v = $.reg.o2stylenumber.exec(v))) {
+                if (!!(v = $.jreg.o2stylenumber.exec(v))) {
                     context.height = +v[1 * (!v[2] || v[2] == "px")] || v[0] || 0;
                     context.$.height(v[0]);
                     return v;
                 }
             };
             object.setVisible = function (v) {
-                if ($.reg.bool.test(v)) {
+                if ($.jreg.bool.test(v)) {
                     context.$.toggleClass("hide", !(context.visible = (v === true || v === "true")));
                     return true;
                 }
             };
             object.setEnabled = function (v) {
-                if ($.reg.bool.test(v)) {
+                if ($.jreg.bool.test(v)) {
                     context.$.attr("disabled", !(context.enabled = (v === true || v === "true")));
                     return true;
                 }
@@ -255,7 +275,14 @@
 
             this.baseConfigs();
 
-            this.baseConfigs(this.base = {}, this);
+            this.baseConfigs(this.base = {}, this, options);
+
+            this.tag = tag;
+
+            this.enabled = true;
+            this.visible = true;
+
+            this.selector = selector;
 
             $.extend(true, this, options);
 
@@ -280,12 +307,27 @@
     };
     $.api.fn.init.prototype = $.api.fn;
 
-    var readyList = jschar.Deferred();
+    var readyList = $.Deferred();
     var readyRegExp = navigator.platform === 'PLAYSTATION 3' ? /^complete$/ : /^(complete|loaded)$/;
     function _load(tag, uri, base) {
+        if (typeof tag === "boolean") {
+            base = base == null ? uri : base;
+            tag = null;
+        }
+        if (typeof uri === "boolean") {
+            base = base == null ? uri : base;
+            uri = null;
+        }
+        if (tag && tag.indexOf("/") > -1) {
+            uri = uri || tag;
+            tag = null;
+        }
+        if (uri && reg.test(uri)) {
+            return uri;
+        }
         var url = base ? $.api.baseUri : $.api.uri;
         if ($.isString(uri)) {
-            if (uri.indexOf("~/")) {
+            if (uri.indexOf("~/") > -1) {
                 url = $.api.baseUri;
                 uri = uri.slice(2);
             }
@@ -295,18 +337,20 @@
                     uriArr.pop();
                     uri = uri.slice(3);
                 }
-                url = uriArr.join("/") + uri;
+                url = uriArr.join("/");
             }
+            url += uri.replace(/^(\/)|(\/)$/g, "");
         }
-        if (uri.indexOf(".js") == uri.length - 3) {
+        if (uri && uri.slice(-3) == ".js") {
             return url;
         }
-        return url += $.lib.formatString("jobkinding.{0}.js", tag.slice(0, 2).toLowerCase() + tag.slice(2));
+        return url += $.lib.formatString("/jobkinding.{0}.js", tag.slice(0, 2).toLowerCase() + tag.slice(2));
     };
     function load(e) {
         var callbak = e.data, target = e.target || e.targetEl || e.currentTarget || e.srcElement;
         if (e.type === 'load' || target && readyRegExp.test(target.readyState)) {
             $.api.isReady = --$.api.readyWait < 1;
+            $(target).off("load readystatechange");
             if (callbak && typeof callbak === "function") {
                 callbak.apply(this, arguments);
             }
@@ -321,7 +365,12 @@
         load: function (tag, uri, base) {
             if ($.isArray(tag)) {
                 return $.each(tag, function (tag) {
-                    $.api.load(tag, uri, base);
+                    $.api.load(tag);
+                });
+            }
+            if ($.isPlainObject(tag)) {
+                return $.each(tag, function (value, tag) {
+                    $.api.load.apply(null, concat.call([tag], value));
                 });
             }
             if ($.isString(tag)) {
@@ -329,11 +378,11 @@
             }
         },
         loadV2: function (tag, uri, base, callbak) {
-            if ($.isFuction(base)) {
+            if ($.isFunction(base)) {
                 callbak = callbak || base;
                 base = false;
             }
-            if ($.isFuction(uri)) {
+            if ($.isFunction(uri)) {
                 callbak = callbak || uri;
                 uri = null;
             }
@@ -361,10 +410,9 @@
                     } else {
                         document.body.appendChild(script);
                     }
-                    callbakArr.push(tag);
                     readyWait = readyWait + 1;
                     $.api.isReady = ++$.api.readyWait < 1;
-                    $(script).on("load readystatechange", load, callbak);
+                    $(script).on("load readystatechange", callbak, load);
                 }
             });
         }
@@ -374,21 +422,23 @@
         if ($.api.isReady) {
             return ready.apply(this, arguments);
         }
-        return this.readyControl(fn);
+        return this.readyControl.apply(this, arguments);
     };
     $.readyControl = $.fn.readyControl = function () {
+        var isDebugging, context = this;
         $.each(arguments, function (tag) {
-            if ($.isFunction(tag)) {
-                return readyList.then(tag).catchErr(function (error) {
+            var type = $.type(tag);
+            if (type === "boolean") {
+                isDebugging = tag;
+                return;
+            }
+            if (type === "function") {
+                return $.api.isReady ? ready.call(context, tag) : readyList.then(tag).catchErr(function (error) {
                     $.readyException(error);
                 });
             }
             return $.fn.ready(function () {
-                if ($.isArray(tag)) {
-                    $.api.load.apply(null, slice.call(tag, 0));
-                } else {
-                    $.api.load(tag);
-                }
+                return $.api[isDebugging ? "loadV2" : "load"][type === "array" ? "apply" : "call"](this, tag);
             });
         });
         return this;
