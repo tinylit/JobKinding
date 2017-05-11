@@ -853,27 +853,27 @@ h4 > a::before
 
 .fr
 {
-    float: right !important;
+    float: right;
 }
 
 .fl
 {
-    float: left !important;
+    float: left;
 }
 
 .tr
 {
-    text-align: right !important;
+    text-align: right;
 }
 
 .tl
 {
-    text-align: left !important;
+    text-align: left;
 }
 
 .tv
 {
-    text-align: center !important;
+    text-align: center;
 }
 
 .mit
@@ -883,6 +883,11 @@ h4 > a::before
     white-space: nowrap;
     text-overflow: ellipsis;
     word-break: break-all;
+}
+
+.box-shadow
+{
+    box-shadow: 0 .0625em .0625em rgba(0, 0, 0, .075), 0 0 .5em rgba(102, 175, 233, .6);
 }
 
 .clearfix
@@ -895,7 +900,7 @@ h4 > a::before
 
 .hidden
 {
-    display: none !important;
+    display: none;
 }
 
 .visible
