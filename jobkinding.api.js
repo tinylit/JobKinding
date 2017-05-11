@@ -11,6 +11,10 @@
     $.uri = uri[1];
     $.baseUri = uri[2];
     $.api = function (tag, selector, options) {
+        if (arguments.length === 2 && $.isPlainObject(selector)) {
+            options = selector;
+            selector = null;
+        }
         if ($.api.control[tag]) {
             return new $.api.control[tag](tag, selector, options);
         }
@@ -93,8 +97,13 @@
             object = object || this;
             context = context || this;
             object.init = function (tag) {
-                context.document = $(context.selector, context.context).append(document.createElement(tag || "div"));
-                context.$ = context.document.lastChild();
+                tag = tag || "div";
+                if (context.selector) {
+                    context.document = $(context.selector, context.context).append(document.createElement(tag));
+                    context.$ = context.document.lastChild();
+                } else {
+                    context.$ = $(tag, context.context);
+                }
             };
             object.render = function () {
                 context.$.addClass("api");
@@ -138,6 +147,12 @@
             object.trigger = function (type, data) {
                 context.$.trigger(type, data);
             };
+            object.contextCall = function (callback) {
+                var args = concat.call([context], slice.call(arguments, 0));
+                return function () {
+                    return callback.apply(context, args);
+                }
+            };
             object.dynamic = function (options, document) {
                 if (options == null || document == null) {
                     return null;
@@ -147,49 +162,58 @@
                 } else if (document.version == null) {
                     return null;
                 }
-                switch ($.type(options)) {
-                    case "object":
-                        if (options.nodeType) {
-                            document.append(options);
+                if ($.isString(options)) {
+                    options = { html: options };
+                }
+
+                var i, val;
+                for (var i in options) {
+                    val = options[i];
+                    switch (i) {
+                        case "html":
+                            if ($.isArray(val)) {
+                                $.each(val, function (html) {
+                                    document.append($.lib.html(html));
+                                });
+                            } else {
+                                document.append($.lib.html(val));
+                            }
                             break;
-                        }
-                        if (options.addClass) {
-                            document.addClass(options.addClass);
-                        }
-                        if (options.on) {
-                            for (var i in options.on) {
-                                if (typeof options.on[i] === "object") {
-                                    document.find(i).on(options.on[i]);
+                        case "on":
+                            for (i in val) {
+                                if (typeof val[i] === "function") {
+                                    document.find(i).click(context.contextCall(val[i]));
                                 } else {
-                                    document.find(i).click(options.on[i]);
+                                    document.find(i).on(context.contextCall(val[i]));
                                 }
                             }
-                        }
-                        var tag = options.tag;
-                        if ($.type(tag) === "string") {
-                            tag = tag.slice(0, 2).toLowerCase() + tag.slice(2);
-                            if (typeof $[tag] === "function") {
-                                $.api(tag, options.selector, options.options);
+                            break;
+                        case "html2on":
+                            for (i in val) {
+                                document.append($.lib.html(i));
+                                if (typeof val[i] === "function") {
+                                    document.find(i).click(context.contextCall(val[i]));
+                                } else {
+                                    document.find(i).on(context.contextCall(val[i]));
+                                }
                             }
-                        }
-                        break;
-                    case "function":
-                        context.dynamic(options.call(context, document, context), document);
-                        break;
-                    case "array":
-                        $.each(options, function (value) {
-                            context.dynamic(value, document);
-                        });
-                        break;
-                    case "number":
-                        document.append('<div class="context-split" style="width:', options, 'px"></div>');
-                        break;
-                    case "string":
-                        document.append($.lib.html(options));
-                        break;
-                    default:
-                        document.append(window.document.createTextNode(String(options)));
-                        break;
+                            break;
+                        case "api":
+                            if ($.isArray(val)) {
+                                $.each(val, function (api) {
+                                    $.api(api.tag, api.selector, api.options);
+                                });
+                            } else {
+                                $.api(val.tag, val.selector, val.options);
+                            }
+                            break;
+                        case "selector":
+                            document.append($(options.selector));
+                            break;
+                        default:
+                            $.api.error("Tag:" + context.tag + ";Fn:dynamic;Error:The method of type " + i + " is undefined.", "API");
+                            break;
+                    }
                 }
                 return document;
             };
@@ -236,22 +260,18 @@
                 } catch (e) { }
             };
             object.setWidth = function (v) {
-                if (!!(v = $.jreg.o2stylenumber.exec(v))) {
-                    context.width = +v[1 * (!v[2] || v[2] == "px")] || v[0] || 0;
-                    context.$.width(v[0]);
-                    return v;
+                if (!!(v = $.jreg.style.exec(v))) {
+                    return context.$.width(context.width = +v[1 * (!v[2] || v[2] == "px")] || v[0] || 0);
                 }
             };
             object.setHeight = function (v) {
-                if (!!(v = $.jreg.o2stylenumber.exec(v))) {
-                    context.height = +v[1 * (!v[2] || v[2] == "px")] || v[0] || 0;
-                    context.$.height(v[0]);
-                    return v;
+                if (!!(v = $.jreg.style.exec(v))) {
+                    return context.$.height(context.height = +v[1 * (!v[2] || v[2] == "px")] || v[0] || 0);
                 }
             };
             object.setVisible = function (v) {
                 if ($.jreg.bool.test(v)) {
-                    context.$.toggleClass("hide", !(context.visible = (v === true || v === "true")));
+                    context.$.toggleClass("hidden", !(context.visible = (v === true || v === "true")));
                     return true;
                 }
             };
@@ -272,7 +292,6 @@
                     return o;
                 })({});
             }
-
             this.baseConfigs();
 
             this.baseConfigs(this.base = {}, this, options);
@@ -309,75 +328,48 @@
 
     var readyList = $.Deferred();
     var readyRegExp = navigator.platform === 'PLAYSTATION 3' ? /^complete$/ : /^(complete|loaded)$/;
-    function _load(tag, uri, base) {
-        if (typeof tag === "boolean") {
-            base = base == null ? uri : base;
-            tag = null;
-        }
-        if (typeof uri === "boolean") {
-            base = base == null ? uri : base;
-            uri = null;
-        }
-        if (tag && tag.indexOf("/") > -1) {
-            uri = uri || tag;
-            tag = null;
-        }
-        if (uri && reg.test(uri)) {
-            return uri;
-        }
-        var url = base ? $.api.baseUri : $.api.uri;
-        if ($.isString(uri)) {
-            if (uri.indexOf("~/") > -1) {
-                url = $.api.baseUri;
-                uri = uri.slice(2);
-            }
-            if (uri.indexOf("../") > -1) {
-                var uriArr = url.split("/");
-                while (uri.indexOf("../") > -1) {
-                    uriArr.pop();
-                    uri = uri.slice(3);
-                }
-                url = uriArr.join("/");
-            }
-            url += uri.replace(/^(\/)|(\/)$/g, "");
-        }
-        if (uri && uri.slice(-3) == ".js") {
-            return url;
-        }
-        return url += $.lib.formatString("/jobkinding.{0}.js", tag.slice(0, 2).toLowerCase() + tag.slice(2));
-    };
-    function load(e) {
-        var callbak = e.data, target = e.target || e.targetEl || e.currentTarget || e.srcElement;
-        if (e.type === 'load' || target && readyRegExp.test(target.readyState)) {
-            $.api.isReady = --$.api.readyWait < 1;
-            $(target).off("load readystatechange");
-            if (callbak && typeof callbak === "function") {
-                callbak.apply(this, arguments);
-            }
-            if ($.api.isReady) {
-                $(document).ready(function () {
-                    readyList.resolveWith(document, [$]);
-                });
-            }
-        }
-    }
     $.extend($.api, {
-        load: function (tag, uri, base) {
-            if ($.isArray(tag)) {
-                return $.each(tag, function (tag) {
-                    $.api.load(tag);
-                });
-            }
-            if ($.isPlainObject(tag)) {
-                return $.each(tag, function (value, tag) {
-                    $.api.load.apply(null, concat.call([tag], value));
-                });
-            }
-            if ($.isString(tag)) {
-                $._evalUrl(_load(tag, uri, base));
-            }
+        error: function (msg, type) {
+            $(document.body).append($.lib.formatString('<div class="ui content font-danger-color border-warning-color"><label class="ui label extra border-danger-color towards-left">{0} Error</label>{1}</div>', type, msg));
         },
-        loadV2: function (tag, uri, base, callbak) {
+        _load: function (tag, uri, base) {
+            if (typeof tag === "boolean") {
+                base = base == null ? uri : base;
+                tag = null;
+            }
+            if (typeof uri === "boolean") {
+                base = base == null ? uri : base;
+                uri = null;
+            }
+            if (tag && tag.indexOf("/") > -1) {
+                uri = uri || tag;
+                tag = null;
+            }
+            if (uri && reg.test(uri)) {
+                return uri;
+            }
+            var url = base ? $.api.baseUri : $.api.uri;
+            if ($.isString(uri)) {
+                if (uri.indexOf("~/") > -1) {
+                    url = $.api.baseUri;
+                    uri = uri.slice(2);
+                }
+                if (uri.indexOf("../") > -1) {
+                    var uriArr = url.split("/");
+                    while (uri.indexOf("../") > -1) {
+                        uriArr.splice(-2, 1);
+                        uri = uri.slice(3);
+                    }
+                    url = uriArr.join("/");
+                }
+                url += uri.replace(/^(\/)|(\/)$/g, "");
+            }
+            if (uri && uri.slice(-3) == ".js") {
+                return url;
+            }
+            return url += $.lib.formatString("/jobkinding.{0}.js", tag.slice(0, 2).toLowerCase() + tag.slice(2));
+        },
+        load: function (tag, uri, base, callbak) {
             if ($.isFunction(base)) {
                 callbak = callbak || base;
                 base = false;
@@ -386,34 +378,61 @@
                 callbak = callbak || uri;
                 uri = null;
             }
-            var readyWait = 0;
-            if (callbak) {
-                var _callbak = callbak;
-                callbak = function () {
-                    if (--readyWait < 1) {
-                        tag = $.map(tag, function (tag) {
-                            if (typeof tag === "string") {
-                                return window[tag];
-                            }
-                        });
-                        _callbak.apply(this, tag);
-                    }
-                }
-            }
-            $.each(tag = $.makeArray(tag, []), function (tag) {
-                if (typeof tag === "string") {
-                    var script = document.createElement("script");
-                    script.type = "text/javascript";
-                    script.src = _load(tag, uri, base);
-                    if (document.head) {
-                        document.head.appendChild(script);
+            if ($.isArray(tag)) {
+                return $.each(tag, function (tag) {
+                    if ($.isArray(tag)) {
+                        var i = tag.length;
+                        $.api.load(tag[0], i > 0 ? tag[1] : uri, i > 1 ? tag[2] : base, i > 2 ? tag[3] : callbak);
                     } else {
-                        document.body.appendChild(script);
+                        $.api.load(tag, uri, base, callbak);
                     }
-                    readyWait = readyWait + 1;
-                    $.api.isReady = ++$.api.readyWait < 1;
-                    $(script).on("load readystatechange", callbak, load);
+                });
+            }
+            if ($.isPlainObject(tag)) {
+                return $.each(tag, function (value, tag) {
+                    $.api.load.apply(null, concat.call([tag], value));
+                });
+            }
+            if ($.isString(tag)) {
+                $._evalUrl(uri = $.api._load(tag, uri, base), typeof callbak === "function" && function () {
+                    callbak(uri, tag);
+                }, function () {
+                    $.api.error("Uri:" + uri, "Script");
+                });
+            }
+        },
+        loadV2: function (tag, uri, base, callbak) {
+            var readyWait = 0;
+            callbak = callbak || base || uri || tag;
+            $.api.load(tag, uri, base, function (src) {
+                var script = document.createElement("script");
+                script.type = "text/javascript";
+                script.src = src;
+                if (document.head) {
+                    document.head.appendChild(script);
+                } else {
+                    document.body.appendChild(script);
                 }
+                readyWait = readyWait + 1;
+                $.api.isReady = ++$.api.readyWait < 1;
+                $(script).on("load readystatechange", typeof callbak === "function" && function () {
+                    if (--readyWait === 0) {
+                        callbak[$.isArray(tag) ? "apply" : "call"](tag);
+                    }
+                }, function (e) {
+                    if (e.type === 'load' || readyRegExp.test(script.readyState)) {
+                        $.api.isReady = --$.api.readyWait < 1;
+                        $(script).off("load readystatechange");
+                        if (e.data) {
+                            e.data.apply(this, arguments);
+                        }
+                        if ($.api.isReady) {
+                            $(document).ready(function () {
+                                readyList.resolveWith(document, [$]);
+                            });
+                        }
+                    }
+                });
             });
         }
     });

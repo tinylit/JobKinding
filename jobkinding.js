@@ -2023,7 +2023,7 @@
                 if (!hooks || !("set" in hooks) || (value = hooks.set(elem, value, extra)) !== undefined) {
                     style[name] = value;
                 }
-
+                return value;
             } else {
                 if (hooks && "get" in hooks && (val = hooks.get(elem, false, extra)) !== undefined) {
                     return val;
@@ -2141,6 +2141,12 @@
                 return classModel.call(this, value, stateVal);
             }
             return classModel.call(this, value, null, true);
+        }
+    });
+
+    jobKinding.each(["width", "height"], function (type) {
+        jobKinding.fn[type] = function (value) {
+            return this.css(type, value);
         }
     });
 
@@ -3895,7 +3901,7 @@
             }, jobKinding.isPlainObject(url) && url))
         }
     });
-    jobKinding._evalUrl = function (url) {
+    jobKinding._evalUrl = function (url, callback, callback2) {
         return jobKinding.ajax({
             url: url,
             type: "GET",
@@ -3903,7 +3909,9 @@
             cache: true,
             async: false,
             global: false,
-            throwsErr: true
+            throwsErr: true,
+            success: callback,
+            error: callback2
         });
     };
 

@@ -20,6 +20,7 @@
         tirm: rtirm,
         int: /^(\d+)$/,
         float: /^(\d+\.)?\d+$/,
+        style: /^((\d+\.)?\d+)([a-z]+|%)?$/i,
         html: new RegExp("^(" + html + "[+>]" + whitespace + "*)*" + html + "$"),
         date: {
             Y: /(y+)/, //年
@@ -377,7 +378,7 @@
             }
 
         }
-        htmls = ["<", htmls.join(" "), matched === false || rsingleTag.test(htmlObj["TAG"]) ? "/>" : ">"];
+        htmls = ["<", htmls.join(" "), matched ? ">" : "/>"];
         if (matched) {
             htmls.push(htmlObj["CONTENT"]);
         }
