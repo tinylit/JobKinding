@@ -26,6 +26,10 @@
         uri: $.uri,
         control: {},
         baseUri: $.baseUri,
+        zIndex: $.lib.year(),
+        animation: $.lib.support("animation"),
+        boxShadow: $.lib.support("box-shadow"),
+        transition: $.lib.support("transition"),
         baseConfigs: function (type, options) {
             if (arguments.length === 1) {
                 options = type;
@@ -130,7 +134,7 @@
                     context.$.addClass(context.addClass);
                 }
                 if (context.border) {
-                    if ($.lib.support("box-shadow")) {
+                    if ($.api.boxShadow) {
                         context.$.addClass("box-shadow");
                     } else {
                         context.$.addClass("border");
