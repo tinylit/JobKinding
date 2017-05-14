@@ -7,7 +7,11 @@
     right: 0;
     bottom: 0;
     left: 0;
+
+    max-width: 100%;
+    max-height: 100%;
     margin: auto;
+
     border-radius: .25em;
     background-color: #fff;
 }
@@ -19,24 +23,111 @@
     right: 0;
     bottom: 0;
     left: 0;
-    background-color: rgb(0,0,0);
-    background-color: rgba(0,0,0,.15);
+
+    background-color: rgb(255,255,255);
+    background-color: rgba(255,255,255,.15);
+
     filter: alpha(opacity=15);
 }
 
-.api.dialog > .header > .fa, .api.dialog > .header > *[class^='fa-']
+.api.dialog.transition
+{
+    -webkit-animation-name: dialog-visible;
+            animation-name: dialog-visible;
+}
+
+@-webkit-keyframes dialog-visible
+{
+    from
+    {
+        top: 100%;
+        right: 100%;
+
+        display: none;
+
+        width: 0;
+        height: 0;
+
+        opacity: 0;
+    }
+}
+
+@keyframes dialog-visible
+{
+    from
+    {
+        top: 100%;
+        right: 100%;
+
+        display: none;
+
+        width: 0;
+        height: 0;
+
+        opacity: 0;
+    }
+}
+
+.api.dialog.transition.hidden
+{
+    display: block;
+    overflow: hidden;
+
+    -webkit-animation-name: dialog-hidden;
+            animation-name: dialog-hidden;
+}
+
+@-webkit-keyframes dialog-hidden
+{
+    to
+    {
+        top: 100%;
+        right: 100%;
+
+        display: none;
+
+        width: 0;
+        height: 0;
+
+        opacity: 0;
+    }
+}
+
+@keyframes dialog-hidden
+{
+    to
+    {
+        top: 100%;
+        right: 100%;
+
+        display: none;
+
+        width: 0;
+        height: 0;
+
+        opacity: 0;
+    }
+}
+
+.api.dialog > .header > .fa,
+.api.dialog > .header > *[class^='fa-']
 {
     margin: 0 .125em;
+
     cursor: pointer;
+
     border-radius: 50%;
 }
-.api.dialog > .header > .fa:hover, .api.dialog > .header > *[class^='fa-']:hover
+.api.dialog > .header > .fa:hover,
+.api.dialog > .header > *[class^='fa-']:hover
 {
     color: #fff;
     background-color: #000;
 }
 
-.api.dialog > .header, .api.dialog > .contaiter, .api.dialog > .footer
+.api.dialog > .header,
+.api.dialog > .contaiter,
+.api.dialog > .footer
 {
     position: absolute;
     right: 0;
@@ -52,7 +143,8 @@
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
-.api.dialog > .footer, .api.dialog > .header
+.api.dialog > .footer,
+.api.dialog > .header
 {
     height: 2.771em;
 }
@@ -60,15 +152,18 @@
 {
     top: 0;
     bottom: 0;
+
     overflow: auto;
 }
 .api.dialog > .footer
 {
     bottom: 0;
 }
-.api.dialog > .header + .contaiter, .api.dialog > .header + .footer + .contaiter
+.api.dialog > .header + .contaiter,
+.api.dialog > .header + .footer + .contaiter
 {
     top: 2.771em;
+
     border-top-width: 0;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
@@ -76,6 +171,7 @@
 .api.dialog > .footer + .contaiter
 {
     bottom: 2.771em;
+
     border-bottom-width: 0;
 }
 .api.dialog > .header + .footer + .contaiter
@@ -92,8 +188,12 @@
     right: 0;
     bottom: 0;
     left: 0;
+
     display: block;
+
     margin: auto;
+    padding: .25em 1em;
+
     border-top-left-radius: .25em;
     border-top-right-radius: .25em;
     background-color: #fff;
@@ -101,15 +201,31 @@
 .api.taskbar > i
 {
     position: absolute;
+    right: 0;
     bottom: 100%;
     left: 0;
-    right: 0;
-    text-align: center;
-    margin: auto;
+
     width: 3.5em;
-    cursor:pointer;
+    margin: auto;
+    margin-bottom: -.0625em;
+
+    cursor: pointer;
+    text-align: center;
+
     border: inherit;
+    border-bottom-width: 0;
     border-radius: inherit;
+    background-color: inherit;
+}
+.api.taskbar > .item
+{
+    border: inherit;
+    border-radius: .25em;
+}
+
+.api.taskbar > .item + .item
+{
+    margin-left: .25em;
 }
 
 .api.taskbar > i.fa-angle-double-up
