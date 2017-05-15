@@ -353,7 +353,7 @@ textarea.ui.input
     min-width:    -moz-max-content;
     min-width:         max-content;
     margin: 0;
-    
+
     z-index:1;
 
     background-color: #fff;
@@ -363,8 +363,8 @@ textarea.ui.input
 .ui.footer > .ui.label.extra,
 .ui.content > .ui.label.extra,
 .ui.select .option > .ui.label.extra
-{    
-    top:-.4375em;/*&{border-top-width}+^{padding-top}*/    
+{
+    top:-.4375em;/*&{border-top-width}+^{padding-top}*/
 }
 
 .ui.label.extra:before
