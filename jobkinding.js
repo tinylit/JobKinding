@@ -505,7 +505,7 @@
         jobKinding.cssHooks[name] = {
             get: function (elem, computed, extra) {
                 if (computed) {
-                    var val = elem["offset" + name.charAt(0).toUperCase() + name.slice(1)];
+                    var val = elem["offset" + name.charAt(0).toUpperCase() + name.slice(1)];
                     if (val <= 0 || val == null) {
                         val = curCSS(elem, name, styles);
                         if (val < 0 || val == null) {
