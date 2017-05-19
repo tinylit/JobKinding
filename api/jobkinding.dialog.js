@@ -33,6 +33,24 @@
             this.setFooter(this.footer);
             this.setContaiter(this.contaiter);
         },
+        drag: function (selector) {
+            var that = this, map, element, obj = {};
+            this.commonDrag(selector ? this.$.find(selector) : this.$, function (e) {
+                element.css({ "top": obj.t - (obj.y - e.clientY), "left": obj.t - (obj.x - e.clientX) });
+            }, function (e) {
+                if (that.isMax) {
+                    return false;
+                }
+                element = that.$.filter(function (elem) {
+                    return elem === e.target || $.contains(elem, e.target);
+                });
+                obj.x = e.clientX;
+                obj.y = e.clientY;
+                map = element.css(["top", "left"]);
+                obj.t = parseFloat(map.top);
+                obj.l = parseFloat(map.left);
+            });
+        },
         show: function () {
             var that = this;
             this.base.show();
