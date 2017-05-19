@@ -797,6 +797,14 @@ textarea.ui.input
 
     text-align: left;
 }
+.ui.menu > .item{
+    white-space: nowrap;
+    word-break: break-all;
+}
+.ui.menu.vertical > .item{
+    white-space: initial;
+    word-break: initial;
+}
 .ui.menu.vertical .item + .item,
 .ui.menu.vertical .item + .ui.menu + .item
 {
