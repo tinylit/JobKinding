@@ -97,6 +97,59 @@
         },
         constructor: $.api,
         control: $.api.control,
+        commonDrag: function (element, callback/*拖动*/, callback2/*拖动之前*/, callback3/*拖动结束*/) {
+            if (!element || !callback) {
+                return false;
+            }
+            if (typeof element === "string") {
+                element = this.$ ? this.$.find(element) : $(element);
+            }
+            var that = this;
+            element.mousedown(function (e) {
+                if (!callback2 || callback2.call(this, e) !== false) {
+                    that.lockDrag();
+                }
+                var callback_body_mouseup = function (e) {
+                    if (!callback3 || callback3.call(this, e) !== false) {
+                        that.unlockDrag();
+                        $(document.body).off({ "mousemove": callback, "mouseup": callback_body_mouseup });
+                    }
+                };
+                $(document.body).on({ "mousemove": callback, "mouseup": callback_body_mouseup });
+            });
+        },
+        lockDrag: function () {
+            if (document.body.setCapture)
+                document.body.setCapture();
+            else
+                this.lockSelectStart();
+        },
+        unlockDrag: function () {
+            if (document.body.releaseCapture)
+                document.body.releaseCapture();
+            else
+                this.unlockSelectStart();
+        },
+        __lockSelectStart: function () {
+            return false;
+        },
+        /* 锁定选择 */
+        lockSelectStart: function () {
+            if ($.lib.isChromeBro)
+                document.body.onselectstart = this.__lockSelectStart;
+            else
+                $(document.body).on("selectstart", this.__lockSelectStart);
+        },
+
+        /* 解锁定选择 */
+        unlockSelectStart: function () {
+            if ($.lib.isChromeBro) {
+                if (document.body.onselectstart == this.__lockSelectStart)
+                    document.body.onselectstart = null;
+            }
+            else
+                $(document.body).off("selectstart", this.__lockSelectStart);
+        },
         baseConfigs: function (object, context) {
             object = object || this;
             context = context || this;

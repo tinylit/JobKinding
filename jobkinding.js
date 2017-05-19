@@ -466,7 +466,7 @@
                 style.maxWidth = maxWidth;
             }
         }
-        return val !== undefined ? ret + "" : ret;
+        return val !== undefined ? val + "" : val;
     }
 
     jobKinding.extend({
@@ -2493,7 +2493,7 @@
     jobKinding.filter = function (selector, elems, not) {
         if (jobKinding.isFunction(selector)) {
             return jobKinding.grep(elems, function (elem, i) {
-                return !!selector.call(elem, i, elem);
+                return !!selector.call(elem, elem, i, elem);
             }, !!not);
         }
         if (selector.nodeType) {
