@@ -349,12 +349,12 @@ textarea.ui.input
 {
     line-height: inherit;
 
+    z-index: 1;
+
     min-width: -webkit-max-content;
     min-width:    -moz-max-content;
     min-width:         max-content;
     margin: 0;
-    
-    z-index:1;
 
     background-color: #fff;
 }
@@ -363,8 +363,8 @@ textarea.ui.input
 .ui.footer > .ui.label.extra,
 .ui.content > .ui.label.extra,
 .ui.select .option > .ui.label.extra
-{    
-    top:-.4375em;/*&{border-top-width}+^{padding-top}*/    
+{
+    top: -.4375em;/*&{border-top-width}+^{padding-top}*/
 }
 
 .ui.label.extra:before
@@ -532,8 +532,11 @@ textarea.ui.input
 .ui.menu > .item > .ui.menu.towards-up,
 .ui.menu > .item > .ui.menu.towards-down
 {
-    right: -.0625em;
-    left: -.0625em;
+    right: -10em;
+    left: -10em;
+
+    width: 120%;
+    max-width: 20em;
 }
 .ui.input > .hint.towards-up,
 .ui.inputs > .input > .hint.towards-up,
@@ -828,6 +831,15 @@ textarea.ui.input
     border-top-width: .0625em;
     border-radius: 0;
 }
+.ui.menu.vertical > .item > .ui.menu.towards-up,
+.ui.menu.vertical > .item > .ui.menu.towards-down
+{
+    right: -.0625em;
+    left: -.0625em;
+
+    width: 100%;
+}
+
 .ui.menu.vertical > .item + .ui.menu > .item,
 .ui.menu.vertical > .item.selected + .ui.menu
 {
@@ -1393,4 +1405,110 @@ textarea.ui.input:focus,
 .ui.inputs > .input > .hint.towards-down > *[class^='fa-']
 {
     display: block;
+}
+
+@media (max-width:48em)
+{
+    .ui.input > .hint.towards-left,
+    .ui.input > .hint.towards-right,
+    .ui.inputs > .input > .hint.towards-left,
+    .ui.inputs > .input > .hint.towards-right
+    {
+        top: auto;
+        right: 0;
+        bottom: auto;
+        left: 0;
+    }
+
+    .ui.input > .hint.towards-left > *[class^='fa-'],
+    .ui.input > .hint.towards-right > *[class^='fa-'],
+    .ui.inputs > .input > .hint.towards-left > *[class^='fa-'],
+    .ui.inputs > .input > .hint.towards-right > *[class^='fa-']
+    {
+        display: block;
+    }
+    .ui.input > .hint.towards-left,
+    .ui.inputs > .input > .hint.towards-left
+    {
+        bottom: 100%;
+
+        margin-right: auto;
+        margin-bottom: .8em;
+    }
+    .ui.input > .hint.towards-right,
+    .ui.inputs > .input > .hint.towards-right
+    {
+        top: 100%;
+
+        margin-top: .8em;
+        margin-left: auto;
+    }
+    .ui.input > .hint.towards-left:after,
+    .ui.input > .hint.towards-left:before,
+    .ui.input > .hint.towards-right:after,
+    .ui.input > .hint.towards-right:before,
+    .ui.inputs > .input > .hint.towards-left:after,
+    .ui.inputs > .input > .hint.towards-left:before,
+    .ui.inputs > .input > .hint.towards-right:after,
+    .ui.inputs > .input > .hint.towards-right:before
+    {
+        top: auto;
+        right: 0;
+        bottom: auto;
+        left: 0;
+    }
+    .ui.input > .hint.towards-left:after,
+    .ui.input > .hint.towards-left:before,
+    .ui.inputs > .input > .hint.towards-right:after,
+    .ui.inputs > .input > .hint.towards-right:before
+    {
+        top: 100%;
+    }
+    .ui.input > .hint.towards-left:after,
+    .ui.input > .hint.towards-left:before,
+    .ui.inputs > .input > .hint.towards-left:after,
+    .ui.inputs > .input > .hint.towards-left:before
+    {
+        border-left-color: transparent;
+    }
+
+    .ui.input > .hint.towards-right:after,
+    .ui.input > .hint.towards-right:before,
+    .ui.inputs > .input > .hint.towards-right:after,
+    .ui.inputs > .input > .hint.towards-right:before
+    {
+        border-right-color: transparent;
+    }
+
+    .ui.input > .hint.towards-left:after,
+    .ui.inputs > .input > .hint.towards-left:after
+    {
+        border-top-color: #fff;
+    }
+
+    .ui.input > .hint.towards-left:before,
+    .ui.inputs > .input > .hint.towards-left:before
+    {
+        border-top-color: inherit;
+    }
+
+    .ui.input > .hint.towards-right:after,
+    .ui.input > .hint.towards-right:before,
+    .ui.inputs > .input > .hint.towards-right:after,
+    .ui.inputs > .input > .hint.towards-right:before
+    {
+        bottom: 100%;
+    }
+
+    .ui.input > .hint.towards-right:before,
+    .ui.inputs > .input > .hint.towards-right:before
+    {
+        border-bottom-color: inherit;
+    }
+
+    .ui.input > .hint.towards-right:after,
+    .ui.inputs > .input > .hint.towards-right:after
+    {
+        border-bottom-color: #fff;
+    }
 }
