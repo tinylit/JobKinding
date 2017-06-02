@@ -14,6 +14,15 @@
             if (this.isMax) {
                 this.max();
             }
+            if (this.dataSite) {
+                var key, site = { "top": 0, "right": 0, "bottom": 0, "left": 0 };
+                for (key in site) {
+                    if (this.dataSite[key]) {
+                        site[key] = +this.dataSite[key] || 0;
+                    }
+                }
+                this.$.css(this.dataSite = site);
+            }
             if (this.transition && $.api.animation) {
                 this.$.addClass(this.transition);
             }
@@ -34,21 +43,32 @@
             this.setContaiter(this.contaiter);
         },
         drag: function (selector) {
-            var that = this, map, element, obj = {};
+            var that = this, i, map = this.dataSite, obj = {}, arr = ["top", "right", "bottom", "left"];
             this.commonDrag(selector ? this.$.find(selector) : this.$, function (e) {
-                element.css({ "top": obj.t - (obj.y - e.clientY), "left": obj.t - (obj.x - e.clientX) });
+                obj.horizontal = (obj.x - e.clientX);
+                obj.vertical = (obj.y - e.clientY);
+                obj.x = e.clientX;
+                obj.y = e.clientY;
+
+                map.top = map.top - obj.vertical;
+                map.right = map.right + obj.horizontal;
+                map.bottom = map.bottom + obj.vertical;
+                map.left = map.left - obj.horizontal;
+
+                that.$.css(map);
+
             }, function (e) {
                 if (that.isMax) {
                     return false;
                 }
-                element = that.$.filter(function (elem) {
-                    return elem === e.target || $.contains(elem, e.target);
-                });
                 obj.x = e.clientX;
                 obj.y = e.clientY;
-                map = element.css(["top", "left"]);
-                obj.t = parseFloat(map.top);
-                obj.l = parseFloat(map.left);
+                if (map == null) {
+                    map = that.dataSite = that.$.css(arr);
+                    for (i in map) {
+                        map[i] = parseFloat(map[i]);
+                    }
+                }
             });
         },
         show: function () {
@@ -72,10 +92,11 @@
         },
         max: function () {
             this.isMax = true;
-            this.$.css({ height: "100%", width: "100%" });
+            this.$.css({ height: "100%", width: "100%", "top": 0, "right": 0, "bottom": 0, "left": 0 });
         },
         restore: function () {
             this.isMax = false;
+            this.$.css(this.dataSite);
             this.setWidth(this.width);
             this.setHeight(this.height);
         },
