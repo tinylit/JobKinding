@@ -1898,9 +1898,9 @@
                 var raw = jobKinding.isFunction(value);
                 for (; i < len; i++) {
                     if (key == null) {
-                        fnSet(this[i], raw ? value(this[i], i, fnGet(this[i])) : value);
+                        fnSet(this[i], raw ? value.call(this.eq(i), fnGet(this[i]), i, this[i]) : value);
                     } else {
-                        fnSet(this[i], key, raw ? value(this[i], i, fnGet(this[i], key)) : value, key);
+                        fnSet(this[i], key, raw ? value.call(this.eq(i), fnGet(this[i], key), i, this[i]) : value, key);
                     }
                 }
                 return this;
