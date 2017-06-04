@@ -13,8 +13,8 @@
 		.row-wrap,
 		.row-test {
 			width: 100%;
-			padding:2em;
-			display:block;
+			padding: 2em;
+			display: block;
 		}
 
 		.row-test {
@@ -32,6 +32,7 @@
 	<script src="jobkinding.api.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		$(document).ready(function(e) {
+			$(document.body).append($.lib.html('.ui.menu.vertical > .item + .ui.menu'));
 			$(".check > input").click(function() {
 				$(this.parentNode).toggleClass("checked", this.checked);
 			});
