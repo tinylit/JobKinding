@@ -1,6 +1,5 @@
 ﻿(function ($) {
     $.api.init("Dialog", {
-        transition: "transition",
         init: function () {
             this.base.init("div");
             this.$.after('<div class="layer"></div>');
@@ -14,17 +13,8 @@
             if (this.isMax) {
                 this.max();
             }
-            if (this.dataSite) {
-                var key, site = { "top": 0, "right": 0, "bottom": 0, "left": 0 };
-                for (key in site) {
-                    if (this.dataSite[key]) {
-                        site[key] = +this.dataSite[key] || 0;
-                    }
-                }
-                this.$.css(this.dataSite = site);
-            }
-            if (this.transition && $.api.animation) {
-                this.$.addClass(this.transition);
+            if (this.transition) {
+                this.$.addClass("transition");
             }
         },
         setHeader: function (options) {
@@ -42,8 +32,20 @@
             this.setFooter(this.footer);
             this.setContaiter(this.contaiter);
         },
+        commit: function () {
+            var that = this;
+            this.layer.click(function () {
+                if (that.isMax) {
+                    return false;
+                }
+                that.$.addClass("pulse");
+                setTimeout(function () {
+                    that.$.removeClass("pulse");
+                }, that.duration);
+            });
+        },
         drag: function (selector) {
-            var that = this, i, map = this.dataSite, obj = {}, arr = ["top", "right", "bottom", "left"];
+            var that = this, i, map = this._dataSite = null, obj = {}, arr = ["top", "right", "bottom", "left"];
             this.commonDrag(selector ? this.$.find(selector) : this.$, function (e) {
                 obj.horizontal = (obj.x - e.clientX);
                 obj.vertical = (obj.y - e.clientY);
@@ -64,7 +66,7 @@
                 obj.x = e.clientX;
                 obj.y = e.clientY;
                 if (map == null) {
-                    map = that.dataSite = that.$.css(arr);
+                    map = that._dataSite = that.$.css(arr);
                     for (i in map) {
                         map[i] = parseFloat(map[i]);
                     }
@@ -78,7 +80,7 @@
             this.$.css("z-index", $.api.zIndex++);
             setTimeout(function () {
                 that.$.addClass("transition-visible");
-            }, 200)
+            }, this.duration);
         },
         hide: function () {
             this.base.hide();
@@ -92,16 +94,16 @@
         },
         max: function () {
             this.isMax = true;
-            this.$.css({ height: "100%", width: "100%", "top": 0, "right": 0, "bottom": 0, "left": 0 });
+            this.$.css({ "height": "100%", "width": "100%", "top": 0, "right": 0, "bottom": 0, "left": 0 });
         },
         restore: function () {
             this.isMax = false;
-            this.$.css(this.dataSite);
+            this.$.css(this._dataSite);
             this.setWidth(this.width);
             this.setHeight(this.height);
         },
         close: function (isClose) {
-            if (isClose || this.isClose) {
+            if (isClose || isClose !== false && this.isClose) {
                 this.destroy();
             } else {
                 this.hide();
