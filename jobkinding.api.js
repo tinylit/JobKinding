@@ -25,6 +25,11 @@
         }
         return new $.api.fn.init(tag, selector, options);
     }
+    $.fn.api = function (tag, options) {
+        return this.each(function (selector) {
+            return $.api(tag, selector, options);
+        });
+    };
     $.extend($.api, {
         isReady: true,
         readyWait: 0,
@@ -32,9 +37,6 @@
         control: {},
         baseUri: $.baseUri,
         zIndex: $.lib.year(),
-        animation: $.lib.support("animation"),
-        boxShadow: $.lib.support("box-shadow"),
-        transition: $.lib.support("transition"),
         baseConfigs: function (type, options) {
             if (arguments.length === 1) {
                 options = type;
@@ -100,8 +102,12 @@
             resolve: 4,
             commit: 8
         },
+        duration: 200,
         constructor: $.api,
         control: $.api.control,
+        animation: $.lib.support("animation"),
+        boxShadow: $.lib.support("box-shadow"),
+        transition: $.lib.support("transition"),
         commonDrag: function (element, callback /*�϶�*/, callback2 /*�϶�֮ǰ*/, callback3 /*�϶�����*/) {
             if (!element || !callback) {
                 return false;
@@ -194,7 +200,7 @@
                     context.$.addClass(context.addClass);
                 }
                 if (context.border) {
-                    if ($.api.boxShadow) {
+                    if (context.boxShadow) {
                         context.$.addClass("box-shadow");
                     } else {
                         context.$.addClass("border");
@@ -455,8 +461,7 @@
             if ($.isArray(tag)) {
                 return $.each(tag, function (tag) {
                     if ($.isArray(tag)) {
-                        var i = tag.length;
-                        $.api.load(tag[0], i > 0 ? tag[1] : uri, i > 1 ? tag[2] : base, i > 2 ? tag[3] : callbak);
+                        $.api.load.apply(null, tag);
                     } else {
                         $.api.load(tag, uri, base, callbak);
                     }
@@ -467,17 +472,26 @@
                     $.api.load.apply(null, concat.call([tag], value));
                 });
             }
+            var isFunction = $.isFunction(callbak);
             if ($.isString(tag)) {
-                $._evalUrl(uri = $.api._load(tag, uri, base), typeof callbak === "function" && function () {
-                    callbak(uri, tag);
-                }, function () {
-                    $.api.error("Uri:" + uri, "Script");
+                return $.each(tag.match(rnotwhite), function (tag) {
+                    $._evalUrl(uri = $.api._load(tag, uri, base), isFunction && function () {
+                        callbak(uri, tag);
+                    }, function () {
+                        $.api.error("Uri:" + uri, "Script");
+                    });
                 });
             }
+            return $._evalUrl(uri = $.api._load(tag, uri, base), isFunction && function () {
+                callbak(uri, tag);
+            }, function () {
+                $.api.error("Uri:" + uri, "Script");
+            });
         },
         loadV2: function (tag, uri, base, callbak) {
             var readyWait = 0;
             callbak = callbak || base || uri || tag;
+            var isFunction = $.isFunction(callbak);
             $.api.load(tag, uri, base, function (src) {
                 var script = document.createElement("script");
                 script.type = "text/javascript";
@@ -489,9 +503,9 @@
                 }
                 readyWait = readyWait + 1;
                 $.api.isReady = ++$.api.readyWait < 1;
-                $(script).on("load readystatechange", typeof callbak === "function" && function () {
+                $(script).on("load readystatechange", isFunction && function () {
                     if (--readyWait === 0) {
-                        callbak[$.isArray(tag) ? "apply" : "call"](tag);
+                        callbak(tag, uri, base, callbak);
                     }
                 }, function (e) {
                     if (e.type === 'load' || readyRegExp.test(script.readyState)) {
