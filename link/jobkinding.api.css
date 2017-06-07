@@ -42,6 +42,11 @@
             animation-name: none;
 }
 
+.api.dialog.transition.transition-visible.pulse{
+    -webkit-animation-name:pulse;
+            animation-name:pulse;    
+}
+
 .api.dialog.transition
 {
     -webkit-animation-name: dialog-visible;

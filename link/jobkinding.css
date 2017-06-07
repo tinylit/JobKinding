@@ -943,6 +943,36 @@ table.visible-inline-block
 
 /*动画*/
 
+@keyframes pulse {
+ 0% {
+   transform: scale(1);
+ }
+ 40% {
+   transform: scale(1.02);
+  }
+ 60% {
+   transform: scale(1.02);
+  }
+ 100% {
+   transform: scale(1);
+ }
+}
+@-webkit-keyframes pulse {
+ 0% {
+   transform: scale(1);
+ }
+ 40% {
+   transform: scale(1.02);
+  }
+ 60% {
+   transform: scale(1.02);
+  }
+ 100% {
+   transform: scale(1);
+ }
+}
+
+
 .transition
 {
     -webkit-animation-duration: .2s;
@@ -956,6 +986,11 @@ table.visible-inline-block
             animation-fill-mode: both;
 }
 
+.pulse
+{
+    -webkit-animation-name:pulse;
+            animation-name:pulse;
+}
 
 /*颜色*/
 
