@@ -5,7 +5,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>$</title>
+	<title>UI</title>
 	<link href="link/fa.css" rel="stylesheet" type="text/css" />
 	<link href="link/jobkinding.css" rel="stylesheet" type="text/css" />
 	<link href="link/jobkinding.lib.css" rel="stylesheet" type="text/css" />
@@ -15,6 +15,7 @@
 			width: 100%;
 			padding: 2em;
 			display: block;
+			/*min-width: 45em;*/
 		}
 
 		.row-test {
@@ -32,7 +33,7 @@
 	<script src="jobkinding.api.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		$(document).ready(function(e) {
-			$(document.body).append($.lib.html('.ui.menu.vertical > .item + .ui.menu'));
+			//$(document.body).append($.lib.html('.ui.menu.vertical > .item + .ui.menu'));
 			$(".check > input").click(function() {
 				$(this.parentNode).toggleClass("checked", this.checked);
 			});

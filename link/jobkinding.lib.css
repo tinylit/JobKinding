@@ -42,6 +42,7 @@
     line-height: 1;
 
     height: 1.345em;
+    margin-top: -.15em;
     padding-right: .25em;
     padding-left: .25em;
 }
@@ -355,11 +356,6 @@ textarea.ui.input
     min-width:    -moz-max-content;
     min-width:         max-content;
     margin: 0;
-<<<<<<< HEAD
-
-    z-index:1;
-=======
->>>>>>> e7433ff5e387199bb4950c2ec40a6e8cbbb7d1a6
 
     background-color: #fff;
 }
@@ -369,11 +365,7 @@ textarea.ui.input
 .ui.content > .ui.label.extra,
 .ui.select .option > .ui.label.extra
 {
-<<<<<<< HEAD
-    top:-.4375em;/*&{border-top-width}+^{padding-top}*/
-=======
     top: -.4375em;/*&{border-top-width}+^{padding-top}*/
->>>>>>> e7433ff5e387199bb4950c2ec40a6e8cbbb7d1a6
 }
 
 .ui.label.extra:before
@@ -806,13 +798,13 @@ textarea.ui.input
 
     text-align: left;
 }
-.ui.menu > .item{
-    white-space: nowrap;
-    word-break: break-all;
+.ui.menu > .item
+{
+    white-space: nowrap;  word-break: break-all;
 }
-.ui.menu.vertical > .item{
-    white-space: initial;
-    word-break: initial;
+.ui.menu.vertical > .item
+{
+    white-space: initial;  word-break: initial;
 }
 .ui.menu.vertical .item + .item,
 .ui.menu.vertical .item + .ui.menu + .item
@@ -1168,6 +1160,12 @@ input.ui.input,
 
     white-space: nowrap;
     word-break: keep-all;
+}
+.ui.input > .hint
+{
+    white-space: normal;
+    word-wrap: normal;
+    word-break: normal;
 }
 input.ui.input,
 textarea.ui.input,
