@@ -9,10 +9,10 @@
 }
 
 .ui *,
+.ui .ui,
 .ui:after,
 .ui:before,
 .ui *:after,
-©
 .ui *:before
 {
     font-size: 100%;
@@ -228,7 +228,7 @@ textarea.ui.input
 {
     display: inline-block;
 }
-.ui.menu,
+
 .ui.input,
 .ui.select,
 .ui.buttons,
@@ -236,6 +236,7 @@ textarea.ui.input
 {
     display: inline-table;
 }
+.ui.menu,
 .ui.links,
 .ui.labels
 {
@@ -791,8 +792,6 @@ textarea.ui.input
 }
 .ui.menu.vertical
 {
-    display: inline-block;
-
     width: 15.75em;
 }
 .ui.menu.vertical .item
@@ -1044,22 +1043,7 @@ textarea.ui.input
 
 .ui.check > input
 {
-    position: absolute;
-    z-index: 3;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-
-    width: 100% !important;
-    height: 100% !important;
-
-    cursor: pointer;
-
-    opacity: 0;
-    outline: 0;
-
-    filter: alpha(opacity=0);
+    display: none;
 }
 
 .ui.check > i,
@@ -1068,6 +1052,8 @@ textarea.ui.input
     position: relative;
 
     display: inline-block;
+
+    cursor: pointer;
 }
 .ui.check > i
 {

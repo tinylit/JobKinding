@@ -34,8 +34,8 @@
 	<script type="text/javascript">
 		$(document).ready(function(e) {
 			//$(document.body).append($.lib.html('.ui.menu.vertical > .item + .ui.menu'));
-			$(".check > input").click(function() {
-				$(this.parentNode).toggleClass("checked", this.checked);
+			$(".check").click(function() {
+				$(this).toggleClass("checked", $(this).children('input').attr('checked'));
 			});
 			$(".ui.menu.vertical > .item + .ui.menu").prev().click(function() {
 				$(this).toggleClass("selected");
@@ -162,6 +162,7 @@
 				</div>
 			</div>
 			<div class="item">菜单-5 </div>
+			<div class="clearfix"></div>
 		</div>
 	</div>
 	<div class="row-wrap">
@@ -201,6 +202,7 @@
 				</div>
 			</div>
 			<div class="item">菜单-5 </div>
+			<div class="clearfix"></div>
 		</div>
 	</div>
 	<div class="row-wrap">
@@ -226,16 +228,16 @@
 	</div>
 	<div class="row-wrap">
 		<div class="ui check">
-			<input type="checkbox" />
-			<i class="label"></i><label></label>
+			<input id="check" type="checkbox" />
+			<i class="label"></i><label for='check'></label>
 		</div>
 		<div class="ui check">
-			<input type="checkbox" checked="checked" />
-			<i class="label"></i><label></label>
+			<input id='check2' type="checkbox" checked="checked" />
+			<i class="label"></i><label for='check2'></label>
 		</div>
 		<div class="ui check">
-			<input type="checkbox" />
-			<i class="label"></i><label>复选框</label>
+			<input id='checkMulit' type="checkbox" />
+			<i class="label"></i><label for='checkMulit'>复选框</label>
 		</div>
 		<div class="ui check checked">
 			<input type="checkbox" checked="checked" />

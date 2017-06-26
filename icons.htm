@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>字体图标</title>
+  <link type="text/css" rel="stylesheet" href="link/fa.css">
+  <script type="text/javascript" src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+  <style type="text/css">
+    .the-icons {
+      list-style-type: none;
+      margin: 0 auto;
+      padding: 0
+    }
+
+    .the-icons li {
+      cursor: pointer;
+      line-height: 32px;
+      height: 32px;
+      float: left;
+      width: 30%;
+      overflow: hidden;
+      padding-left: 2.5%;
+      padding-right: 0.8%;
+      -webkit-border-radius: 6px;
+      -moz-border-radius: 6px;
+      border-radius: 6px
+    }
+
+
+    .the-icons li span {
+      color: #e0e0e0;
+      float: right;
+    }
+
+    .the-icons li .fa {
+      width: 32px;
+      font-size: 14px
+    }
+
+    .the-icons li:hover {
+      background-color: #fbf4f4
+    }
+
+    .the-icons li:hover .fa {
+      * font-size: 28px;
+      * vertical-align: middle
+    }
+
+    .the-icons li:hover .fa:before {
+      font-size: 28px;
+      vertical-align: -5px
+    }
+  </style>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $.ajax({
+        type: 'get',
+        url: 'link/fa.css',
+        success: function(json) {
+          var contaiter = $('.the-icons');
+          var match, reg = /content:[\x20\t\r\n\f]*(?:'((?:\\.|[^\\'])*)'|\"((?:\\.|[^\\\"])*)\")/img;
+          var regSingle = /\.([\w+-]*\w+):before/img;
+          var regMulti = /(\.[\w+-]*\w+:before[\x20\t\r\n\f]*,[\x20\t\r\n\f]*)*\.([\w+-]*\w+):before[\x20\t\r\n\f]*\{([^\}]+)\}/img;
+          json.replace(regMulti, function(all, multi, _class, content) {
+            if (match = reg.exec(content)) {
+              if (multi) {
+                all.replace(regSingle, function(all, _class_) {
+                  contaiter.append('<li><i class="fa ' + _class_ + '"></i>.' + _class_ + '<span>(' + (match[1] || match[2]) + ')</span></li>');
+                });
+              } else {
+                contaiter.append('<li><i class="fa ' + _class + '"></i>.' + _class + '<span>(' + (match[1] || match[2]) + ')</span></li>');
+              }
+            }
+          });
+        }
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <ul class="the-icons">
+
+  </ul>
+</body>
+
+</html>
