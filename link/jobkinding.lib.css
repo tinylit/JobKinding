@@ -12,6 +12,7 @@
 .ui:after,
 .ui:before,
 .ui *:after,
+©
 .ui *:before
 {
     font-size: 100%;
@@ -228,14 +229,17 @@ textarea.ui.input
     display: inline-block;
 }
 .ui.menu,
-.ui.links,
 .ui.input,
 .ui.select,
-.ui.labels,
 .ui.buttons,
 .ui.inputs > .input
 {
     display: inline-table;
+}
+.ui.links,
+.ui.labels
+{
+    display: inline-block;
 }
 .ui.links,
 .ui.select,

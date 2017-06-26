@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>canvas</title>
+    <style type="text/css">
+        canvas {
+            background-color: rgba(0, 0, 0, .15);
+        }
+    </style>
+</head>
+
+<body>
+<canvas id="canvas" width="300" height="250">
+    您的浏览器不支持Canvas绘图！
+</canvas>
+<script type="text/javascript">
+    var cvs = document.getElementById("canvas");
+
+    var paint = cvs.getContext('2d');
+    //设置绘图颜色
+    paint.fillStyle = '#0a9';
+    //设置左上角矩形框
+    paint.fillRect(50, 50, 50, 50);
+    //设置右上角矩形框
+    paint.fillRect(300 - 50 - 50, 50, 50, 50);
+    //设置中下矩形框
+    paint.fillRect((300 - 50) / 2, 150, 50, 50);
+</script>
+<canvas id="canvas2" width="300" height="250">
+    您的浏览器不支持Canvas绘图！
+</canvas>
+<script type="text/javascript">
+    var cvs = document.getElementById('canvas2');
+
+    var width = cvs.width;
+    var height = cvs.height;
+    //获取一个2D绘图画笔
+    var paint = cvs.getContext('2d');
+
+    function randomNumber(min, max) {
+        return Math.floor(Math.random() * (max - min) + min);
+    }
+    function randomColor(minR, maxR, minG, maxG, minB, maxB) {
+        var r = randomNumber(minR, maxR);
+        var g = randomNumber(minG, maxG);
+        var b = randomNumber(minB, maxB);
+        return 'rgb(' + r + ',' + g + ',' + b + ')';
+    }
+    var x = 10;
+    var xDirection = 1;
+    var y = 10;
+    var yDirection = 1;
+    function bubbles() {
+        //清除画布
+        paint.clearRect(0, 0, width, height);
+
+        //获得一个线性渐变对象
+        var lg = paint.createLinearGradient(0, 0, 0, 20);
+        lg.addColorStop(0, randomColor(60, 120, 200, 255, 60, 120));
+        lg.addColorStop(0.5, randomColor(60, 120, 200, 255, 60, 120));
+        lg.addColorStop(1, randomColor(60, 120, 200, 255, 60, 120));
+
+        x += xDirection;
+        y += yDirection;
+
+        if (x < 10 || x > width - 10) {
+            xDirection = -xDirection;
+        }
+        if (y < 10 | y > height - 10) {
+            yDirection = -yDirection;
+        }
+        //画一个以（10，10）作为原点，半径为10像素的圆形
+        paint.arc(x, y, 10, 0, 2 * Math.PI);
+        //设置填充颜色
+        paint.fillStyle = lg;
+        //对圆形进行填充
+        paint.fill();
+    }
+    var timer = setInterval(bubbles, 10);
+</script>
+</body>
+
+</html>
